@@ -8,6 +8,9 @@ use Navindex\Auth\Config\Auth;
 use Navindex\Auth\Authentication\Activators\Activator;
 use Navindex\Auth\Authentication\Validators\Validator;
 use Navindex\Auth\Authentication\Resetters\Resetter;
+use Navindex\Auth\Models\Types\PermissionModel;
+use Navindex\Auth\Models\Types\RoleModel;
+use Navindex\Auth\Models\UserModel;
 
 /**
  * Services Configuration file.
@@ -62,13 +65,13 @@ class Services extends CoreServices
 
 		$config = config(Auth::class);
 
-		$userClass = $config->models['user'];
+		$userClass = $config->models['user'] ?? UserModel::class;
 		$userModel = new $userClass();
 
-		$roleClass = $config->models['role'];
+		$roleClass = $config->models['role'] ?? RoleModel::class;
 		$roleModel = new $roleClass();
 
-		$permissionClass = $config->models['permission'];
+		$permissionClass = $config->models['permission'] ?? PermissionModel::class;
 		$permissionModel = new $permissionClass($config);
 
 		$libClass = $config->authorisationLibs[$lib];

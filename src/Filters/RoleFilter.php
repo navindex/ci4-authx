@@ -1,10 +1,12 @@
-<?php namespace Myth\Auth\Filters;
+<?php
+
+namespace Navindex\Auth\Filters;
 
 use Config\Services;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
-use Myth\Auth\Exceptions\PermissionException;
+use Navindex\Auth\Exceptions\PermissionException;
 
 class RoleFilter implements FilterInterface
 {

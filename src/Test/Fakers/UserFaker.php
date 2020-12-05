@@ -1,8 +1,10 @@
-<?php namespace Myth\Auth\Test\Fakers;
+<?php
+
+namespace Navindex\Auth\Test\Fakers;
 
 use Faker\Generator;
-use Myth\Auth\Entities\User;
-use Myth\Auth\Models\UserModel;
+use Navindex\Auth\Entities\User;
+use Navindex\Auth\Models\UserModel;
 
 class UserFaker extends UserModel
 {

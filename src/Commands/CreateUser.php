@@ -1,10 +1,12 @@
-<?php namespace Myth\Auth\Commands;
+<?php
+
+namespace Navindex\Auth\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\Services;
-use Myth\Auth\Entities\User;
-use Myth\Auth\Models\UserModel;
+use Navindex\Auth\Entities\User;
+use Navindex\Auth\Models\UserModel;
 
 class CreateUser extends BaseCommand
 {

@@ -1,7 +1,9 @@
-<?php namespace Myth\Auth\Test\Fakers;
+<?php
+
+namespace Navindex\Auth\Test\Fakers;
 
 use Faker\Generator;
-use Myth\Auth\Authorization\PermissionModel;
+use Navindex\Auth\Authorization\PermissionModel;
 
 class PermissionFaker extends PermissionModel
 {

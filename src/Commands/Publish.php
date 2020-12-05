@@ -1,4 +1,6 @@
-<?php namespace Myth\Auth\Commands;
+<?php
+
+namespace Navindex\Auth\Commands;
 
 use Config\Autoload;
 use CodeIgniter\CLI\CLI;
@@ -233,7 +235,7 @@ class Publish extends BaseCommand
         $path = "{$this->sourcePath}/Config/Auth.php";
 
         $content = file_get_contents($path);
-        $content = str_replace('namespace Myth\Auth\Config', "namespace Config", $content);
+        $content = str_replace('namespace Navindex\Auth\Config', "namespace Config", $content);
         $content = str_replace("use CodeIgniter\Config\BaseConfig;\n", '', $content);
         $content = str_replace('extends BaseConfig', "extends \Myth\Auth\Config\Auth", $content);
 

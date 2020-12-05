@@ -1,4 +1,6 @@
-<?php namespace Myth\Auth\Filters;
+<?php
+
+namespace Navindex\Auth\Filters;
 
 use Config\Services;
 use CodeIgniter\HTTP\RequestInterface;

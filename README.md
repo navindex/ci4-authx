@@ -2,7 +2,7 @@
 
 ***
 
-Flexible Auth package for CodeIgniter 4. It is based in [**Myth:Auth**](https://github.com/lonnieezell/myth-auth) with the additional flexibility to customize modules.
+Flexible Auth package for CodeIgniter 4. It is based on [**Myth:Auth**](https://github.com/lonnieezell/myth-auth) and provides additional customisation flexibility.
 
 **NOTE: This package is work in progress. Do not use it while you see this note.**
 
@@ -117,12 +117,12 @@ You can specify the library to use as the first argument:
     $authenticate = service('authentication', 'jwt');
 ```
 
-### 6.2. Authorization
+### 6.2. Authorisation
 
 Provides access to any of the authorization libraries that **Navindex:Auth** knows about. By default it will return the "Flat" authorization library, which is a Flat RBAC (role-based access control) as defined by NIST. It provides user-specific permissions as well as role based permissions.
 
 ```php
-    $authorize = service('authorization');
+    $authorise = service('authorization');
 ```
 
 ### 6.3. Password validation

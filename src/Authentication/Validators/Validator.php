@@ -2,7 +2,7 @@
 
 namespace Navindex\Auth\Authentication\Validators;
 
-use App\Exceptions\AuthException;
+use Navindex\Auth\Exceptions\AuthException;
 use Navindex\Auth\Config\Auth;
 
 class Validator

@@ -2,24 +2,23 @@
 
 namespace Navindex\Auth\Config;
 
-use App\Entities\Type;
-use App\Entities\User;
-use App\Entities\UserToken;
-use App\Models\Types\PermissionModel;
-use App\Models\Types\RoleModel;
-use App\Models\UserModel;
-use App\Models\UserTokenModel;
-use App\Views\CommonData;
 use CodeIgniter\Config\BaseConfig;
 use Navindex\Auth\Authentication\Activators\EmailActivator;
 use Navindex\Auth\Authentication\Authenticators\LocalAuthenticator;
+use Navindex\Auth\Authentication\Resetters\EmailResetter;
 use Navindex\Auth\Authentication\Validators\CompositionValidator;
 use Navindex\Auth\Authentication\Validators\DictionaryValidator;
 use Navindex\Auth\Authentication\Validators\NothingPersonalValidator;
 use Navindex\Auth\Authentication\Validators\PwnedValidator;
-use Navindex\Auth\Authentication\Resetters\EmailResetter;
 use Navindex\Auth\Authorisation\FlatAuthorisation;
 use Navindex\Auth\Controllers\Auth as AuthController;
+use Navindex\Auth\Entities\Type;
+use Navindex\Auth\Entities\User;
+use Navindex\Auth\Entities\UserToken;
+use Navindex\Auth\Models\Types\PermissionModel;
+use Navindex\Auth\Models\Types\RoleModel;
+use Navindex\Auth\Models\UserModel;
+use Navindex\Auth\Models\UserTokenModel;
 use Navindex\Auth\Validation\Rules as AuthRules;
 
 class Auth extends BaseConfig
@@ -67,7 +66,7 @@ class Auth extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $root = 'dashboard';
+	public $root;
 
 	//--------------------------------------------------------------------
 
@@ -108,8 +107,6 @@ class Auth extends BaseConfig
 	 */
 	public $defaultRole;
 
-
-
 	//--------------------------------------------------------------------
 	// Views
 	//--------------------------------------------------------------------
@@ -136,6 +133,15 @@ class Auth extends BaseConfig
 	 * @var string
 	 */
 	public $viewLayout = 'Navindex\Auth\Views\layouts\auth';
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Layout for the emails to extend.
+	 *
+	 * @var string
+	 */
+	public $emailLayout = 'Navindex\Auth\Views\layouts\email';
 
 	//--------------------------------------------------------------------
 	// Fields
@@ -251,7 +257,7 @@ class Auth extends BaseConfig
 	public $hashAlgorithm = PASSWORD_DEFAULT;
 
 	//--------------------------------------------------------------------
-	// ARGON2i/D Encryption Algorithm Options
+	// ARGON2i/D Hashing Algorithm Options
 	//--------------------------------------------------------------------
 
 	/**
@@ -283,7 +289,7 @@ class Auth extends BaseConfig
 	public $hashThreads = 4;
 
 	//--------------------------------------------------------------------
-	// BCRYPT Encryption Algorithm Options
+	// BCRYPT Hashing Algorithm Options
 	//--------------------------------------------------------------------
 
 	/**
@@ -321,9 +327,8 @@ class Auth extends BaseConfig
 	 */
 	public $activators = [
 		EmailActivator::class => [
-			'prepareViewData' => CommonData::class . '::add',
-			'fromEmail'       => null,
-			'fromName'        => null,
+			'fromEmail' => null,
+			'fromName'  => null,
 		],
 	];
 
@@ -375,9 +380,8 @@ class Auth extends BaseConfig
 	 */
 	public $resetters = [
 		EmailResetter::class => [
-			'prepareViewData' => CommonData::class . '::add',
-			'fromEmail'       => null,
-			'fromName'        => null,
+			'fromEmail' => null,
+			'fromName'  => null,
 		],
 	];
 
@@ -480,9 +484,8 @@ class Auth extends BaseConfig
 	 */
 	public $controllers = [
 		AuthController::class => [
-			'prepareViewData' => CommonData::class . '::add',
-			'userEntity'      => User::class,
-			'userModel'       => UserModel::class,
+			'userEntity' => User::class,
+			'userModel'  => UserModel::class,
 		],
 	];
 
@@ -500,5 +503,4 @@ class Auth extends BaseConfig
 			'user' => User::class,
 		],
 	];
-
 }

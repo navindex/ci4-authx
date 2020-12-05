@@ -1,7 +1,9 @@
-<?php namespace Myth\Auth\Test\Fakers;
+<?php
+
+namespace Navindex\Auth\Test\Fakers;
 
 use Faker\Generator;
-use Myth\Auth\Authorization\GroupModel;
+use Navindex\Auth\Authorization\GroupModel;
 
 class GroupFaker extends GroupModel
 {

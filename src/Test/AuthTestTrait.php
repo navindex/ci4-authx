@@ -1,10 +1,12 @@
-<?php namespace Myth\Auth\Test;
+<?php
+
+namespace Navindex\Auth\Test;
 
 use CodeIgniter\Test\Fabricator;
 use Config\Services;
-use Myth\Auth\Entities\User;
-use Myth\Auth\Models\UserModel;
-use Myth\Auth\Test\Fakers\UserFaker;
+use Navindex\Auth\Entities\User;
+use Navindex\Auth\Models\UserModel;
+use Navindex\Auth\Test\Fakers\UserFaker;
 
 /**
  * Trait AuthTestTrait

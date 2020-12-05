@@ -1,4 +1,6 @@
-<?php namespace Myth\Auth\Commands;
+<?php
+
+namespace Navindex\Auth\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;

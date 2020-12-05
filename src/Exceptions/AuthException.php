@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace Navindex\Auth\Exceptions;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 

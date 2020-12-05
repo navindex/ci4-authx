@@ -2,8 +2,8 @@
 
 namespace Navindex\Auth\Authentication\Authenticators;
 
-use App\Exceptions\AuthException;
-use App\Exceptions\UserNotFoundException;
+use Navindex\Auth\Exceptions\AuthException;
+use Navindex\Auth\Exceptions\UserNotFoundException;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use Config\App as AppConfig;

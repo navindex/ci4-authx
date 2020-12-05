@@ -1,7 +1,9 @@
-<?php namespace Myth\Auth\Collectors;
+<?php
+
+namespace Navindex\Auth\Collectors;
 
 use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
-use Myth\Auth\Authorization\GroupModel;
+use Navindex\Auth\Authorization\GroupModel;
 
 /**
  * Debug Toolbar Collector for Auth
@@ -51,7 +53,7 @@ class Auth extends BaseCollector
 	{
 		return get_class(service('authentication'));
 	}
-	
+
 	/**
 	 * Returns the data of this collector to be formatted in the toolbar
 	 *
@@ -67,7 +69,7 @@ class Auth extends BaseCollector
 			$groups = model(GroupModel::class)->getGroupsForUser($user->id);
 
 			$groupsForUser = implode(', ', array_column($groups, 'name'));
-			
+
 			$html = '<h3>Current User</h3>';
 			$html .= '<table><tbody>';
 			$html .= "<tr><td style='width:150px;'>User ID</td><td>#{$user->id}</td></tr>";

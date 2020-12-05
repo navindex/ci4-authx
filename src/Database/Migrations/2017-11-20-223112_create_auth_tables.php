@@ -1,4 +1,6 @@
-<?php namespace Myth\Auth\Database\Migrations;
+<?php
+
+namespace Navindex\Auth\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 

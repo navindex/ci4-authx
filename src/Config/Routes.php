@@ -1,14 +1,20 @@
 <?php
 
-use Navindex\Auth\Config\Auth;
+use Navindex\Auth\Config\Auth as AuthConfig;
+use Navindex\Auth\Controllers\Auth as AuthController;
 
 /**
  * Auth routes file.
  */
 
-$authConfig = new Auth();
-$authRoot = $authConfig->root;
-$authController = $authConfig->activeController;
+//  Open the configuration file
+$authConfig = new AuthConfig();
+
+// Base URL for Auth pages
+$authRoot = $authConfig->root ?? '';
+
+// Auth controller in use
+$authController = $authConfig->activeController ?? AuthController::class;
 
 // Auth
 $routes->group($authRoot, ['namespace' => ''], function ($routes) use ($authController) {
@@ -25,7 +31,7 @@ $routes->group($authRoot, ['namespace' => ''], function ($routes) use ($authCont
 	$routes->get('activate-account', $authController . '::activateAccount', ['as' => 'activate-account']);
 	$routes->get('resend-activate-account', $authController . '::resendActivateAccount', ['as' => 'resend-activate-account']);
 
-	// Forgot/Resets
+	// Forgot/Reset
 	$routes->get('forgot', $authController . '::forgotPassword', ['as' => 'forgot']);
 	$routes->post('forgot', $authController . '::attemptForgot');
 	$routes->get('reset-password', $authController . '::resetPassword', ['as' => 'reset-password']);
