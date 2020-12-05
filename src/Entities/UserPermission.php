@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entities;
+namespace Navindex\Auth\Entities;
 
-use App\Entities\Base\BaseEntity;
+use Navindex\Auth\Entities\Base\BaseEntity;
 
 class UserPermission extends BaseEntity
 {
