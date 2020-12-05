@@ -120,12 +120,12 @@ class Auth extends BaseConfig
 	 * @var array
 	 */
 	public $views = [
-		'login'         => 'forms/auth/login',
-		'register'      => 'forms/auth/register',
-		'forgot'        => 'forms/auth/forgot',
-		'reset'         => 'forms/auth/reset',
-		'emailForgot'   => 'emails/auth/forgot',
-		'emailActivate' => 'emails/auth/activate',
+		'login'         => 'Navindex\Auth\Views\forms\login',
+		'register'      => 'Navindex\Auth\Views\forms\register',
+		'forgot'        => 'Navindex\Auth\Views\forms\forgot',
+		'reset'         => 'Navindex\Auth\Views\forms\reset',
+		'emailForgot'   => 'Navindex\Auth\Views\emails\forgot',
+		'emailActivate' => 'Navindex\Auth\Views\emails\activate',
 	];
 
 	//--------------------------------------------------------------------
@@ -135,7 +135,7 @@ class Auth extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $viewLayout = 'layouts/auth';
+	public $viewLayout = 'Navindex\Auth\Views\layouts\auth';
 
 	//--------------------------------------------------------------------
 	// Fields
