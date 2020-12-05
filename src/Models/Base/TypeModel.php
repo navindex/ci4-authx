@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Base;
+namespace Navindex\Auth\Models\Base;
 
-use App\Entities\Type;
-use App\Models\Base\BaseModel;
+use Navindex\Auth\Entities\Type;
+use Navindex\Auth\Models\Base\BaseModel;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
 

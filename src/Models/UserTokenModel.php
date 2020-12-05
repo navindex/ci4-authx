@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace Navindex\Auth\Models;
 
-use App\Entities\UserToken;
-use App\Models\Base\BaseModel;
+use Navindex\Auth\Entities\UserToken;
+use Navindex\Auth\Models\Base\BaseModel;
 use Navindex\Auth\Models\TokenModelInterface;
 
 class UserTokenModel extends BaseModel implements TokenModelInterface

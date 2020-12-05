@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Lists;
+namespace Navindex\Auth\Models\Lists;
 
-use App\Models\Base\ListModel;
+use Navindex\Auth\Models\Base\ListModel;
 
 class UserFullPermissionListModel extends ListModel
 {

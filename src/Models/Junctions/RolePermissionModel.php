@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Junctions;
+namespace Navindex\Auth\Models\Junctions;
 
-use App\Entities\RolePermission;
-use App\Models\Base\JunctionModel;
+use Navindex\Auth\Entities\RolePermission;
+use Navindex\Auth\Models\Base\JunctionModel;
 
 class RolePermissionModel extends JunctionModel
 {

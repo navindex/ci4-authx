@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Models\Base;
+namespace Navindex\Auth\Models\Base;
 
-abstract class ListModel extends ParsableModel
+use Navindex\Auth\Models\Base\BaseModel;
+
+abstract class ListModel extends BaseModel
 {
 	protected $primaryKey = 'id';
 

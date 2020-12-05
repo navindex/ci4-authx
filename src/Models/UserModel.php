@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Models;
+namespace Navindex\Auth\Models;
 
-use App\Entities\Attempt;
-use App\Entities\User;
-use App\Models\AttemptModel;
-use App\Models\Base\BaseModel;
-use App\Models\Junctions\UserPermissionModel;
-use App\Models\Junctions\UserRoleModel;
-use App\Models\Lists\UserFullPermissionListModel;
-use App\Models\Lists\UserPermissionListModel;
-use App\Models\Lists\UserRoleListModel;
-use App\Models\Types\PermissionModel;
-use App\Models\Types\RoleModel;
+use Navindex\Auth\Entities\Attempt;
+use Navindex\Auth\Entities\User;
+use Navindex\Auth\Models\AttemptModel;
+use Navindex\Auth\Models\Base\BaseModel;
+use Navindex\Auth\Models\Junctions\UserPermissionModel;
+use Navindex\Auth\Models\Junctions\UserRoleModel;
+use Navindex\Auth\Models\Lists\UserFullPermissionListModel;
+use Navindex\Auth\Models\Lists\UserPermissionListModel;
+use Navindex\Auth\Models\Lists\UserRoleListModel;
+use Navindex\Auth\Models\Types\PermissionModel;
+use Navindex\Auth\Models\Types\RoleModel;
 use CodeIgniter\Database\BaseBuilder;
 use Navindex\Auth\Models\UserModelInterface;
 

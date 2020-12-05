@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace Navindex\Auth\Models;
 
-use App\Entities\Attempt;
-use App\Models\Base\BaseModel;
+use Navindex\Auth\Entities\Attempt;
+use Navindex\Auth\Models\Base\BaseModel;
 
 class AttemptModel extends BaseModel
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Base;
+namespace Navindex\Auth\Models\Base;
 
-use App\Exceptions\ModelException;
+use Navindex\Auth\Exceptions\ModelException;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;

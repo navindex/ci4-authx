@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Types;
+namespace Navindex\Auth\Models\Types;
 
-use App\Models\Base\TypeModel;
+use Navindex\Auth\Models\Base\TypeModel;
 
 class UserStatusModel extends TypeModel
 {

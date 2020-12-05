@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\Types;
+namespace Navindex\Auth\Models\Types;
 
-use App\Entities\Type;
-use App\Models\Base\TypeModel;
-use App\Models\Junctions\RolePermissionModel;
-use App\Models\Junctions\UserPermissionModel;
-use App\Models\Lists\RolePermissionListModel;
-use App\Models\Lists\UserPermissionListModel;
+use Navindex\Auth\Entities\Type;
+use Navindex\Auth\Models\Base\TypeModel;
+use Navindex\Auth\Models\Junctions\RolePermissionModel;
+use Navindex\Auth\Models\Junctions\UserPermissionModel;
+use Navindex\Auth\Models\Lists\RolePermissionListModel;
+use Navindex\Auth\Models\Lists\UserPermissionListModel;
 use Navindex\Auth\Models\PermissionModelInterface;
 
 class PermissionModel extends TypeModel implements PermissionModelInterface
