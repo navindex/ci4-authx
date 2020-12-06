@@ -6,7 +6,7 @@ use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
 use Navindex\Auth\Authorization\GroupModel;
 
 /**
- * Debug Toolbar Collector for Auth
+ * Debug Toolbar Collector for Auth.
  */
 class Auth extends BaseCollector
 {
@@ -14,7 +14,7 @@ class Auth extends BaseCollector
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTimeline = false;
 
@@ -22,7 +22,7 @@ class Auth extends BaseCollector
 	 * Whether this collector needs to display
 	 * content in a tab or not.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasTabContent = true;
 
@@ -30,7 +30,7 @@ class Auth extends BaseCollector
 	 * Whether this collector has data that
 	 * should be shown in the Vars tab.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $hasVarData = false;
 
@@ -51,11 +51,11 @@ class Auth extends BaseCollector
 	 */
 	public function getTitleDetails(): string
 	{
-		return get_class(service('authentication'));
+		return \get_class(service('authentication'));
 	}
 
 	/**
-	 * Returns the data of this collector to be formatted in the toolbar
+	 * Returns the data of this collector to be formatted in the toolbar.
 	 *
 	 * @return string
 	 */
@@ -63,12 +63,11 @@ class Auth extends BaseCollector
 	{
 		$authenticate = service('authentication');
 
-		if ($authenticate->isLoggedIn())
-		{
-			$user   = $authenticate->user();
+		if ($authenticate->isLoggedIn()) {
+			$user = $authenticate->user();
 			$groups = model(GroupModel::class)->getGroupsForUser($user->id);
 
-			$groupsForUser = implode(', ', array_column($groups, 'name'));
+			$groupsForUser = \implode(', ', \array_column($groups, 'name'));
 
 			$html = '<h3>Current User</h3>';
 			$html .= '<table><tbody>';
@@ -77,18 +76,17 @@ class Auth extends BaseCollector
 			$html .= "<tr><td>Email</td><td>{$user->email}</td></tr>";
 			$html .= "<tr><td>Groups</td><td>{$groupsForUser}</td></tr>";
 			$html .= '</tbody></table>';
-		}
-		else
-		{
+		} else {
 			$html = '<p>Not logged in.</p>';
 		}
+
 		return $html;
 	}
 
 	/**
 	 * Gets the "badge" value for the button.
 	 *
-	 * @return int|null ID of the current User, or null when not logged in
+	 * @return null|int ID of the current User, or null when not logged in
 	 */
 	public function getBadgeValue(): ?int
 	{

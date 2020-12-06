@@ -2,8 +2,6 @@
 
 namespace Navindex\Auth\Authentication\Authenticators;
 
-use Navindex\Auth\Exceptions\AuthException;
-use Navindex\Auth\Exceptions\UserNotFoundException;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use Config\App as AppConfig;
@@ -11,6 +9,8 @@ use Navindex\Auth\Authentication\Authenticators\AuthenticatorInterface;
 use Navindex\Auth\Authentication\Authenticators\BaseAuthentication;
 use Navindex\Auth\Config\Auth;
 use Navindex\Auth\Entities\UserInterface;
+use Navindex\Auth\Exceptions\AuthException;
+use Navindex\Auth\Exceptions\UserNotFoundException;
 
 class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInterface
 {
@@ -46,7 +46,7 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 	{
 		parent::__construct($config);
 
-		$settings = $this->config->authenticators[get_class($this)];
+		$settings = $this->config->authenticators[\get_class($this)];
 		$this->userModel = model($settings['userModel']);
 		$this->tokenModel = model($settings['tokenModel']);
 		$this->userType = $settings['userEntity'] ?? UserInterface::class;
@@ -108,8 +108,8 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 				$request->getUserAgent()
 			);
 
-			$param = http_build_query([
-				'login' => urlencode($credentials['email'] ?? $credentials['username']),
+			$param = \http_build_query([
+				'login' => \urlencode($credentials['email'] ?? $credentials['username']),
 			]);
 
 			$this->error = lang('Auth.error.notActivated') . ' ' . anchor(route_to('resend-activate-account') . '?' . $param, lang('Auth.error.activationResend'));
@@ -127,9 +127,9 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 	 * Checks to see if the user is logged in or not. Redirects to password
 	 * reset if it was forced.
 	 *
-	 * @return bool True if the user is logged in
-	 *
 	 * @throws \CodeIgniter\Router\Exceptions\RedirectException
+	 *
+	 * @return bool True if the user is logged in
 	 */
 	public function check(): bool
 	{
@@ -150,8 +150,8 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 			return false;
 		}
 
-		[$selector, $validator] = explode(':', $remember);
-		$validator = hash('sha256', $validator);
+		[$selector, $validator] = \explode(':', $remember);
+		$validator = \hash('sha256', $validator);
 
 		$token = $this->loginModel->getRememberToken($selector);
 
@@ -159,7 +159,7 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 			return false;
 		}
 
-		if (!hash_equals($token->hashedValidator, $validator)) {
+		if (!\hash_equals($token->hashedValidator, $validator)) {
 			return false;
 		}
 
@@ -193,7 +193,7 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 	public function validate(array $credentials, bool $returnUser = false)
 	{
 		// Can't validate without a password.
-		if (empty($credentials['password']) || count($credentials) < 2) {
+		if (empty($credentials['password']) || \count($credentials) < 2) {
 			return false;
 		}
 
@@ -201,26 +201,26 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 		$password = $credentials['password'];
 		unset($credentials['password']);
 
-		if (count($credentials) > 1) {
+		if (\count($credentials) > 1) {
 			throw AuthException::forTooManyCredentials();
 		}
 
 		// Ensure that the fields are allowed validation fields
-		if (!in_array(key($credentials), $this->config->validFields)) {
-			throw AuthException::forInvalidFields(key($credentials));
+		if (!\in_array(\key($credentials), $this->config->validFields)) {
+			throw AuthException::forInvalidFields(\key($credentials));
 		}
 
 		// Can we find a user with those credentials?
 		$user = $this->userModel->fetchByCredentials($credentials);
 
-		if (empty($user) || !is_a($user, $this->userType)) {
+		if (empty($user) || !\is_a($user, $this->userType)) {
 			$this->error = lang('Auth.badAttempt');
 
 			return false;
 		}
 
 		// Now, try matching the passwords.
-		$result = password_verify(base64_encode(hash('sha384', $password, true)), $user->getPassword());
+		$result = \password_verify(\base64_encode(\hash('sha384', $password, true)), $user->getPassword());
 
 		if (!$result) {
 			$this->error = lang('Auth.invalidPassword');
@@ -232,7 +232,7 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 		// This would be due to the hash algorithm or hash
 		// cost changing since the last time that a user
 		// logged in.
-		if (password_needs_rehash($user->getPassword(), $this->config->hashAlgorithm)) {
+		if (\password_needs_rehash($user->getPassword(), $this->config->hashAlgorithm)) {
 			$user->setPassword($password);
 			$this->userModel->save($user->getUserId(), $user);
 		}
@@ -294,7 +294,7 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 		// We'll give a 20% chance to need to do a purge since we
 		// don't need to purge THAT often, it's just a maintenance issue.
 		// to keep the table from getting out of control.
-		if (mt_rand(1, 100) < 20) {
+		if (\mt_rand(1, 100) < 20) {
 			$this->tokenModel->purgeExpiredTokens();
 		}
 
@@ -314,7 +314,7 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 	public function isLoggedIn(): bool
 	{
 		// On the off chance
-		if (is_a($this->user, $this->userType)) {
+		if (\is_a($this->user, $this->userType)) {
 			return true;
 		}
 
@@ -322,7 +322,7 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 			// Store our current user object
 			$this->user = $this->userModel->fetch($userID);
 
-			return is_a($this->user, $this->userType);
+			return \is_a($this->user, $this->userType);
 		}
 
 		return false;
@@ -401,14 +401,14 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 	 */
 	public function rememberUser(int $userID): void
 	{
-		$selector = bin2hex(random_bytes(12));
-		$validator = bin2hex(random_bytes(20));
-		$expires = date('Y-m-d H:i:s', time() + $this->config->rememberLength);
+		$selector = \bin2hex(\random_bytes(12));
+		$validator = \bin2hex(\random_bytes(20));
+		$expires = \date('Y-m-d H:i:s', \time() + $this->config->rememberLength);
 
 		$token = $selector . ':' . $validator;
 
 		// Store it in the database
-		$this->tokenModel->rememberUser($userID, $selector, hash('sha256', $validator), $expires);
+		$this->tokenModel->rememberUser($userID, $selector, \hash('sha256', $validator), $expires);
 
 		// Save it to the user's browser in a cookie.
 		$appConfig = config(AppConfig::class);
@@ -449,7 +449,7 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 		}
 
 		// Update the validator in the database and the session
-		$validator = bin2hex(random_bytes(20));
+		$validator = \bin2hex(\random_bytes(20));
 
 		$this->tokenModel->updateValidator($selector, $validator);
 

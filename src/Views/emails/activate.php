@@ -5,7 +5,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('body') ?>
-<p><?= lang('Auth.email.activate.whatIsThis', [parse_url(base_url())['host']]) ?></p>
+<p><?= lang('Auth.email.activate.whatIsThis', [\parse_url(base_url())['host']]) ?></p>
 <p><?= lang('Auth.email.activate.whatToDo') ?></p>
 <p><a href="<?= base_url(route_to('activate-account')) . '?token=' . $hash ?>"><?= lang('Auth.email.activate.target') ?></a></p>
 <?= $this->endSection() ?>

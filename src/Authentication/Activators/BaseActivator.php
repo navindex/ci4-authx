@@ -53,6 +53,6 @@ abstract class BaseActivator
 	 */
 	public function getSettings(): ?object
 	{
-		return (object) $this->config->activators[get_class($this)];
+		return (object) $this->config->activators[\get_class($this)];
 	}
 }

@@ -1,78 +1,84 @@
 <?php
 
-use Mockery as m;
-use Navindex\Auth\Config\Auth;
-use Navindex\Auth\Entities\User;
-use Navindex\Auth\Config\Services;
-use Navindex\Auth\Models\UserModel;
 use CodeIgniter\Test\CIUnitTestCase;
+use Mockery as m;
 use Navindex\Auth\Authentication\LocalAuthenticator;
+use Navindex\Auth\Config\Auth;
+use Navindex\Auth\Config\Services;
+use Navindex\Auth\Entities\User;
+use Navindex\Auth\Models\UserModel;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class LocalAuthenticateAttemptTest extends CIUnitTestCase
 {
-    /**
-     * @var UserModel
-     */
-    protected $userModel;
-    /**
-     * @var LocalAuthenticator
-     */
-    protected $auth;
-    /**
-     * @var \CodeIgniter\HTTP\IncomingRequest
-     */
-    protected $request;
+	/**
+	 * @var UserModel
+	 */
+	protected $userModel;
 
-    public function setUp(): void
-    {
-        parent::setUp();
+	/**
+	 * @var LocalAuthenticator
+	 */
+	protected $auth;
 
-        $this->userModel = m::mock(UserModel::class);
-        $this->auth = m::mock('Navindex\Auth\Authentication\LocalAuthenticator[recordLoginAttempt,login,rememberUser,validate]', [new Auth()]);
-        $this->auth->setUserModel($this->userModel);
+	/**
+	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 */
+	protected $request;
 
-        $this->request = m::mock('CodeIgniter\HTTP\IncomingRequest');
-        Services::injectMock('CodeIgniter\HTTP\IncomingRequest', $this->request);
-    }
+	public function setUp(): void
+	{
+		parent::setUp();
 
-    public function tearDown(): void
-    {
-        m::close();
-        parent::tearDown();
-    }
+		$this->userModel = m::mock(UserModel::class);
+		$this->auth = m::mock('Navindex\Auth\Authentication\LocalAuthenticator[recordLoginAttempt,login,rememberUser,validate]', [new Auth()]);
+		$this->auth->setUserModel($this->userModel);
 
-    public function testLoginInvalidUser()
-    {
-        $credentials = [
-            'email' => 'joe@example.com',
-            'password' => 'secret'
-        ];
+		$this->request = m::mock('CodeIgniter\HTTP\IncomingRequest');
+		Services::injectMock('CodeIgniter\HTTP\IncomingRequest', $this->request);
+	}
 
-        $this->auth->shouldReceive('validate')->once()->with(\Mockery::subset($credentials), true)->andReturn(false);
-        $this->auth->shouldReceive('recordLoginAttempt')->once()->with($credentials['email'], '0.0.0.0', null, false);
+	public function tearDown(): void
+	{
+		m::close();
+		parent::tearDown();
+	}
 
-        $result = $this->auth->attempt($credentials, false);
+	public function testLoginInvalidUser()
+	{
+		$credentials = [
+			'email'    => 'joe@example.com',
+			'password' => 'secret',
+		];
 
-        $this->assertFalse($result);
-        $this->assertNull($this->auth->user());
-    }
+		$this->auth->shouldReceive('validate')->once()->with(\Mockery::subset($credentials), true)->andReturn(false);
+		$this->auth->shouldReceive('recordLoginAttempt')->once()->with($credentials['email'], '0.0.0.0', null, false);
 
-    public function testLoginSuccessRemember()
-    {
-        $credentials = [
-            'email' => 'joe@example.com',
-            'password' => 'secret'
-        ];
+		$result = $this->auth->attempt($credentials, false);
 
-        $user = new User();
-        $user->id = 5;
-        $user->active = true;
+		$this->assertFalse($result);
+		$this->assertNull($this->auth->user());
+	}
 
-        $this->auth->shouldReceive('validate')->once()->with(\Mockery::subset($credentials), true)->andReturn($user);
-        $this->auth->shouldReceive('login')->once()->andReturn(true);
+	public function testLoginSuccessRemember()
+	{
+		$credentials = [
+			'email'    => 'joe@example.com',
+			'password' => 'secret',
+		];
 
-        $result = $this->auth->attempt($credentials, true);
+		$user = new User();
+		$user->id = 5;
+		$user->active = true;
 
-        $this->assertTrue($result);
-    }
+		$this->auth->shouldReceive('validate')->once()->with(\Mockery::subset($credentials), true)->andReturn($user);
+		$this->auth->shouldReceive('login')->once()->andReturn(true);
+
+		$result = $this->auth->attempt($credentials, true);
+
+		$this->assertTrue($result);
+	}
 }

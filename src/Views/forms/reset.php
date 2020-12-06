@@ -91,9 +91,9 @@
 	]) ?>
 <?php endif ?>
 <?= form_button([
-	'name'  => 'submit',
-	'type'  => 'submit',
-	'class' => 'item g-recaptcha',
-], lang('Auth.form.reset.action')) ?>
+		'name'  => 'submit',
+		'type'  => 'submit',
+		'class' => 'item g-recaptcha',
+	], lang('Auth.form.reset.action')) ?>
 <?= form_close() ?>
 <?= $this->endSection() ?>

@@ -33,7 +33,7 @@ class Rules
 	{
 		$checker = service('passwords');
 
-		if (function_exists('user') && user()) {
+		if (\function_exists('user') && user()) {
 			$user = user();
 		} else {
 			$user = empty($data) ? $this->buildUserFromRequest() : $this->buildUserFromData($data);
@@ -63,7 +63,7 @@ class Rules
 	{
 		$fields = $this->prepareValidFields();
 		$data = service('request')->getPost($fields);
-		$userClass = config(Auth::class)->rules[get_class($this)]['user'];
+		$userClass = config(Auth::class)->rules[\get_class($this)]['user'];
 
 		return new $userClass($data);
 	}
@@ -80,8 +80,8 @@ class Rules
 	protected function buildUserFromData(array $data = []): object
 	{
 		$fields = $this->prepareValidFields();
-		$data = array_intersect_key($data, array_fill_keys($fields, null));
-		$userClass = config(Auth::class)->rules[get_class($this)]['user'];
+		$data = \array_intersect_key($data, \array_fill_keys($fields, null));
+		$userClass = config(Auth::class)->rules[\get_class($this)]['user'];
 
 		return new $userClass($data);
 	}
@@ -96,7 +96,7 @@ class Rules
 	protected function prepareValidFields(): array
 	{
 		$config = config(Auth::class);
-		$fields = array_merge($config->validFields, $config->personalFields);
+		$fields = \array_merge($config->validFields, $config->personalFields);
 		$fields[] = 'password';
 
 		return $fields;

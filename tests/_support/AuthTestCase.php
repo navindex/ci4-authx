@@ -3,18 +3,22 @@
 namespace ModuleTests\Support;
 
 use CodeIgniter\Session\Handlers\ArrayHandler;
+use CodeIgniter\Test\Mock\MockSession;
 use Navindex\Auth\Authorization\GroupModel;
 use Navindex\Auth\Authorization\PermissionModel;
 use Navindex\Auth\Entities\User;
 use Navindex\Auth\Models\UserModel;
-use CodeIgniter\Test\Mock\MockSession;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class AuthTestCase extends \CodeIgniter\Test\CIDatabaseTestCase
 {
 	/**
 	 * Should the database be refreshed before each test?
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $refresh = true;
 
@@ -75,7 +79,6 @@ class AuthTestCase extends \CodeIgniter\Test\CIDatabaseTestCase
 
 	/**
 	 * Pre-loads the mock session driver into $this->session.
-	 *
 	 */
 	protected function mockSession()
 	{
@@ -96,11 +99,11 @@ class AuthTestCase extends \CodeIgniter\Test\CIDatabaseTestCase
 	protected function createUser(array $info = [])
 	{
 		$defaults = [
-			'email' => 'fred@example.com',
+			'email'    => 'fred@example.com',
 			'username' => 'Fred',
-			'password' => 'secret'
+			'password' => 'secret',
 		];
-		$info = array_merge($defaults, $info);
+		$info = \array_merge($defaults, $info);
 		$user = new User($info);
 
 		$userId = $this->users->insert($user);
@@ -113,7 +116,7 @@ class AuthTestCase extends \CodeIgniter\Test\CIDatabaseTestCase
 	}
 
 	/**
-	 * Creates a group on the fly
+	 * Creates a group on the fly.
 	 *
 	 * @param array $info
 	 *
@@ -122,10 +125,10 @@ class AuthTestCase extends \CodeIgniter\Test\CIDatabaseTestCase
 	protected function createGroup(array $info = [])
 	{
 		$defaults = [
-			'name' => $this->faker->word,
-			'description' => $this->faker->sentence
+			'name'        => $this->faker->word,
+			'description' => $this->faker->sentence,
 		];
-		$info = array_merge($defaults, $info);
+		$info = \array_merge($defaults, $info);
 
 		$this->db->table('auth_groups')->insert($info);
 
@@ -142,10 +145,10 @@ class AuthTestCase extends \CodeIgniter\Test\CIDatabaseTestCase
 	protected function createPermission(array $info = [])
 	{
 		$defaults = [
-			'name' => $this->faker->word,
-			'description' => $this->faker->sentence
+			'name'        => $this->faker->word,
+			'description' => $this->faker->sentence,
 		];
-		$info = array_merge($defaults, $info);
+		$info = \array_merge($defaults, $info);
 
 		$this->db->table('auth_permissions')->insert($info);
 

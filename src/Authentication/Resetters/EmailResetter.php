@@ -42,7 +42,8 @@ class EmailResetter extends BaseResetter implements ResetterInterface
 			->setSubject(lang('Auth.email.forgot.subject'))
 			->setMessage(view($this->config->views['emailForgot'], $data))
 			->setMailType('html')
-			->send();
+			->send()
+		;
 
 		if (!$sent) {
 			$this->error = lang('Auth.error.resetSendFailed', [$user->getEmail()]);

@@ -7,7 +7,7 @@ class BaseAuthorisation
 	/**
 	 * Error message(s).
 	 *
-	 * @var string|array
+	 * @var array|string
 	 */
 	protected $error;
 
@@ -16,7 +16,7 @@ class BaseAuthorisation
 	/**
 	 * Returns the current error.
 	 *
-	 * @return null|string|array Error message(s) or null
+	 * @return null|array|string Error message(s) or null
 	 */
 	public function error()
 	{

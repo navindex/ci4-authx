@@ -1,49 +1,53 @@
 <?php
 
+use ModuleTests\Support\AuthTestCase;
 use Navindex\Auth\Authorization\PermissionModel;
 use Navindex\Auth\Entities\User;
-use ModuleTests\Support\AuthTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class UserEntityTest extends AuthTestCase
 {
-    /**
-     * @var User
-     */
-    protected $user;
+	/**
+	 * @var User
+	 */
+	protected $user;
 
-    public function setUp(): void
-    {
-        \Config\Services::reset();
+	public function setUp(): void
+	{
+		\Config\Services::reset();
 
-        parent::setUp();
+		parent::setUp();
 
-        // Don't worry about default groups for this...
-        $config = new \Navindex\Auth\Config\Auth();
-        $config->defaultGroup = 'Administrators';
-        \CodeIgniter\Config\Config::injectMock('Auth', $config);
-    }
+		// Don't worry about default groups for this...
+		$config = new \Navindex\Auth\Config\Auth();
+		$config->defaultGroup = 'Administrators';
+		\CodeIgniter\Config\Config::injectMock('Auth', $config);
+	}
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Users must be created before getting permissions.
-     */
-    public function testGetPermissionsNotSaved()
-    {
-        $user = new User();
+	/**
+	 * @expectedException \RuntimeException
+	 * @expectedExceptionMessage Users must be created before getting permissions.
+	 */
+	public function testGetPermissionsNotSaved()
+	{
+		$user = new User();
 
-        $this->assertEmpty($user->getPermissions());
-    }
+		$this->assertEmpty($user->getPermissions());
+	}
 
-    public function testGetPermissionSuccess()
-    {
-        $user = $this->createUser();
-        $perm = $this->createPermission();
-        $model = new PermissionModel();
+	public function testGetPermissionSuccess()
+	{
+		$user = $this->createUser();
+		$perm = $this->createPermission();
+		$model = new PermissionModel();
 
-        $this->assertEmpty($user->getPermissions());
+		$this->assertEmpty($user->getPermissions());
 
-        $model->addPermissionToUser($perm->id, $user->id);
+		$model->addPermissionToUser($perm->id, $user->id);
 
-        $this->assertTrue(in_array($perm->name, $user->getPermissions()));
-    }
+		$this->assertTrue(\in_array($perm->name, $user->getPermissions()));
+	}
 }

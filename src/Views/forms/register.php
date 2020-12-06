@@ -90,10 +90,10 @@
 	]) ?>
 <?php endif ?>
 <?= form_button([
-	'name'  => 'submit',
-	'type'  => 'submit',
-	'class' => 'item g-recaptcha',
-], lang('Auth.form.register.action')) ?>
+		'name'  => 'submit',
+		'type'  => 'submit',
+		'class' => 'item g-recaptcha',
+	], lang('Auth.form.register.action')) ?>
 <ul class="item">
 	<li><?= lang('Auth.form.alreadyRegistered') ?></li>
 	<li><?= anchor(route_to('login'), lang('Auth.form.signIn')) ?></li>

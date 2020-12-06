@@ -2,9 +2,9 @@
 
 namespace Navindex\Auth\Authentication\Validators;
 
-use Navindex\Auth\Exceptions\AuthException;
 use Navindex\Auth\Authentication\Validators\BaseValidator;
 use Navindex\Auth\Authentication\Validators\ValidatorInterface;
+use Navindex\Auth\Exceptions\AuthException;
 
 /**
  * Class CompositionValidator.
@@ -35,7 +35,7 @@ class CompositionValidator extends BaseValidator implements ValidatorInterface
 			throw AuthException::forUnsetPasswordLength();
 		}
 
-		$passed = strlen($password) >= $this->config->minimumPasswordLength;
+		$passed = \strlen($password) >= $this->config->minimumPasswordLength;
 
 		if (!$passed) {
 			$this->error = lang('Auth.errorPasswordLength', [$this->config->minimumPasswordLength]);

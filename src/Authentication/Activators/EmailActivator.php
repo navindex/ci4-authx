@@ -42,7 +42,8 @@ class EmailActivator extends BaseActivator implements ActivatorInterface
 			->setSubject(lang('Auth.email.activate.subject'))
 			->setMessage(view($this->config->views['emailActivate'], $data))
 			->setMailType('html')
-			->send();
+			->send()
+		;
 
 		if (!$sent) {
 			$this->error = lang('Auth.error.activationSendFailed', [$user->getEmail()]);

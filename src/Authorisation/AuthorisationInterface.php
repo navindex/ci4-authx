@@ -7,7 +7,7 @@ interface AuthorisationInterface
 	/**
 	 * Returns the latest error string.
 	 *
-	 * @return null|string|array Error message(s) or null
+	 * @return null|array|string Error message(s) or null
 	 */
 	public function error();
 
@@ -23,7 +23,7 @@ interface AuthorisationInterface
 	 * user must belong to ONE of. (It's an OR check not an AND check)
 	 *
 	 * @param int|string       $user  User ID or name
-	 * @param int|string|array $roles Role ID, role name or an array of roles
+	 * @param array|int|string $roles Role ID, role name or an array of roles
 	 *
 	 * @return bool True if the user has any of the roles, false otherwise
 	 */

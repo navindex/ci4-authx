@@ -2,8 +2,8 @@
 
 namespace Navindex\Auth\Authentication\Validators;
 
-use Navindex\Auth\Exceptions\AuthException;
 use Navindex\Auth\Config\Auth;
+use Navindex\Auth\Exceptions\AuthException;
 
 class Validator
 {
@@ -46,11 +46,11 @@ class Validator
 	 */
 	public function check(string $password, object $user = null): bool
 	{
-		if (is_null($user)) {
+		if (\is_null($user)) {
 			throw AuthException::forNoEntityProvided();
 		}
 
-		$password = trim($password);
+		$password = \trim($password);
 
 		if (empty($password)) {
 			$this->error = lang('Auth.errorPasswordEmpty');

@@ -19,8 +19,8 @@ class UserFaker extends UserModel
 	{
 		return new User([
 			'email'    => $faker->email,
-			'username' => implode('_', $faker->words),
-			'password' => bin2hex(random_bytes(16)),
+			'username' => \implode('_', $faker->words),
+			'password' => \bin2hex(\random_bytes(16)),
 		]);
 	}
 }

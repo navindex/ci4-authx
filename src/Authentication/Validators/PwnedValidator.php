@@ -2,10 +2,10 @@
 
 namespace Navindex\Auth\Authentication\Validators;
 
-use Navindex\Auth\Exceptions\AuthException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Navindex\Auth\Authentication\Validators\BaseValidator;
 use Navindex\Auth\Authentication\Validators\ValidatorInterface;
+use Navindex\Auth\Exceptions\AuthException;
 
 /**
  * Class PwnedValidator.
@@ -33,9 +33,9 @@ class PwnedValidator extends BaseValidator implements ValidatorInterface
 	 */
 	public function check(string $password, object $user = null): bool
 	{
-		$hashedPword = strtoupper(sha1($password));
-		$rangeHash = substr($hashedPword, 0, 5);
-		$searchHash = substr($hashedPword, 5);
+		$hashedPword = \strtoupper(\sha1($password));
+		$rangeHash = \substr($hashedPword, 0, 5);
+		$searchHash = \substr($hashedPword, 5);
 
 		try {
 			$client = service('curlrequest', ['base_uri' => 'https://api.pwnedpasswords.com/']);
@@ -52,18 +52,18 @@ class PwnedValidator extends BaseValidator implements ValidatorInterface
 		}
 
 		$range = $response->getBody();
-		$startPos = strpos($range, $searchHash);
+		$startPos = \strpos($range, $searchHash);
 		if (false === $startPos) {
 			return true;
 		}
 
 		$startPos += 36; // right after the delimiter (:)
-		$endPos = strpos($range, "\r\n", $startPos);
+		$endPos = \strpos($range, "\r\n", $startPos);
 		if (false !== $endPos) {
-			$hits = (int) substr($range, $startPos, $endPos - $startPos);
+			$hits = (int) \substr($range, $startPos, $endPos - $startPos);
 		} else {
 			// match is the last item in the range which does not end with "\r\n"
-			$hits = (int) substr($range, $startPos);
+			$hits = (int) \substr($range, $startPos);
 		}
 
 		$wording = $hits > 1 ? lang('Auth.databases') : lang('Auth.database');

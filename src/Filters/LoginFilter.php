@@ -2,10 +2,10 @@
 
 namespace Navindex\Auth\Filters;
 
-use Config\Services;
+use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Filters\FilterInterface;
+use Config\Services;
 
 class LoginFilter implements FilterInterface
 {
@@ -20,33 +20,32 @@ class LoginFilter implements FilterInterface
 	 * redirects, etc.
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
-	 * @param array|null                         $params
+	 * @param null|array                         $params
 	 *
 	 * @return mixed
 	 */
 	public function before(RequestInterface $request, $params = null)
 	{
-		if (! function_exists('logged_in'))
-		{
+		if (!\function_exists('logged_in')) {
 			helper('auth');
 		}
 
-		$current = (string)current_url(true)
+		$current = (string) current_url(true)
 			->setHost('')
 			->setScheme('')
-			->stripQuery('token');
+			->stripQuery('token')
+		;
 
 		// Make sure this isn't already a login route
-		if (in_array((string)$current, [route_to('login'), route_to('forgot'), route_to('reset-password'), route_to('register'), route_to('activate-account')]))
-		{
+		if (\in_array((string) $current, [route_to('login'), route_to('forgot'), route_to('reset-password'), route_to('register'), route_to('activate-account')])) {
 			return;
 		}
 
 		// if no user is logged in then send to the login form
 		$authenticate = Services::authentication();
-		if (! $authenticate->check())
-		{
+		if (!$authenticate->check()) {
 			session()->set('redirect_url', current_url());
+
 			return redirect('login');
 		}
 	}
@@ -61,13 +60,10 @@ class LoginFilter implements FilterInterface
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface  $request
 	 * @param \CodeIgniter\HTTP\ResponseInterface $response
-	 * @param array|null                          $arguments
-	 *
-	 * @return void
+	 * @param null|array                          $arguments
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
-
 	}
 
 	//--------------------------------------------------------------------

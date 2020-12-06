@@ -2,12 +2,12 @@
 
 namespace Navindex\Auth\Authorisation;
 
-use Navindex\Auth\Authorisation\BaseAuthorisation;
-use Navindex\Auth\Authorisation\AuthorisationInterface;
 use CodeIgniter\Events\Events;
-use Navindex\Auth\Models\PermissionModelInterface;
-use Navindex\Auth\Models\RoleModelInterface;
-use Navindex\Auth\Models\UserModelInterface;
+use Navindex\Auth\Authorisation\AuthorisationInterface;
+use Navindex\Auth\Authorisation\BaseAuthorisation;
+use Navindex\Auth\Models\Interfaces\PermissionModelInterface;
+use Navindex\Auth\Models\Interfaces\RoleModelInterface;
+use Navindex\Auth\Models\Interfaces\UserModelInterface;
 
 class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterface
 {
@@ -69,17 +69,17 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 * user must belong to ONE of. (It's an OR check not an AND check.)
 	 *
 	 * @param int|string       $user  User ID or name
-	 * @param int|string|array $roles Role ID, role name or an array of roles
+	 * @param array|int|string $roles Role ID, role name or an array of roles
 	 *
 	 * @return bool True if the user has any of the roles, false otherwise
 	 */
 	public function hasRole($user, $roles): bool
 	{
-		if (!is_array($roles)) {
+		if (!\is_array($roles)) {
 			$roles = [$roles];
 		}
 
-		if (empty($user) || (!is_string($user) && !is_numeric($user))) {
+		if (empty($user) || (!\is_string($user) && !\is_numeric($user))) {
 			return false;
 		}
 
@@ -90,15 +90,15 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 		}
 
 		foreach ($roles as $role) {
-			if (is_numeric($role)) {
-				$ids = array_column($userRoles, 'id');
-				if (in_array($role, $ids)) {
+			if (\is_numeric($role)) {
+				$ids = \array_column($userRoles, 'id');
+				if (\in_array($role, $ids)) {
 					return true;
 				}
-			} else if (is_string($role)) {
-				$names = array_column($userRoles, 'name');
+			} elseif (\is_string($role)) {
+				$names = \array_column($userRoles, 'name');
 
-				if (in_array($role, $names)) {
+				if (\in_array($role, $names)) {
 					return true;
 				}
 			}
@@ -121,22 +121,22 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 */
 	public function hasPermission($user, $permission, bool $direct = false): bool
 	{
-		if (empty($permission) || (!is_string($permission) && !is_numeric($permission))) {
+		if (empty($permission) || (!\is_string($permission) && !\is_numeric($permission))) {
 			return false;
 		}
 
-		if (empty($user) || (!is_string($user) && !is_numeric($user))) {
+		if (empty($user) || (!\is_string($user) && !\is_numeric($user))) {
 			return false;
 		}
 
 		// Get the Permission ID
 		$permissionId = $this->permissionModel->getID($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
-		return $this->userModel->hasPermission($userId, $permissionId, $direct);
+		return $this->userModel->hasPermission($user, $permissionId, $direct);
 	}
 
 	//--------------------------------------------------------------------
@@ -144,18 +144,18 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	/**
 	 * Adds a role to the user.
 	 *
-	 * @param int        $userid User ID
-	 * @param int|string $role   Role ID or name
+	 * @param int|string $user User ID or name
+	 * @param int|string $role Role ID or name
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */
-	public function addUserRole(int $userid, $role): bool
+	public function addUserRole($user, $role): bool
 	{
-		if (empty($userid) || !is_numeric($userid)) {
+		if (empty($user) || !\is_numeric($user)) {
 			return false;
 		}
 
-		if (empty($role) || (!is_numeric($role) && !is_string($role))) {
+		if (empty($role) || (!\is_numeric($role) && !\is_string($role))) {
 			return false;
 		}
 
@@ -165,7 +165,7 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 			return false;
 		}
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -185,24 +185,24 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	/**
 	 * Removes a user's role.
 	 *
-	 * @param int        $userid User ID
+	 * @param int|string $user User ID or name
 	 * @param int|string $role   Role ID or name
 	 *
 	 * @return bool True is the user has the permission, false otherwise
 	 */
-	public function removeUserRole(int $userId, $role): bool
+	public function removeUserRole($user, $role): bool
 	{
-		if (empty($userId) || !is_numeric($userId)) {
+		if (empty($user) || !\is_numeric($user)) {
 			return false;
 		}
 
-		if (empty($role) || (!is_numeric($role) && !is_string($role))) {
+		if (empty($role) || (!\is_numeric($role) && !\is_string($role))) {
 			return false;
 		}
 
 		$roleId = $this->roleModel->getID($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -236,7 +236,7 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 		$roleId = $this->roleModel->getID($role);
 		$permissionId = $this->permissionModel->getID($permission);
 
-		if (!is_numeric($roleId) || !is_numeric($permissionId)) {
+		if (!\is_numeric($roleId) || !\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -259,12 +259,12 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 *
 	 * @return bool True is the user has the permission, false otherwise
 	 */
-	public function removeRolePermission($permission, $role)
+	public function removeRolePermission($role, $permission): bool
 	{
 		$roleId = $this->roleModel->getID($role);
 		$permissionId = $this->permissionModel->getID($permission);
 
-		if (!is_numeric($roleId) || !is_numeric($permissionId)) {
+		if (!\is_numeric($roleId) || !\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -287,13 +287,13 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 * @param int|string $permission
 	 * @param int        $userId
 	 *
-	 * @return int|bool
+	 * @return bool|int
 	 */
 	public function addPermissionToUser($permission, int $userId)
 	{
-		$permissionId = $this->getPermissionID($permission);
+		$permissionId = $this->permissionModel->getID($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return null;
 		}
 
@@ -305,12 +305,13 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 
 		if (!$user) {
 			$this->error = lang('Auth.userNotFound', [$userId]);
+
 			return false;
 		}
 
 		$permissions = $user->getPermissions();
 
-		if (!in_array($permissionId, $permissions)) {
+		if (!\in_array($permissionId, $permissions)) {
 			$this->permissionModel->addPermissionToUser($permissionId, $user->id);
 		}
 
@@ -327,23 +328,23 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 * inherited based on groups they belong to.
 	 *
 	 * @param int/string $permission
-	 * @param int $userId
+	 * @param int        $userId
 	 *
-	 * @return bool|mixed|null
+	 * @return null|bool|mixed
 	 */
 	public function removePermissionFromUser($permission, int $userId)
 	{
-		$permissionId = $this->getPermissionID($permission);
+		$permissionId = $this->permissionModel->getID($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
-		if (empty($userId) || !is_numeric($userId)) {
+		if (empty($userId) || !\is_numeric($userId)) {
 			return null;
 		}
 
-		$userId = (int)$userId;
+		$userId = (int) $userId;
 
 		if (!Events::trigger('beforeRemovePermissionFromUser', $userId, $permissionId)) {
 			return false;
@@ -359,14 +360,14 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	/**
 	 * Grabs the details about a single role.
 	 *
-	 * @param $role
+	 * @param int|string $role Role ID or name
 	 *
-	 * @return object|null
+	 * @return null|object Role object or null
 	 */
-	public function role($role)
+	public function role($role): ?object
 	{
-		if (is_numeric($role)) {
-			return $this->roleModel->find((int)$role);
+		if (\is_numeric($role)) {
+			return $this->roleModel->find((int) $role);
 		}
 
 		return $this->roleModel->where('name', $role)->first();
@@ -392,30 +393,31 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 * @param string $name        Role name
 	 * @param string $description Role description
 	 *
-	 * @return int|bool Role ID or false
+	 * @return bool|int Role ID or false
 	 */
 	public function createRole(string $name, string $description)
 	{
 		$id = $this->roleModel->addRole($name, $description);
 
-		if (!is_numeric($id)) {
+		if (!\is_numeric($id)) {
 			$this->error = $this->roleModel->errors();
+
 			return false;
 		}
 
-		return (int)$id;
+		return (int) $id;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Deletes a single role.
+	 * Deletes a single role and removes that role from all users.
 	 *
-	 * @param int $roleId
+	 * @param int|string $role Role ID or name
 	 *
-	 * @return bool
+	 * @return bool True if the operation was successful, false otherwise
 	 */
-	public function deleteRole(int $roleId)
+	public function deleteRole($role): bool
 	{
 		// Remove all permissions of the role
 		$this->roleModel->removeRolePermissions($roleId);
@@ -445,7 +447,7 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 */
 	public function updateRole(int $id, string $name, string $description)
 	{
-		$description = $description ?? ucfirst($name);
+		$description = $description ?? \ucfirst($name);
 
 		if (!$this->roleModel->updateRole($id, $name, $description)) {
 			$this->error = $this->roleModel->errors();
@@ -465,7 +467,7 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 *
 	 * @param int|string $permission Permission ID or name
 	 *
-	 * @return object|null Permission object or null
+	 * @return null|object Permission object or null
 	 */
 	public function permission($permission): ?object
 	{
@@ -492,18 +494,19 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 * @param string $name        Permission name
 	 * @param string $description Permission description
 	 *
-	 * @return int|bool Permission ID or false
+	 * @return bool|int Permission ID or false
 	 */
 	public function createPermission(string $name, string $description)
 	{
 		$id = $this->permissionModel->addPermission($name, $description);
 
-		if (!is_numeric($id)) {
+		if (!\is_numeric($id)) {
 			$this->error = $this->permissionModel->errors();
+
 			return false;
 		}
 
-		return (int)$id;
+		return (int) $id;
 	}
 
 	//--------------------------------------------------------------------
@@ -545,7 +548,7 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 */
 	public function updatePermission(int $id, string $name, string $description): bool
 	{
-		$description = $description ?? ucfirst($name);
+		$description = $description ?? \ucfirst($name);
 
 		if (!$this->permissionModel->updatePermission($id, $name, $description)) {
 			$this->error = $this->permissionModel->errors();

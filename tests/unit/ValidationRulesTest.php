@@ -5,151 +5,155 @@ use CodeIgniter\Validation\Validation;
 use Config\Services;
 use Navindex\Auth\Authentication\Passwords\ValidationRules;
 
-
+/**
+ * @internal
+ * @coversNothing
+ */
 class ValidationRulesTest extends CIUnitTestCase
 {
-    protected $validation;
-    protected $config = [
-        'ruleSets'      => [
-            ValidationRules::class,
-        ],
-    ];
+	protected $validation;
 
-    //--------------------------------------------------------------------
+	protected $config = [
+		'ruleSets'      => [
+			ValidationRules::class,
+		],
+	];
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+	//--------------------------------------------------------------------
 
-        Services::reset(true);
+	protected function setUp(): void
+	{
+		parent::setUp();
 
-        $this->validation = new Validation((object) $this->config, \Config\Services::renderer());
-        $this->validation->reset();
+		Services::reset(true);
 
-        $_REQUEST = [];
-    }
+		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
+		$this->validation->reset();
 
-    //--------------------------------------------------------------------
+		$_REQUEST = [];
+	}
 
-    public function testStrongPasswordLongRule()
-    {
-        $rules = [
-            'password' => 'strong_password[]',
-        ];
+	//--------------------------------------------------------------------
 
-        $data = [
-            'email'    => 'john@smith.com',
-            'password' => '!!!gerard!!!abootylicious',
-        ];
+	public function testStrongPasswordLongRule()
+	{
+		$rules = [
+			'password' => 'strong_password[]',
+		];
 
-        $this->validation->setRules($rules);
+		$data = [
+			'email'    => 'john@smith.com',
+			'password' => '!!!gerard!!!abootylicious',
+		];
 
-        $this->assertTrue($this->validation->run($data));
-    }
+		$this->validation->setRules($rules);
 
-    //--------------------------------------------------------------------
+		$this->assertTrue($this->validation->run($data));
+	}
 
-    public function testStrongPasswordLongRuleWithPostRequest()
-    {
-        $_REQUEST = $data = [
-            'email'    => 'john@smith.com',
-            'password' => '!!!gerard!!!abootylicious',
-        ];
+	//--------------------------------------------------------------------
 
-        $request = service('request');
-        $request->setMethod('post')->setGlobal('post', $data);
+	public function testStrongPasswordLongRuleWithPostRequest()
+	{
+		$_REQUEST = $data = [
+			'email'    => 'john@smith.com',
+			'password' => '!!!gerard!!!abootylicious',
+		];
 
-        $this->validation->setRules([
-            'password' => 'strong_password[]',
-        ]);
+		$request = service('request');
+		$request->setMethod('post')->setGlobal('post', $data);
 
-        $result = $this->validation->withRequest($request)->run();
-        $this->assertTrue($result);
-    }
+		$this->validation->setRules([
+			'password' => 'strong_password[]',
+		]);
 
-    //--------------------------------------------------------------------
+		$result = $this->validation->withRequest($request)->run();
+		$this->assertTrue($result);
+	}
 
-    public function testStrongPasswordLongRuleWithRawInputRequest()
-    {
-        $data = [
-            'email'    => 'john@smith.com',
-            'password' => '!!!gerard!!!abootylicious',
-        ];
+	//--------------------------------------------------------------------
 
-        $request = service('request');
-        $request->setMethod('patch')->setBody(http_build_query($data));
+	public function testStrongPasswordLongRuleWithRawInputRequest()
+	{
+		$data = [
+			'email'    => 'john@smith.com',
+			'password' => '!!!gerard!!!abootylicious',
+		];
 
-        $this->validation->setRules([
-            'password' => 'strong_password[]',
-        ]);
+		$request = service('request');
+		$request->setMethod('patch')->setBody(\http_build_query($data));
 
-        $result = $this->validation->withRequest($request)->run();
-        $this->assertTrue($result);
-    }
+		$this->validation->setRules([
+			'password' => 'strong_password[]',
+		]);
 
-    //--------------------------------------------------------------------
+		$result = $this->validation->withRequest($request)->run();
+		$this->assertTrue($result);
+	}
 
-    public function testStrongPasswordShortRuleWithPostRequest()
-    {
-        $_REQUEST = $data = [
-            'email'    => 'john@smith.com',
-            'password' => '!!!gerard!!!abootylicious',
-        ];
+	//--------------------------------------------------------------------
 
-        $request = service('request');
-        $request->setMethod('post')->setGlobal('post', $data);
+	public function testStrongPasswordShortRuleWithPostRequest()
+	{
+		$_REQUEST = $data = [
+			'email'    => 'john@smith.com',
+			'password' => '!!!gerard!!!abootylicious',
+		];
 
-        $this->validation->setRules([
-            'password' => 'strong_password',
-        ]);
+		$request = service('request');
+		$request->setMethod('post')->setGlobal('post', $data);
 
-        $result = $this->validation->withRequest($request)->run();
-        $this->assertTrue($result);
-    }
+		$this->validation->setRules([
+			'password' => 'strong_password',
+		]);
 
-    //--------------------------------------------------------------------
+		$result = $this->validation->withRequest($request)->run();
+		$this->assertTrue($result);
+	}
 
-    public function testStrongPasswordShortRuleWithErrors()
-    {
-        $_REQUEST = $data = [
-            'email'    => 'john@smith.com',
-            'password' => 'john12345',
-        ];
+	//--------------------------------------------------------------------
 
-        $request = service('request');
-        $request->setMethod('post')->setGlobal('post', $data);
+	public function testStrongPasswordShortRuleWithErrors()
+	{
+		$_REQUEST = $data = [
+			'email'    => 'john@smith.com',
+			'password' => 'john12345',
+		];
 
-        $this->validation->setRules([
-            'password' => 'strong_password',
-        ]);
+		$request = service('request');
+		$request->setMethod('post')->setGlobal('post', $data);
 
-        $result = $this->validation->withRequest($request)->run();
-        $this->assertFalse($result);
-        $this->assertEquals([
-            'password' => 'Passwords cannot contain re-hashed personal information.'
-        ], $this->validation->getErrors());
-    }
+		$this->validation->setRules([
+			'password' => 'strong_password',
+		]);
 
-    //--------------------------------------------------------------------
+		$result = $this->validation->withRequest($request)->run();
+		$this->assertFalse($result);
+		$this->assertEquals([
+			'password' => 'Passwords cannot contain re-hashed personal information.',
+		], $this->validation->getErrors());
+	}
 
-    public function testStrongPasswordLongRuleWithErrors()
-    {
-        $_REQUEST = $data = [
-            'email'    => 'john@smith.com',
-            'password' => 'john12345',
-        ];
+	//--------------------------------------------------------------------
 
-        $request = service('request');
-        $request->setMethod('patch')->setBody(http_build_query($data));
+	public function testStrongPasswordLongRuleWithErrors()
+	{
+		$_REQUEST = $data = [
+			'email'    => 'john@smith.com',
+			'password' => 'john12345',
+		];
 
-        $this->validation->setRules([
-            'password' => 'strong_password[]',
-        ]);
+		$request = service('request');
+		$request->setMethod('patch')->setBody(\http_build_query($data));
 
-        $result = $this->validation->withRequest($request)->run();
-        $this->assertFalse($result);
-        $this->assertEquals([
-            'password' => 'Passwords cannot contain re-hashed personal information.'
-        ], $this->validation->getErrors());
-    }
+		$this->validation->setRules([
+			'password' => 'strong_password[]',
+		]);
+
+		$result = $this->validation->withRequest($request)->run();
+		$this->assertFalse($result);
+		$this->assertEquals([
+			'password' => 'Passwords cannot contain re-hashed personal information.',
+		], $this->validation->getErrors());
+	}
 }

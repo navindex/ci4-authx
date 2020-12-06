@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('logged_in')) {
+if (!\function_exists('logged_in')) {
 	/**
 	 * Checks to see if the user is logged in.
 	 *
@@ -12,7 +12,7 @@ if (!function_exists('logged_in')) {
 	}
 }
 
-if (!function_exists('user')) {
+if (!\function_exists('user')) {
 	/**
 	 * Returns the User instance for the current logged in user.
 	 *
@@ -22,11 +22,12 @@ if (!function_exists('user')) {
 	{
 		$authenticate = service('authentication');
 		$authenticate->check();
+
 		return $authenticate->user();
 	}
 }
 
-if (!function_exists('user_id')) {
+if (!\function_exists('user_id')) {
 	/**
 	 * Returns the User ID for the current logged in user.
 	 *
@@ -36,11 +37,12 @@ if (!function_exists('user_id')) {
 	{
 		$authenticate = service('authentication');
 		$authenticate->check();
+
 		return $authenticate->id();
 	}
 }
 
-if (!function_exists('has_role')) {
+if (!\function_exists('has_role')) {
 	/**
 	 * Ensures that the current user has at least one of the passed in
 	 * roles. The roles can be passed in as either ID's or role names.
@@ -52,7 +54,7 @@ if (!function_exists('has_role')) {
 	 *  has_role('admin');
 	 *  has_role( ['admin', 'moderator'] );
 	 *
-	 * @param int|string|array $roles
+	 * @param array|int|string $roles
 	 *
 	 * @return bool True if the user has any of the roles, false otherwise
 	 */
@@ -69,7 +71,7 @@ if (!function_exists('has_role')) {
 	}
 }
 
-if (!function_exists('has_permission')) {
+if (!\function_exists('has_permission')) {
 	/**
 	 * Ensures that the current user has the passed in permission.
 	 * The permission can be passed in either as an ID or name.

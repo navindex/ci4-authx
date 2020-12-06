@@ -1,148 +1,155 @@
 <?php
 
-use Mockery as m;
-use Navindex\Auth\Config\Services;
-use Navindex\Auth\Models\UserModel;
-use Navindex\Auth\Models\LoginModel;
 use CodeIgniter\Test\CIUnitTestCase;
+use Mockery as m;
 use Navindex\Auth\Authentication\LocalAuthenticator;
+use Navindex\Auth\Config\Services;
+use Navindex\Auth\Models\LoginModel;
+use Navindex\Auth\Models\UserModel;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class LocalAuthenticateValidateTest extends CIUnitTestCase
 {
-    /**
-     * @var UserModel
-     */
-    protected $userModel;
-    /**
-     * @var LoginModel
-     */
-    protected $loginModel;
-    /**
-     * @var LocalAuthenticator
-     */
-    protected $auth;
-    /**
-     * @var \CodeIgniter\HTTP\IncomingRequest
-     */
-    protected $request;
+	/**
+	 * @var UserModel
+	 */
+	protected $userModel;
 
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->userModel = m::mock(UserModel::class);
-        $this->loginModel = m::mock(LoginModel::class);
-        $this->auth = Services::authentication('local', $this->userModel, $this->loginModel, false);
+	/**
+	 * @var LoginModel
+	 */
+	protected $loginModel;
 
-        $this->request = m::mock('CodeIgniter\HTTP\IncomingRequest');
-        Services::injectMock('CodeIgniter\HTTP\IncomingRequest', $this->request);
-    }
+	/**
+	 * @var LocalAuthenticator
+	 */
+	protected $auth;
 
-    public function tearDown(): void
-    {
-        m::close();
-        parent::tearDown();
-    }
+	/**
+	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 */
+	protected $request;
 
-    public function testCannotValidateWithoutPassword()
-    {
-        $this->assertFalse($this->auth->validate([]));
-    }
+	public function setUp(): void
+	{
+		parent::setUp();
+		$this->userModel = m::mock(UserModel::class);
+		$this->loginModel = m::mock(LoginModel::class);
+		$this->auth = Services::authentication('local', $this->userModel, $this->loginModel, false);
 
-    public function testThrowsWithTooManyCredentials()
-    {
-        $this->expectException('\Navindex\Auth\Exceptions\AuthException');
-        $this->expectExceptionMessage('You may only validate against 1 credential other than a password.');
+		$this->request = m::mock('CodeIgniter\HTTP\IncomingRequest');
+		Services::injectMock('CodeIgniter\HTTP\IncomingRequest', $this->request);
+	}
 
-        $this->auth->validate([
-            'password' => 'secret',
-            'email' => 'joe@example.com',
-            'username' => 'fred'
-        ]);
-    }
+	public function tearDown(): void
+	{
+		m::close();
+		parent::tearDown();
+	}
 
-    public function testThrowsWithInvalidFields()
-    {
-        $this->expectException('\Navindex\Auth\Exceptions\AuthException');
-        $this->expectExceptionMessage('The "foo" field cannot be used to validate credentials.');
+	public function testCannotValidateWithoutPassword()
+	{
+		$this->assertFalse($this->auth->validate([]));
+	}
 
-        $this->auth->validate([
-            'password' => 'secret',
-            'foo' => 'bar'
-        ]);
-    }
+	public function testThrowsWithTooManyCredentials()
+	{
+		$this->expectException('\Navindex\Auth\Exceptions\AuthException');
+		$this->expectExceptionMessage('You may only validate against 1 credential other than a password.');
 
-    public function testFailsBadUser()
-    {
-        $this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
-        $this->userModel->shouldReceive('first')->once()->andReturn(null);
+		$this->auth->validate([
+			'password' => 'secret',
+			'email'    => 'joe@example.com',
+			'username' => 'fred',
+		]);
+	}
 
-        $result = $this->auth->validate([
-            'password' => 'secret',
-            'email' => 'joe@example.com'
-        ]);
+	public function testThrowsWithInvalidFields()
+	{
+		$this->expectException('\Navindex\Auth\Exceptions\AuthException');
+		$this->expectExceptionMessage('The "foo" field cannot be used to validate credentials.');
 
-        $this->assertFalse($result);
-        $this->assertEquals(lang('Auth.badAttempt'), $this->auth->error());
-    }
+		$this->auth->validate([
+			'password' => 'secret',
+			'foo'      => 'bar',
+		]);
+	}
 
-    public function testFailsPasswordValidation()
-    {
-        $user = new \Navindex\Auth\Entities\User(['password_hash' => password_hash('nope!', PASSWORD_DEFAULT)]);
+	public function testFailsBadUser()
+	{
+		$this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
+		$this->userModel->shouldReceive('first')->once()->andReturn(null);
 
-        $this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
-        $this->userModel->shouldReceive('first')->once()->andReturn($user);
+		$result = $this->auth->validate([
+			'password' => 'secret',
+			'email'    => 'joe@example.com',
+		]);
 
-        $result = $this->auth->validate([
-            'password' => 'secret',
-            'email' => 'joe@example.com'
-        ]);
+		$this->assertFalse($result);
+		$this->assertEquals(lang('Auth.badAttempt'), $this->auth->error());
+	}
 
-        $this->assertFalse($result);
-        $this->assertEquals(lang('Auth.invalidPassword'), $this->auth->error());
-    }
+	public function testFailsPasswordValidation()
+	{
+		$user = new \Navindex\Auth\Entities\User(['password_hash' => \password_hash('nope!', PASSWORD_DEFAULT)]);
 
-    public function testValidateSuccess()
-    {
-        $user = new \Navindex\Auth\Entities\User(['password' => 'secret']);
+		$this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
+		$this->userModel->shouldReceive('first')->once()->andReturn($user);
 
-        $this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
-        $this->userModel->shouldReceive('first')->once()->andReturn($user);
+		$result = $this->auth->validate([
+			'password' => 'secret',
+			'email'    => 'joe@example.com',
+		]);
 
-        $result = $this->auth->validate([
-            'password' => 'secret',
-            'email' => 'joe@example.com'
-        ]);
+		$this->assertFalse($result);
+		$this->assertEquals(lang('Auth.invalidPassword'), $this->auth->error());
+	}
 
-        $this->assertTrue($result);
-    }
+	public function testValidateSuccess()
+	{
+		$user = new \Navindex\Auth\Entities\User(['password' => 'secret']);
 
-    public function testValidateSuccessReturnsUser()
-    {
-        $user = new \Navindex\Auth\Entities\User(['password' => 'secret']);
+		$this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
+		$this->userModel->shouldReceive('first')->once()->andReturn($user);
 
-        $this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
-        $this->userModel->shouldReceive('first')->once()->andReturn($user);
+		$result = $this->auth->validate([
+			'password' => 'secret',
+			'email'    => 'joe@example.com',
+		]);
 
-        $result = $this->auth->validate([
-            'password' => 'secret',
-            'email' => 'joe@example.com'
-        ], true);
+		$this->assertTrue($result);
+	}
 
-        $this->assertTrue($result instanceof \Navindex\Auth\Entities\User);
-    }
+	public function testValidateSuccessReturnsUser()
+	{
+		$user = new \Navindex\Auth\Entities\User(['password' => 'secret']);
 
-    public function testValidateSuccessReHashPassword()
-    {
-        $user = new \Navindex\Auth\Entities\User(['password' => 'secret']);
+		$this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
+		$this->userModel->shouldReceive('first')->once()->andReturn($user);
 
-        $this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
-        $this->userModel->shouldReceive('first')->once()->andReturn($user);
+		$result = $this->auth->validate([
+			'password' => 'secret',
+			'email'    => 'joe@example.com',
+		], true);
 
-        $result = $this->auth->validate([
-            'password' => 'secret',
-            'email' => 'joe@example.com'
-        ], true);
+		$this->assertTrue($result instanceof \Navindex\Auth\Entities\User);
+	}
 
-        $this->assertTrue($result instanceof \Navindex\Auth\Entities\User);
-    }
+	public function testValidateSuccessReHashPassword()
+	{
+		$user = new \Navindex\Auth\Entities\User(['password' => 'secret']);
+
+		$this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
+		$this->userModel->shouldReceive('first')->once()->andReturn($user);
+
+		$result = $this->auth->validate([
+			'password' => 'secret',
+			'email'    => 'joe@example.com',
+		], true);
+
+		$this->assertTrue($result instanceof \Navindex\Auth\Entities\User);
+	}
 }

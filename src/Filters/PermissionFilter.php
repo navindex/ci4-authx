@@ -2,10 +2,10 @@
 
 namespace Navindex\Auth\Filters;
 
-use Config\Services;
+use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Filters\FilterInterface;
+use Config\Services;
 use Navindex\Auth\Exceptions\PermissionException;
 
 class PermissionFilter implements FilterInterface
@@ -21,28 +21,26 @@ class PermissionFilter implements FilterInterface
 	 * redirects, etc.
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
-	 * @param array|null                         $params
+	 * @param null|array                         $params
 	 *
 	 * @return mixed
 	 */
 	public function before(RequestInterface $request, $params = null)
 	{
-		if (! function_exists('logged_in'))
-		{
+		if (!\function_exists('logged_in')) {
 			helper('auth');
 		}
 
-		if (empty($params))
-		{
+		if (empty($params)) {
 			return;
 		}
 
 		$authenticate = Services::authentication();
 
 		// if no user is logged in then send to the login form
-		if (! $authenticate->check())
-		{
+		if (!$authenticate->check()) {
 			session()->set('redirect_url', current_url());
+
 			return redirect('login');
 		}
 
@@ -50,22 +48,19 @@ class PermissionFilter implements FilterInterface
 		$result = true;
 
 		// Check each requested permission
-		foreach ($params as $permission)
-		{
+		foreach ($params as $permission) {
 			$result = $result && $authorize->hasPermission($permission, $authenticate->id());
 		}
 
-		if (! $result)
-		{
-			if ($authenticate->silent())
-			{
+		if (!$result) {
+			if ($authenticate->silent()) {
 				$redirectURL = session('redirect_url') ?? '/';
 				unset($_SESSION['redirect_url']);
+
 				return redirect()->to($redirectURL)->with('error', lang('Auth.notEnoughPrivilege'));
 			}
-			else {
-				throw new PermissionException(lang('Auth.notEnoughPrivilege'));
-			}
+
+			throw new PermissionException(lang('Auth.notEnoughPrivilege'));
 		}
 	}
 
@@ -79,13 +74,10 @@ class PermissionFilter implements FilterInterface
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface  $request
 	 * @param \CodeIgniter\HTTP\ResponseInterface $response
-	 * @param array|null                          $arguments
-	 *
-	 * @return void
+	 * @param null|array                          $arguments
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
-
 	}
 
 	//--------------------------------------------------------------------

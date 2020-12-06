@@ -5,7 +5,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('body') ?>
-<p><?= lang('Auth.email.forgot.whatIsThis', [parse_url(base_url())['host']]) ?></p>
+<p><?= lang('Auth.email.forgot.whatIsThis', [\parse_url(base_url())['host']]) ?></p>
 <p><?= lang('Auth.email.forgot.whatToDo') ?></p>
 <p><?= lang('Auth.email.forgot.whatToDo') ?></p>
 <p><a href="<?= base_url(route_to('reset-password')) . '?token=' . $hash ?>"><?= lang('Auth.email.forgot.target') ?></a></p>

@@ -69,7 +69,7 @@ class NothingPersonalValidator extends BaseValidator implements ValidatorInterfa
 		if (
 			$password === $userName ||
 			$password === $email ||
-			$password === strrev($userName)
+			$password === \strrev($userName)
 		) {
 			$valid = false;
 		}
@@ -108,19 +108,19 @@ class NothingPersonalValidator extends BaseValidator implements ValidatorInterfa
 			$haystacks = $this->strip_explode($password);
 
 			foreach ($haystacks as $haystack) {
-				if (empty($haystack) || in_array($haystack, $trivial)) {
+				if (empty($haystack) || \in_array($haystack, $trivial)) {
 					continue;  //ignore trivial words
 				}
 
 				foreach ($needles as $needle) {
-					if (empty($needle) || in_array($needle, $trivial)) {
+					if (empty($needle) || \in_array($needle, $trivial)) {
 						continue;
 					}
 
 					// look both ways in case password is subset of needle
 					if (
-						false !== strpos($haystack, $needle) ||
-						false !== strpos($needle, $haystack)
+						false !== \strpos($haystack, $needle) ||
+						false !== \strpos($needle, $haystack)
 					) {
 						$valid = false;
 
@@ -168,7 +168,7 @@ class NothingPersonalValidator extends BaseValidator implements ValidatorInterfa
 		if (!empty($maxSimilarity)) {
 			$userName = \strtolower($user->username);
 
-			similar_text($password, $userName, $similarity);
+			\similar_text($password, $userName, $similarity);
 			if ($similarity >= $maxSimilarity) {
 				$this->error = lang('Auth.errorPasswordTooSimilar');
 				$this->suggestion = lang('Auth.suggestPasswordTooSimilar');
@@ -198,8 +198,8 @@ class NothingPersonalValidator extends BaseValidator implements ValidatorInterfa
 		$parts = \explode(' ', \trim($stripped));
 
 		// If it's not already there put the untouched input at the top of the array
-		if (!in_array($str, $parts)) {
-			array_unshift($parts, $str);
+		if (!\in_array($str, $parts)) {
+			\array_unshift($parts, $str);
 		}
 
 		return $parts;

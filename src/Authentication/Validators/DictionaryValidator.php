@@ -27,11 +27,11 @@ class DictionaryValidator extends BaseValidator implements ValidatorInterface
 	public function check(string $password, object $user = null): bool
 	{
 		// Loop over our file
-		$fp = fopen(__DIR__ . '/_dictionary.txt', 'r');
+		$fp = \fopen(__DIR__ . '/_dictionary.txt', 'r');
 		if ($fp) {
-			while (false !== ($line = fgets($fp, 4096))) {
-				if ($password == trim($line)) {
-					fclose($fp);
+			while (false !== ($line = \fgets($fp, 4096))) {
+				if ($password == \trim($line)) {
+					\fclose($fp);
 
 					$this->error = lang('Auth.errorPasswordCommon');
 					$this->suggestion = lang('Auth.suggestPasswordCommon');
@@ -41,7 +41,7 @@ class DictionaryValidator extends BaseValidator implements ValidatorInterface
 			}
 		}
 
-		fclose($fp);
+		\fclose($fp);
 
 		return true;
 	}

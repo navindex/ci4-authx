@@ -79,10 +79,10 @@
 	]) ?>
 <?php endif ?>
 <?= form_button([
-	'name'  => 'submit',
-	'type'  => 'submit',
-	'class' => 'item g-recaptcha',
-], lang('Auth.form.login.action')) ?>
+		'name'  => 'submit',
+		'type'  => 'submit',
+		'class' => 'item g-recaptcha',
+	], lang('Auth.form.login.action')) ?>
 <ul class="item">
 	<?php if ($auth->allowRegistration) : ?>
 		<li><?= anchor(route_to('register'), lang('Auth.form.needAnAccount')) ?></li>
