@@ -2,7 +2,7 @@
 
 namespace Navindex\Auth\Entities;
 
-use Navindex\Auth\Entities\Base\BaseEntity;
+use Navindex\Auth\Entities\BaseEntity;
 use Navindex\Auth\Models\Lists\UserFullPermissionListModel;
 use Navindex\Auth\Models\Lists\UserRoleListModel;
 use Navindex\Auth\Models\Types\UserStatusModel;

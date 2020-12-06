@@ -2,7 +2,7 @@
 
 namespace Navindex\Auth\Entities;
 
-use Navindex\Auth\Entities\Base\BaseEntity;
+use Navindex\Auth\Entities\BaseEntity;
 
 class UserPermission extends BaseEntity
 {
