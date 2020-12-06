@@ -4,7 +4,7 @@
 
 Flexible Auth package for CodeIgniter 4. It is based on [**Myth:Auth**](https://github.com/lonnieezell/myth-auth) and provides additional customisation flexibility.
 
-**NOTE: This package is not functional yet. Watch this space to check the progress.**
+**NOTE: *This package is not functional yet. Watch this space to check the progress*.**
 
 ## 1. Requirements
 

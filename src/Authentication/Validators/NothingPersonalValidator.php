@@ -41,7 +41,7 @@ class NothingPersonalValidator extends BaseValidator implements ValidatorInterfa
 	 * isNotPersonal().
 	 *
 	 * Looks for personal information in a password. The personal info used
-	 * comes from Myth\Auth\Entities\User properties username and email.
+	 * comes from Navindex\Auth\Entities\User properties username and email.
 	 *
 	 * It is possible to include other fields as information sources.
 	 * For instance, a project might require adding `firstname` and `lastname` properties
@@ -143,7 +143,7 @@ class NothingPersonalValidator extends BaseValidator implements ValidatorInterfa
 
 	/**
 	 * notSimilar() uses $password and $userName to calculate a similarity value.
-	 * Similarity values equal to, or greater than Myth\Auth\Config::maxSimilarity
+	 * Similarity values equal to, or greater than Navindex\Auth\Config::maxSimilarity
 	 * are rejected for being too much alike and false is returned.
 	 * Otherwise, true is returned,.
 	 *

@@ -2,6 +2,9 @@
 
 namespace Navindex\Auth\Entities;
 
+/**
+ * User entity interface.
+ */
 interface UserInterface
 {
 	/**

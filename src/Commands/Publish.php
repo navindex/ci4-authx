@@ -54,7 +54,7 @@ class Publish extends BaseCommand
     ];
 
     /**
-     * The path to Myth\Auth\src directory.
+     * The path to Navindex\Auth\src directory.
      *
      * @var string
      */
@@ -137,7 +137,7 @@ class Publish extends BaseCommand
             $path = "{$this->sourcePath}/Models/{$model}.php";
 
             $content = file_get_contents($path);
-            $content = $this->replaceNamespace($content, 'Myth\Auth\Models', 'Models');
+            $content = $this->replaceNamespace($content, 'Navindex\Auth\Models', 'Models');
 
             $this->writeFile("Models/{$model}.php", $content);
         }
@@ -148,7 +148,7 @@ class Publish extends BaseCommand
         $path = "{$this->sourcePath}/Entities/User.php";
 
         $content = file_get_contents($path);
-        $content = $this->replaceNamespace($content, 'Myth\Auth\Entities', 'Entities');
+        $content = $this->replaceNamespace($content, 'Navindex\Auth\Entities', 'Entities');
 
         $this->writeFile("Entities/User.php", $content);
     }
@@ -158,7 +158,7 @@ class Publish extends BaseCommand
         $path = "{$this->sourcePath}/Controllers/AuthController.php";
 
         $content = file_get_contents($path);
-        $content = $this->replaceNamespace($content, 'Myth\Auth\Controllers', 'Controllers');
+        $content = $this->replaceNamespace($content, 'Navindex\Auth\Controllers', 'Controllers');
 
         $this->writeFile("Controllers/AuthController.php", $content);
     }
@@ -195,7 +195,7 @@ class Publish extends BaseCommand
 		$namespace = defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
 
         $content = file_get_contents($path);
-        $content = str_replace('Myth\Auth\Views', $namespace.'\Auth', $content);
+        $content = str_replace('Navindex\Auth\Views', $namespace . '\Auth', $content);
 
         $this->writeFile("Views/Auth/{$prefix}{$view}", $content);
     }
@@ -209,7 +209,7 @@ class Publish extends BaseCommand
             $path = "{$this->sourcePath}/Filters/{$filter}.php";
 
             $content = file_get_contents($path);
-            $content = $this->replaceNamespace($content, 'Myth\Auth\Filters', 'Filters');
+            $content = $this->replaceNamespace($content, 'Navindex\Auth\Filters', 'Filters');
 
             $this->writeFile("Filters/{$filter}.php", $content);
         }
@@ -222,7 +222,7 @@ class Publish extends BaseCommand
         foreach ($map as $file)
         {
             $content = file_get_contents("{$this->sourcePath}/Database/Migrations/{$file}");
-            $content = $this->replaceNamespace($content, 'Myth\Auth\Database\Migrations', 'Database\Migrations');
+            $content = $this->replaceNamespace($content, 'Navindex\Auth\Database\Migrations', 'Database\Migrations');
 
             $this->writeFile("Database/Migrations/{$file}", $content);
         }
@@ -237,13 +237,13 @@ class Publish extends BaseCommand
         $content = file_get_contents($path);
         $content = str_replace('namespace Navindex\Auth\Config', "namespace Config", $content);
         $content = str_replace("use CodeIgniter\Config\BaseConfig;\n", '', $content);
-        $content = str_replace('extends BaseConfig', "extends \Myth\Auth\Config\Auth", $content);
+        $content = str_replace('extends BaseConfig', "extends \Navindex\Auth\Config\Auth", $content);
 
         // are we also changing the views?
         if ($this->viewsPublished)
         {
             $namespace = defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
-            $content = str_replace('Myth\Auth\Views', $namespace . '\Views', $content);
+            $content = str_replace('Navindex\Auth\Views', $namespace . '\Views', $content);
         }
 
         $this->writeFile("Config/Auth.php", $content);
