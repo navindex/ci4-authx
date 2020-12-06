@@ -138,7 +138,7 @@ To allow a user to remove all login attempts associated with their email address
 Before the system can work, you must tell it which model to use when working with Users.
 
 ```php
-    $auth->useModel( new \Myth\Auth\Models\UserModel() );
+    $auth->useModel( new \Navindex\Auth\Models\UserModel() );
 ```
 
 ## 9. Removing All Login Attempts for A User
@@ -205,7 +205,7 @@ This can be either false or string with a namespaced class name. Using a class n
 class to send an activation message.
 
 ```php
-    public $requireActivation = 'Myth\Auth\Authentication\Activators\EmailActivator';
+    public $requireActivation = 'Navindex\Auth\Authentication\Activators\EmailActivator';
 
 ### auth.userActivators
 This is a list of available activators, along with their optional configuration variables. Class names listed here can be used
@@ -213,7 +213,7 @@ by `requireActivation` config variable.
 
 ```php
     public $userActivators = [
-        'Myth\Auth\Authentication\Activators\EmailActivator' => [
+        'Navindex\Auth\Authentication\Activators\EmailActivator' => [
             'fromEmail' => null,
             'fromName' => null,
         ],
@@ -224,7 +224,7 @@ This can be either false or string with a namespaced class name. Using a class n
  class to send a reset message.
 
 ```php
-    public $activeResetter = 'Myth\Auth\Authentication\Resetters\EmailResetter';
+    public $activeResetter = 'Navindex\Auth\Authentication\Resetters\EmailResetter';
 
 ### auth.userResetters
 This is a list of available resetters, along with their optional configuration variables. Class names listed here can be used
@@ -232,7 +232,7 @@ by `activeResetter` config variable.
 
 ```php
     public $userResetters = [
-        'Myth\Auth\Authentication\Resetters\EmailResetter' => [
+        'Navindex\Auth\Authentication\Resetters\EmailResetter' => [
             'fromEmail' => null,
             'fromName' => null,
         ],
@@ -272,9 +272,9 @@ You can easily add your own should you need to customize the validation rules.
 
 ```php
     public $passwordValidators = [
-        'Myth\Auth\Authentication\Passwords\CompositionValidator',
-        'Myth\Auth\Authentication\Passwords\DictionaryValidator',
-        //'Myth\Auth\Authentication\Passwords\PwnedValidator',
+        'Navindex\Auth\Authentication\Passwords\CompositionValidator',
+        'Navindex\Auth\Authentication\Passwords\DictionaryValidator',
+        //'Navindex\Auth\Authentication\Passwords\PwnedValidator',
     ];
 
 The default validators that come with Myth:Auth are:
