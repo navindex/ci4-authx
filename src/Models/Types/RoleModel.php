@@ -4,11 +4,11 @@ namespace Navindex\Auth\Models\Types;
 
 use Navindex\Auth\Entities\Type;
 use Navindex\Auth\Models\Base\TypeModel;
+use Navindex\Auth\Models\Interfaces\RoleModelInterface;
 use Navindex\Auth\Models\Junctions\RolePermissionModel;
 use Navindex\Auth\Models\Junctions\UserRoleModel;
 use Navindex\Auth\Models\Lists\RolePermissionListModel;
 use Navindex\Auth\Models\Lists\UserRoleListModel;
-use Navindex\Auth\Models\RoleModelInterface;
 
 class RoleModel extends TypeModel implements RoleModelInterface
 {
@@ -57,6 +57,7 @@ class RoleModel extends TypeModel implements RoleModelInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Retrieves the role name.
 	 *
@@ -129,7 +130,7 @@ class RoleModel extends TypeModel implements RoleModelInterface
 	{
 		$roleId = $this->getTypeId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return [];
 		}
 
@@ -150,7 +151,7 @@ class RoleModel extends TypeModel implements RoleModelInterface
 	{
 		$roleId = $this->getTypeId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -171,7 +172,7 @@ class RoleModel extends TypeModel implements RoleModelInterface
 	{
 		$roleId = $this->getTypeId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -192,7 +193,7 @@ class RoleModel extends TypeModel implements RoleModelInterface
 	{
 		$roleId = $this->getTypeId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -212,7 +213,7 @@ class RoleModel extends TypeModel implements RoleModelInterface
 	{
 		$roleId = $this->getTypeId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -234,7 +235,7 @@ class RoleModel extends TypeModel implements RoleModelInterface
 	{
 		$roleId = $this->getTypeId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return [];
 		}
 
@@ -255,7 +256,7 @@ class RoleModel extends TypeModel implements RoleModelInterface
 	{
 		$roleId = $this->getTypeId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -276,7 +277,7 @@ class RoleModel extends TypeModel implements RoleModelInterface
 	{
 		$roleId = $this->getTypeId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -297,7 +298,7 @@ class RoleModel extends TypeModel implements RoleModelInterface
 	{
 		$roleId = $this->getTypeId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -317,7 +318,7 @@ class RoleModel extends TypeModel implements RoleModelInterface
 	{
 		$roleId = $this->getTypeId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 

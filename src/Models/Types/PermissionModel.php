@@ -4,11 +4,11 @@ namespace Navindex\Auth\Models\Types;
 
 use Navindex\Auth\Entities\Type;
 use Navindex\Auth\Models\Base\TypeModel;
+use Navindex\Auth\Models\Interfaces\PermissionModelInterface;
 use Navindex\Auth\Models\Junctions\RolePermissionModel;
 use Navindex\Auth\Models\Junctions\UserPermissionModel;
 use Navindex\Auth\Models\Lists\RolePermissionListModel;
 use Navindex\Auth\Models\Lists\UserPermissionListModel;
-use Navindex\Auth\Models\PermissionModelInterface;
 
 class PermissionModel extends TypeModel implements PermissionModelInterface
 {
@@ -57,6 +57,7 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Retrieves the permission name.
 	 *
@@ -129,7 +130,7 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	{
 		$permissionId = $this->getTypeId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return [];
 		}
 
@@ -141,8 +142,8 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	/**
 	 * Checks whether a specific user has a specific direct permission.
 	 *
-	 * @param int|string $permission   Permission ID or name
-	 * @param int        $userId User ID
+	 * @param int|string $permission Permission ID or name
+	 * @param int        $userId     User ID
 	 *
 	 * @return bool True if the user directly has the permission, false otherwise
 	 */
@@ -150,7 +151,7 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	{
 		$permissionId = $this->getTypeId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -162,8 +163,8 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	/**
 	 * Adds a direct permission to a user.
 	 *
-	 * @param int|string $permission   Permission ID or name
-	 * @param int        $userId User ID
+	 * @param int|string $permission Permission ID or name
+	 * @param int        $userId     User ID
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */
@@ -171,7 +172,7 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	{
 		$permissionId = $this->getTypeId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -183,8 +184,8 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	/**
 	 * Removes a user's direct permission.
 	 *
-	 * @param int|string $permission   Permission ID or name
-	 * @param int        $userId User ID
+	 * @param int|string $permission Permission ID or name
+	 * @param int        $userId     User ID
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */
@@ -192,7 +193,7 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	{
 		$permissionId = $this->getTypeId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -212,7 +213,7 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	{
 		$permissionId = $this->getTypeId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -234,7 +235,7 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	{
 		$permissionId = $this->getTypeId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return [];
 		}
 
@@ -255,7 +256,7 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	{
 		$permissionId = $this->getTypeId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -267,8 +268,8 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	/**
 	 * Adds a role to a permission.
 	 *
-	 * @param int|string $permission         Permission ID or name
-	 * @param int        $roleId Role ID
+	 * @param int|string $permission Permission ID or name
+	 * @param int        $roleId     Role ID
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */
@@ -276,7 +277,7 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	{
 		$permissionId = $this->getTypeId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -297,7 +298,7 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	{
 		$permissionId = $this->getTypeId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -317,7 +318,7 @@ class PermissionModel extends TypeModel implements PermissionModelInterface
 	{
 		$permissionId = $this->getTypeId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 

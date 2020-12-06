@@ -2,10 +2,10 @@
 
 namespace Navindex\Auth\Models\Base;
 
-use Navindex\Auth\Entities\Type;
-use Navindex\Auth\Models\Base\BaseModel;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
+use Navindex\Auth\Entities\Type;
+use Navindex\Auth\Models\Base\BaseModel;
 
 abstract class TypeModel extends BaseModel
 {
@@ -52,11 +52,11 @@ abstract class TypeModel extends BaseModel
 	 */
 	public function getType($type): ?Type
 	{
-		if (is_numeric($type)) {
+		if (\is_numeric($type)) {
 			return $this->find($type);
 		}
 
-		if (is_string($type)) {
+		if (\is_string($type)) {
 			return $this->findUnique('name', $type);
 		}
 
@@ -152,7 +152,7 @@ abstract class TypeModel extends BaseModel
 	{
 		$id = $this->getTypeId($type);
 
-		if (is_numeric($id)) {
+		if (\is_numeric($id)) {
 			return false !== $this->delete($id);
 		}
 

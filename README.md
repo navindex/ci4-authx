@@ -203,13 +203,13 @@ Your application can use a different class, however, the **Entities/UserInterfac
         FlatAuthorisation::class => [
             'models' => [
                 'user'       => UserModel::class,
-                'token'      => UserTokenModel::class,
+                'token'      => PersistenceTokenModel::class,
                 'role'       => RoleModel::class,
                 'permission' => PermissionModel::class,
             ],
             'entities' => [
                 'user'       => App\Entities\MyUser::class,
-                'token'      => UserToken::class,
+                'token'      => PersistenceToken::class,
                 'role'       => Type::class,
                 'permission' => Type::class,
             ]

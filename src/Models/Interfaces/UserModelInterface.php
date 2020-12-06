@@ -1,8 +1,8 @@
 <?php
 
-namespace Navindex\Auth\Models;
+namespace Navindex\Auth\Models\Interfaces;
 
-use Navindex\Auth\Models\AuthModelInterface;
+use Navindex\Auth\Models\Interfaces\AuthModelInterface;
 
 interface UserModelInterface extends AuthModelInterface
 {
@@ -30,8 +30,9 @@ interface UserModelInterface extends AuthModelInterface
 	 *
 	 * @param array|object $data Record entity
 	 *
-	 * @return bool True if the operation was successful, false otherwise
 	 * @throws \ReflectionException
+	 *
+	 * @return bool True if the operation was successful, false otherwise
 	 */
 	public function save($data): bool;
 
@@ -111,7 +112,7 @@ interface UserModelInterface extends AuthModelInterface
 	/**
 	 * Retrieves all permissions of a single user.
 	 *
-	 * @param int|string $user User ID or username
+	 * @param int|string $user   User ID or username
 	 * @param null|bool  $direct True: direct user permissions only
 	 *                           False: both user and role permissions
 	 *
@@ -124,10 +125,10 @@ interface UserModelInterface extends AuthModelInterface
 	/**
 	 * Checks whether a specific permission has a specific permission.
 	 *
-	 * @param int|string $user         User ID or username
-	 * @param int|string $permission   Permission ID or name
-	 * @param null|bool  $direct       True: direct user permissions only
-	 *                                 False: both user and role permissions
+	 * @param int|string $user       User ID or username
+	 * @param int|string $permission Permission ID or name
+	 * @param null|bool  $direct     True: direct user permissions only
+	 *                               False: both user and role permissions
 	 *
 	 * @return bool True if the user has the permission, false otherwise
 	 */

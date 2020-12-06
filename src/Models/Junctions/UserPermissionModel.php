@@ -8,6 +8,8 @@ use Navindex\Auth\Models\Base\JunctionModel;
 class UserPermissionModel extends JunctionModel
 {
 	protected $table = 'user_permission';
+
 	protected $tables = ['user', 'permission'];
+
 	protected $returnType = UserPermission::class;
 }

@@ -6,5 +6,5 @@ use Navindex\Auth\Models\Base\TypeModel;
 
 class AttemptTypeModel extends TypeModel
 {
-    protected $table = 'attemp_type';
+	protected $table = 'attempt_type';
 }

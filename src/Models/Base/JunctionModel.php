@@ -2,16 +2,17 @@
 
 namespace Navindex\Auth\Models\Base;
 
-use Navindex\Auth\Models\Base\BaseModel;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
+use Navindex\Auth\Models\Base\BaseModel;
 
 /**
  * Model representing a mny-to-many connector table.
  */
 abstract class JunctionModel extends BaseModel
 {
-	const LEFT = 0, RIGHT = 1;
+	const LEFT = 0;
+	const RIGHT = 1;
 
 	/**
 	 * The table's composite primary key,
@@ -52,7 +53,7 @@ abstract class JunctionModel extends BaseModel
 
 			$this->primaryKey[static::LEFT] = $this->primaryKey[static::LEFT] ?? $leftId ?? null;
 
-			if (!in_array($leftId, $this->allowedFields)) {
+			if (!\in_array($leftId, $this->allowedFields)) {
 				$this->allowedFields[] = $leftId;
 			}
 
@@ -64,7 +65,7 @@ abstract class JunctionModel extends BaseModel
 
 			$this->primaryKey[static::RIGHT] = $this->primaryKey[static::RIGHT] ?? $rightId ?? null;
 
-			if (!in_array($rightId, $this->allowedFields)) {
+			if (!\in_array($rightId, $this->allowedFields)) {
 				$this->allowedFields[] = $rightId;
 			}
 
@@ -84,7 +85,7 @@ abstract class JunctionModel extends BaseModel
 	 */
 	public function connect(int $leftId, int $rightId): bool
 	{
-		return false !== $this->save(array_combine($this->primaryKey, [$leftId, $rightId]));
+		return false !== $this->save(\array_combine($this->primaryKey, [$leftId, $rightId]));
 	}
 
 	//--------------------------------------------------------------------
@@ -99,7 +100,7 @@ abstract class JunctionModel extends BaseModel
 	 */
 	public function disconnect(int $leftId, int $rightId): bool
 	{
-		return false !== $this->where(array_combine($this->primaryKey, [$leftId, $rightId]))->delete();
+		return false !== $this->where(\array_combine($this->primaryKey, [$leftId, $rightId]))->delete();
 	}
 
 	//--------------------------------------------------------------------
@@ -107,7 +108,7 @@ abstract class JunctionModel extends BaseModel
 	/**
 	 * Deletes all records with a given Left ID.
 	 *
-	 * @param int $leftId  Left ID
+	 * @param int $leftId Left ID
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */

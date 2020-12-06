@@ -2,34 +2,37 @@
 
 namespace Navindex\Auth\Models\Base;
 
-use Navindex\Auth\Exceptions\ModelException;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Model;
 use CodeIgniter\Validation\ValidationInterface;
-use stdClass;
+use Navindex\Auth\Exceptions\ModelException;
 
 abstract class BaseModel extends Model
 {
 	// Field lengths
 	const LENGTH_NAME = 255;
+
 	const LENGTH_LABEL = 255;
+
 	const LENGTH_TEXT = 65535;
 
 	// Regex expressions
 	const REGEX_NAME = '^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$';  // Regex expression for name validation
+
 	const REGEX_PHONE = '^(?:\(?\+?[0-9]*\)?)?[0-9._\-\(\)\s\\/]*$'; // Regex expression for phone number
 
 	// Default values
 	const DEFAULT_CREATOR_ID = 1;
+
 	const DEFAULT_DELETED = 0;
 
 	/**
 	 * The table's primary key.
 	 *
-	 * @var string|array
+	 * @var array|string
 	 */
 	protected $primaryKey = 'id';
 
@@ -45,12 +48,12 @@ abstract class BaseModel extends Model
 	 * simply set a date when rows are deleted, or
 	 * do hard deletes.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $useSoftDeletes = true;
 
 	/**
-	 * The column used to save soft delete state
+	 * The column used to save soft delete state.
 	 *
 	 * @var string
 	 */
@@ -68,11 +71,11 @@ abstract class BaseModel extends Model
 	{
 		parent::__construct($db, $validation);
 
-		if (in_array('deleted', $this->allowedFields)) {
+		if (\in_array('deleted', $this->allowedFields)) {
 			$this->validationRules['deleted'] = $this->validationRules['deleted'] ?? 'permit_empty|in_list[0,1]';
 		}
 
-		if (in_array('creator_id', $this->allowedFields)) {
+		if (\in_array('creator_id', $this->allowedFields)) {
 			$this->validationRules['creator_id'] = $this->validationRules['creator_id'] ?? 'permit_empty|is_not_unique[user.id]';
 		}
 	}
@@ -83,17 +86,17 @@ abstract class BaseModel extends Model
 	 * Fetches the row of database from $this->table with a unique key
 	 * matching $uniqueValue.
 	 *
-	 * @param string|array     $uniqueKey   Unique key column name or a key->value array
-	 * @param mixed|array|null $uniqueValue One unique key or an array of unique keys
-	 *
-	 * @return array|object|null The resulting row of data, or null.
+	 * @param array|string     $uniqueKey   Unique key column name or a key->value array
+	 * @param null|array|mixed $uniqueValue One unique key or an array of unique keys
 	 *
 	 * @throws \App\Exceptions\ModelException
+	 *
+	 * @return null|array|object the resulting row of data, or null
 	 */
 	public function findUnique($uniqueKey, $uniqueValue = null)
 	{
-		if (is_array($uniqueKey)) {
-			$key = key($uniqueKey);
+		if (\is_array($uniqueKey)) {
+			$key = \key($uniqueKey);
 			$value = $uniqueKey[$key];
 		} else {
 			$key = $uniqueKey;
@@ -104,14 +107,15 @@ abstract class BaseModel extends Model
 			return $this->find($value);
 		}
 
-		if (!in_array($key, $this->uniqueKeys)) {
-			throw ModelException::forNotUniqueKey($key, get_class($this));
+		if (!\in_array($key, $this->uniqueKeys)) {
+			throw ModelException::forNotUniqueKey($key, \get_class($this));
 		}
 
 		$primaryKey = $this->primaryKey;
 		$this->primaryKey = $key;
 		$result = $this->find($value);
 		$this->primaryKey = $primaryKey;
+
 		return $result;
 	}
 
@@ -122,37 +126,37 @@ abstract class BaseModel extends Model
 	 * matching $id.
 	 * Changed to support composite keys.
 	 *
-	 * @param null|int|string|array $id One primary key or an array of primary keys,
-	 *                                  or an associative array of composite keys.
+	 * @param null|array|int|string $id One primary key or an array of primary keys,
+	 *                                  or an associative array of composite keys
 	 *
 	 * @throws \App\Exceptions\ModelException
 	 *
-	 * @return null|object|array The resulting row of data, or null.
+	 * @return null|array|object The resulting row of data, or null
 	 */
 	public function find($id = null)
 	{
 		$builder = $this->builder();
 
-		if ($this->tempUseSoftDeletes === true) {
+		if (true === $this->tempUseSoftDeletes) {
 			$builder->where($this->table . '.' . $this->deletedField, 0);
 		}
 
-		if (is_array($this->primaryKey)) {
-			if (array_diff_key(array_flip($this->primaryKey), (array) $id)) {
-				throw ModelException::forInvalidCompositeId(implode(', ', $this->primaryKey), get_class($this));
+		if (\is_array($this->primaryKey)) {
+			if (\array_diff_key(\array_flip($this->primaryKey), (array) $id)) {
+				throw ModelException::forInvalidCompositeId(\implode(', ', $this->primaryKey), \get_class($this));
 			}
 			// Composite keys: the $id array keys must match the primary key array values
-			$whereKeys = array_combine($this->prefixField(array_keys($id)), array_values($id));
+			$whereKeys = \array_combine($this->prefixField(\array_keys($id)), \array_values($id));
 			foreach ($whereKeys as $key => $value) {
-				is_array($value) ? $builder->whereIn($key, $value) : $builder->where($key, $value);
+				\is_array($value) ? $builder->whereIn($key, $value) : $builder->where($key, $value);
 			}
 			$row = $builder->get();
 			$row = $row->getResult($this->tempReturnType);
-		} elseif (is_array($id)) {
+		} elseif (\is_array($id)) {
 			// Single key with multiple values
 			$row = $builder->whereIn($this->table . '.' . $this->primaryKey, $id)->get();
 			$row = $row->getResult($this->tempReturnType);
-		} elseif (is_numeric($id) || is_string($id)) {
+		} elseif (\is_numeric($id) || \is_string($id)) {
 			$row = $builder->where($this->table . '.' . $this->primaryKey, $id)->get();
 			$row = $row->getFirstRow($this->tempReturnType);
 		} else {
@@ -162,7 +166,7 @@ abstract class BaseModel extends Model
 
 		$eventData = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
 
-		$this->tempReturnType     = $this->returnType;
+		$this->tempReturnType = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $eventData['data'];
@@ -184,7 +188,7 @@ abstract class BaseModel extends Model
 	{
 		$builder = $this->builder();
 
-		if ($this->tempUseSoftDeletes === true) {
+		if (true === $this->tempUseSoftDeletes) {
 			$builder->where($this->table . '.' . $this->deletedField, 0);
 		}
 
@@ -194,7 +198,7 @@ abstract class BaseModel extends Model
 
 		$eventData = $this->trigger('afterFind', ['data' => $row, 'limit' => $limit, 'offset' => $offset]);
 
-		$this->tempReturnType     = $this->returnType;
+		$this->tempReturnType = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $eventData['data'];
@@ -208,24 +212,24 @@ abstract class BaseModel extends Model
 	 * Changed to strict deleteField.
 	 * Changed to support composite keys.
 	 *
-	 * @return array|object|null
+	 * @return null|array|object
 	 */
 	public function first()
 	{
 		$builder = $this->builder();
 
-		if ($this->tempUseSoftDeletes === true) {
+		if (true === $this->tempUseSoftDeletes) {
 			$builder->where($this->table . '.' . $this->deletedField, 0);
 		} else {
-			if ($this->useSoftDeletes === true && empty($builder->QBGroupBy) && !empty($this->primaryKey)) {
+			if (true === $this->useSoftDeletes && empty($builder->QBGroupBy) && !empty($this->primaryKey)) {
 				$builder->groupBy($this->prefixField($this->primaryKey));
 			}
 		}
 
 		// Some databases, like PostgreSQL, need order
 		// information to consistently return correct results.
-		$orderBy = is_array($this->primaryKey)
-			? implode(', ', $this->prefixField($this->primaryKey))
+		$orderBy = \is_array($this->primaryKey)
+			? \implode(', ', $this->prefixField($this->primaryKey))
 			: $this->table . '.' . $this->primaryKey;
 
 		if (!empty($builder->QBGroupBy) && empty($builder->QBOrderBy) && !empty($this->primaryKey)) {
@@ -238,7 +242,7 @@ abstract class BaseModel extends Model
 
 		$eventData = $this->trigger('afterFind', ['data' => $row]);
 
-		$this->tempReturnType     = $this->returnType;
+		$this->tempReturnType = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $eventData['data'];
@@ -250,23 +254,24 @@ abstract class BaseModel extends Model
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param integer|array|string $id
-	 * @param array|object         $data
+	 * @param array|int|string $id
+	 * @param array|object     $data
 	 *
-	 * @return boolean
 	 * @throws \ReflectionException
+	 *
+	 * @return bool
 	 */
 	public function update($id = null, $data = null): bool
 	{
 		$escape = null;
 
-		if (is_numeric($id) || is_string($id)) {
+		if (\is_numeric($id) || \is_string($id)) {
 			$id = [$id];
 		}
 
 		if (empty($data)) {
-			$data           = $this->tempData['data'] ?? null;
-			$escape         = $this->tempData['escape'] ?? null;
+			$data = $this->tempData['data'] ?? null;
+			$escape = $this->tempData['escape'] ?? null;
 			$this->tempData = [];
 		}
 
@@ -277,14 +282,14 @@ abstract class BaseModel extends Model
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
-		if (is_object($data) && !$data instanceof stdClass) {
+		if (\is_object($data) && !$data instanceof \stdClass) {
 			$data = static::classToArray($data, $this->primaryKey, $this->dateFormat);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
 		// an array so doProtectFields and other model methods
 		// don't have to do special checks.
-		if (is_object($data)) {
+		if (\is_object($data)) {
 			$data = (array) $data;
 		}
 
@@ -294,8 +299,8 @@ abstract class BaseModel extends Model
 		}
 
 		// Validate data before saving.
-		if ($this->skipValidation === false) {
-			if ($this->cleanRules(true)->validate($data) === false) {
+		if (false === $this->skipValidation) {
+			if (false === $this->cleanRules(true)->validate($data)) {
 				return false;
 			}
 		}
@@ -304,7 +309,7 @@ abstract class BaseModel extends Model
 		// strip out updated_at values.
 		$data = $this->doProtectFields($data);
 
-		if ($this->useTimestamps && !empty($this->updatedField) && !array_key_exists($this->updatedField, $data)) {
+		if ($this->useTimestamps && !empty($this->updatedField) && !\array_key_exists($this->updatedField, $data)) {
 			$data[$this->updatedField] = $this->setDate();
 		}
 
@@ -312,11 +317,11 @@ abstract class BaseModel extends Model
 
 		$builder = $this->builder();
 
-		if (is_array($this->primaryKey) && !array_diff_key(array_flip($this->primaryKey), (array) $id)) {
+		if (\is_array($this->primaryKey) && !\array_diff_key(\array_flip($this->primaryKey), (array) $id)) {
 			// Composite keys: the $id array keys must match the primary key array values
-			$whereKeys = array_combine($this->prefixField(array_keys($id)), array_values($id));
+			$whereKeys = \array_combine($this->prefixField(\array_keys($id)), \array_values($id));
 			foreach ($whereKeys as $key => $value) {
-				is_array($value) ? $builder->whereIn($key, $value) : $builder->where($key, $value);
+				\is_array($value) ? $builder->whereIn($key, $value) : $builder->where($key, $value);
 			}
 		} elseif ($id) {
 			$builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
@@ -352,27 +357,27 @@ abstract class BaseModel extends Model
 			return true;
 		}
 
-		if (!is_array($this->primaryKey)) {
+		if (!\is_array($this->primaryKey)) {
 			return parent::save($data);
 		}
 
 		// Check if all the primary key fields exist
-		if (array_diff_key(array_flip($this->primaryKey), (array) $data)) {
+		if (\array_diff_key(\array_flip($this->primaryKey), (array) $data)) {
 			return false;
 		}
 
 		// Populate the where clouse with the composite key.
-		if (is_object($data)) {
+		if (\is_object($data)) {
 			$primaryKey = [];
 			foreach ($this->primaryKey as $key) {
-				$primaryKey[$key] = $data->$key;
+				$primaryKey[$key] = $data->{$key};
 			}
 		} else {
-			$primaryKey = array_intersect_key($data, array_flip($this->primaryKey));
+			$primaryKey = \array_intersect_key($data, \array_flip($this->primaryKey));
 		}
 
 		// Check if the record exists and call the appropriate action
-		if (is_null($this->where($primaryKey)->first())) {
+		if (\is_null($this->where($primaryKey)->first())) {
 			$response = $this->insert($data, false);
 		} else {
 			$response = $this->update($data[$this->primaryKey], $data);
@@ -380,8 +385,8 @@ abstract class BaseModel extends Model
 
 		// Calculate the boolean response value
 		if ($response instanceof BaseResult) {
-			$response = $response->resultID !== false;
-		} elseif ($response !== false) {
+			$response = false !== $response->resultID;
+		} elseif (false !== $response) {
 			$response = true;
 		}
 
@@ -394,30 +399,30 @@ abstract class BaseModel extends Model
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey.
 	 *
-	 * @param null|int|string|array $id    The rows primary key(s)
-	 * @param bool                  $purge Allows overriding the soft deletes setting.
-
+	 * @param null|array|int|string $id    The rows primary key(s)
+	 * @param bool                  $purge Allows overriding the soft deletes setting
+	 *
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 * @throws \App\Exceptions\ModelException
 	 *
-	 * @return BaseResult|boolean
+	 * @return BaseResult|bool
 	 */
 	public function delete($id = null, bool $purge = false)
 	{
-		if (!is_array($this->primaryKey)) {
+		if (!\is_array($this->primaryKey)) {
 			return parent::delete($id, $purge);
 		}
 
 		// Check if all the primary key fields exist
-		if (array_diff_key(array_flip($this->primaryKey), (array) $id)) {
-			throw ModelException::forInvalidCompositeId(implode(', ', $this->primaryKey), get_class($this));
+		if (\array_diff_key(\array_flip($this->primaryKey), (array) $id)) {
+			throw ModelException::forInvalidCompositeId(\implode(', ', $this->primaryKey), \get_class($this));
 		}
 
 		$builder = $this->builder();
 
-		$whereKeys = array_combine($this->prefixField(array_keys($id)), array_values($id));
+		$whereKeys = \array_combine($this->prefixField(\array_keys($id)), \array_values($id));
 		foreach ($whereKeys as $key => $value) {
-			is_array($value) ? $builder->whereIn($key, $value) : $builder->where($key, $value);
+			\is_array($value) ? $builder->whereIn($key, $value) : $builder->where($key, $value);
 		}
 
 		$this->trigger('beforeDelete', ['id' => $id, 'purge' => $purge]);
@@ -454,7 +459,7 @@ abstract class BaseModel extends Model
 	 * through soft deletes (deleted = 1)
 	 * Changed to strict deleteField.
 	 *
-	 * @return boolean|mixed
+	 * @return bool|mixed
 	 */
 	public function purgeDeleted()
 	{
@@ -489,23 +494,23 @@ abstract class BaseModel extends Model
 	 * Override countAllResults to account for soft deleted accounts.
 	 * Changed to strict deleteField.
 	 *
-	 * @param boolean $reset
-	 * @param boolean $test
+	 * @param bool $reset
+	 * @param bool $test
 	 *
 	 * @return mixed
 	 */
 	public function countAllResults(bool $reset = true, bool $test = false)
 	{
-		if ($this->tempUseSoftDeletes === true) {
+		if (true === $this->tempUseSoftDeletes) {
 			$this->builder()->where($this->table . '.' . $this->deletedField, 0);
 		}
 
 		// When $reset === false, the $tempUseSoftDeletes will be
 		// dependant on $useSoftDeletes value because we don't
 		// want to add the same "where" condition for the second time
-		$this->tempUseSoftDeletes = ($reset === true)
+		$this->tempUseSoftDeletes = (true === $reset)
 			? $this->useSoftDeletes
-			: ($this->useSoftDeletes === true
+			: (true === $this->useSoftDeletes
 				? false
 				: $this->useSoftDeletes);
 
@@ -523,11 +528,11 @@ abstract class BaseModel extends Model
 	 *
 	 * @return array
 	 */
-	protected function processResultAfterFind(array $data, string $indexBy = null,  string $groupBy = null): array
+	protected function processResultAfterFind(array $data, string $indexBy = null, string $groupBy = null): array
 	{
 		if (!empty($data['data'] ?? null)) {
 			helper('array');
-			if (array_key_exists('limit', $data)) {
+			if (\array_key_exists('limit', $data)) {
 				foreach ($data['data'] as &$row) {
 					$processedRow = $this->processRowAfterFind($row);
 					if (empty($processedRow)) {
@@ -543,6 +548,7 @@ abstract class BaseModel extends Model
 				$data['data'] = empty($groupBy) ? $data['data'] : array_group_by($groupBy, $data['data']);
 			}
 		}
+
 		return $data;
 	}
 
@@ -572,9 +578,10 @@ abstract class BaseModel extends Model
 	 */
 	protected function prepareCreator(array $data): array
 	{
-		if (array_key_exists('creator_id', $data['data']) && empty($data['data']['creator_id'])) {
+		if (\array_key_exists('creator_id', $data['data']) && empty($data['data']['creator_id'])) {
 			$data['data']['creator_id'] = self::DEFAULT_CREATOR_ID;
 		}
+
 		return $data;
 	}
 
@@ -590,9 +597,10 @@ abstract class BaseModel extends Model
 	 */
 	protected function prepareDeleted(array $data): array
 	{
-		if (array_key_exists('deleted', $data['data']) && empty($data['data']['deleted'])) {
+		if (\array_key_exists('deleted', $data['data']) && empty($data['data']['deleted'])) {
 			$data['data']['deleted'] = self::DEFAULT_DELETED;
 		}
+
 		return $data;
 	}
 
@@ -601,13 +609,13 @@ abstract class BaseModel extends Model
 	/**
 	 * Prefix a path with another.
 	 *
-	 * @param array|object|null $row
+	 * @param null|array|object $row
 	 *
-	 * @return string|null
+	 * @return null|string
 	 */
 	protected function addPath($row, string $fileKey, string $folderKey = 'folder'): ?string
 	{
-		if (is_array($row) && !empty($row[$fileKey])) {
+		if (\is_array($row) && !empty($row[$fileKey])) {
 			return (!empty($row[$folderKey]) ? $row[$folderKey] . DIRECTORY_SEPARATOR : '') . $row[$fileKey];
 		}
 
@@ -622,20 +630,20 @@ abstract class BaseModel extends Model
 	 * @param string/array $field  Field name or array of field names
 	 * @param null|string  $prefix String or null for table name
 	 *
-	 * @return string|array
+	 * @return array|string
 	 */
 	protected function prefixField($field, string $prefix = null)
 	{
-		$prefix = rtrim(($prefix ?? $this->table), '.') . '.';
+		$prefix = \rtrim(($prefix ?? $this->table), '.') . '.';
 
-		if (is_array($field)) {
-			array_walk($field, function (&$value, $key) use ($prefix) {
+		if (\is_array($field)) {
+			\array_walk($field, function (&$value, $key) use ($prefix) {
 				$value = $prefix . $value;
 			});
 
 			return $field;
-		} else {
-			return $prefix . $field;
 		}
+
+		return $prefix . $field;
 	}
 }

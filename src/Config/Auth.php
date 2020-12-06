@@ -14,11 +14,11 @@ use Navindex\Auth\Authorisation\FlatAuthorisation;
 use Navindex\Auth\Controllers\Auth as AuthController;
 use Navindex\Auth\Entities\Type;
 use Navindex\Auth\Entities\User;
-use Navindex\Auth\Entities\UserToken;
+use Navindex\Auth\Entities\PersistenceToken;
 use Navindex\Auth\Models\Types\PermissionModel;
 use Navindex\Auth\Models\Types\RoleModel;
 use Navindex\Auth\Models\UserModel;
-use Navindex\Auth\Models\UserTokenModel;
+use Navindex\Auth\Models\PersistenceTokenModel;
 use Navindex\Auth\Validation\Rules as AuthRules;
 
 class Auth extends BaseConfig
@@ -366,7 +366,7 @@ class Auth extends BaseConfig
 	public $authenticators = [
 		LocalAuthenticator::class => [
 			'userModel'  => UserModel::class,
-			'tokenModel' => UserTokenModel::class,
+			'tokenModel' => PersistenceTokenModel::class,
 		],
 	];
 
@@ -462,13 +462,13 @@ class Auth extends BaseConfig
 		FlatAuthorisation::class => [
 			'models' => [
 				'user'       => UserModel::class,
-				'token'      => UserTokenModel::class,
+				'token'      => PersistenceTokenModel::class,
 				'role'       => RoleModel::class,
 				'permission' => PermissionModel::class,
 			],
 			'entities' => [
 				'user'       => User::class,
-				'token'      => UserToken::class,
+				'token'      => PersistenceToken::class,
 				'role'       => Type::class,
 				'permission' => Type::class,
 			],

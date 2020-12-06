@@ -1,8 +1,8 @@
 <?php
 
-namespace Navindex\Auth\Models;
+namespace Navindex\Auth\Models\Interfaces;
 
-use Navindex\Auth\Models\AuthModelInterface;
+use Navindex\Auth\Models\Interfaces\AuthModelInterface;
 
 interface RoleModelInterface extends AuthModelInterface
 {

@@ -78,8 +78,8 @@ class Auth extends Controller
 		$this->config = config(AuthConfig::class);
 		$this->auth = service('authentication');
 
-		foreach ($this->config->controllers[get_class($this)] as $key => $value) {
-			$this->$key = $value;
+		foreach ($this->config->controllers[\get_class($this)] as $key => $value) {
+			$this->{$key} = $value;
 		}
 	}
 
@@ -135,7 +135,7 @@ class Auth extends Controller
 		$remember = (bool) $this->request->getPost('remember');
 
 		// Determine credential type
-		$type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+		$type = \filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
 		// Try to log them in...
 		if (!$this->auth->attempt([$type => $login, 'password' => $password], $remember)) {
@@ -217,7 +217,7 @@ class Auth extends Controller
 		}
 
 		// Save the user
-		$allowedPostFields = array_merge(['password'], $this->config->validFields, $this->config->personalFields);
+		$allowedPostFields = \array_merge(['password'], $this->config->validFields, $this->config->personalFields);
 		$userClass = $this->userEntity;
 		$user = new $userClass($this->request->getPost($allowedPostFields));
 
@@ -280,7 +280,7 @@ class Auth extends Controller
 
 		$user = $users->findUnique('email', $this->request->getPost('email'));
 
-		if (is_null($user)) {
+		if (\is_null($user)) {
 			return redirect()->back()->with('error', lang('Auth.forgotNoUser'));
 		}
 
@@ -339,9 +339,9 @@ class Auth extends Controller
 		);
 
 		$rules = [
-			'token'    => 'required',
-			'email'    => 'required|valid_email',
-			'password' => 'required|strong_password',
+			'token'        => 'required',
+			'email'        => 'required|valid_email',
+			'password'     => 'required|strong_password',
 			'pass_confirm' => 'required|matches[password]',
 		];
 
@@ -350,22 +350,23 @@ class Auth extends Controller
 		}
 
 		$user = $users->where('reset_hash', $this->request->getPost('token'))
-			->findUnique('email', $this->request->getPost('email'));
+			->findUnique('email', $this->request->getPost('email'))
+		;
 
-		if (is_null($user)) {
+		if (\is_null($user)) {
 			return redirect()->back()->with('error', lang('Auth.forgotNoUser'));
 		}
 
 		// Reset token still valid?
-		if (!empty($user->reset_expires) && time() > $user->reset_expires->getTimestamp()) {
+		if (!empty($user->reset_expires_at) && \time() > $user->reset_expires_at->getTimestamp()) {
 			return redirect()->back()->withInput()->with('error', lang('Auth.resetTokenExpired'));
 		}
 
 		// Success! Save the new password, and cleanup the reset hash.
-		$user->password         = $this->request->getPost('password');
-		$user->reset_hash       = null;
-		$user->reset_at         = gmdate('Y-m-d H:i:s');
-		$user->reset_expires    = null;
+		$user->password = $this->request->getPost('password');
+		$user->reset_hash = null;
+		$user->reset_requested_at = \gmdate('Y-m-d H:i:s');
+		$user->reset_expires_at = null;
 		$user->force_pass_reset = false;
 		$users->save($user);
 
@@ -398,7 +399,7 @@ class Auth extends Controller
 
 		$user = $users->where('activate_hash', $this->request->getGet('token'))->inactive()->first();
 
-		if (is_null($user)) {
+		if (\is_null($user)) {
 			return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
 		}
 
@@ -428,14 +429,14 @@ class Auth extends Controller
 			return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
 		}
 
-		$login = urldecode($this->request->getGet('login'));
-		$type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+		$login = \urldecode($this->request->getGet('login'));
+		$type = \filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
 		$users = model($this->userModel);
 
 		$user = $users->whereNotActive()->findUnique($type, $login);
 
-		if (is_null($user)) {
+		if (\is_null($user)) {
 			return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
 		}
 
@@ -466,11 +467,11 @@ class Auth extends Controller
 	{
 		$filename = config(Paths::class)->viewDirectory . DIRECTORY_SEPARATOR . $view . '.php';
 
-		if (!file_exists($filename)) {
+		if (!\file_exists($filename)) {
 			throw PageNotFoundException::forPageNotFound($view);
 		}
 
-		$data = array_merge(['auth' => $this->config], $data ?? []);
+		$data = \array_merge(['auth' => $this->config], $data ?? []);
 
 		$prepareData = $this->prepareViewData;
 

@@ -13,7 +13,7 @@ class User extends BaseEntity implements UserInterface
 	/**
 	 * Define properties that are automatically converted to Time instances.
 	 */
-	protected $dates = ['reset_at', 'reset_expires'];
+	protected $dates = ['reset_requested_at', 'reset_expires_at'];
 
 	/**
 	 * Array of field names and the type of value to cast them as
@@ -141,8 +141,8 @@ class User extends BaseEntity implements UserInterface
 			reset-token would be able to change the password.
 		*/
 		$this->attributes['reset_hash'] = null;
-		$this->attributes['reset_at'] = null;
-		$this->attributes['reset_expires'] = null;
+		$this->attributes['reset_requested_at'] = null;
+		$this->attributes['reset_expires_at'] = null;
 	}
 
 	//--------------------------------------------------------------------
@@ -190,7 +190,7 @@ class User extends BaseEntity implements UserInterface
 	public function generateResetHash(): self
 	{
 		$this->attributes['reset_hash'] = \bin2hex(\random_bytes(16));
-		$this->attributes['reset_expires'] = \date('Y-m-d H:i:s', \time() + config('Auth')->resetTime);
+		$this->attributes['reset_expires_at'] = \date('Y-m-d H:i:s', \time() + config('Auth')->resetTime);
 
 		return $this;
 	}

@@ -2,10 +2,12 @@
 
 namespace Navindex\Auth\Models;
 
+use CodeIgniter\Database\BaseBuilder;
 use Navindex\Auth\Entities\Attempt;
 use Navindex\Auth\Entities\User;
 use Navindex\Auth\Models\AttemptModel;
 use Navindex\Auth\Models\Base\BaseModel;
+use Navindex\Auth\Models\Interfaces\UserModelInterface;
 use Navindex\Auth\Models\Junctions\UserPermissionModel;
 use Navindex\Auth\Models\Junctions\UserRoleModel;
 use Navindex\Auth\Models\Lists\UserFullPermissionListModel;
@@ -13,23 +15,25 @@ use Navindex\Auth\Models\Lists\UserPermissionListModel;
 use Navindex\Auth\Models\Lists\UserRoleListModel;
 use Navindex\Auth\Models\Types\PermissionModel;
 use Navindex\Auth\Models\Types\RoleModel;
-use CodeIgniter\Database\BaseBuilder;
-use Navindex\Auth\Models\UserModelInterface;
 
 class UserModel extends BaseModel implements UserModelInterface
 {
 	protected $table = 'user';
+
 	protected $primaryKey = 'id';
+
 	protected $uniqueKeys = ['username'];
+
 	protected $returnType = User::class;
+
 	protected $allowedFields = [
 		'email',
 		'username',
 		'email',
 		'password_hash',
 		'reset_hash',
-		'reset_at',
-		'reset_expires',
+		'reset_requested_at',
+		'reset_expires_at',
 		'activate_hash',
 		'force_pass_reset',
 		'status_id',
@@ -37,16 +41,19 @@ class UserModel extends BaseModel implements UserModelInterface
 		'deleted',
 		'creator_id',
 	];
+
 	protected $validationRules = [
 		'username'      => 'alpha_numeric_punct|min_length[3]|is_unique[user.username,id,{id}]',
 		'email'         => 'valid_email|is_unique[user.email,id,{id}]',
 		'password_hash' => 'required',
 	];
+
 	protected $afterInsert = ['assignDefaultRole'];
 
 	/**
 	 * The id of a role to assign.
 	 * Set internally by withRole.
+	 *
 	 * @var int
 	 */
 	protected $assignRole;
@@ -76,11 +83,11 @@ class UserModel extends BaseModel implements UserModelInterface
 	 */
 	public function fetch($user): ?User
 	{
-		if (is_numeric($user)) {
+		if (\is_numeric($user)) {
 			return $this->find($user);
 		}
 
-		if (is_string($user)) {
+		if (\is_string($user)) {
 			return $this->findUnique('username', $user);
 		}
 
@@ -116,6 +123,7 @@ class UserModel extends BaseModel implements UserModelInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Retrieves the user name.
 	 *
@@ -141,7 +149,7 @@ class UserModel extends BaseModel implements UserModelInterface
 	{
 		$userId = $this->getId($user);
 
-		if (is_numeric($userId)) {
+		if (\is_numeric($userId)) {
 			return $this->delete($userId);
 		}
 
@@ -177,9 +185,10 @@ class UserModel extends BaseModel implements UserModelInterface
 	{
 		$userId = $this->getId($user);
 
-		if (!is_numeric($userId)) {
+		if (!\is_numeric($userId)) {
 			return [];
 		}
+
 		return model(UserRoleListModel::class)->getUserRoles($userId);
 	}
 
@@ -197,13 +206,13 @@ class UserModel extends BaseModel implements UserModelInterface
 	{
 		$userId = $this->getId($user);
 
-		if (!is_numeric($userId)) {
+		if (!\is_numeric($userId)) {
 			return false;
 		}
 
 		$roleId = model(RoleModel::class)->getId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -224,13 +233,13 @@ class UserModel extends BaseModel implements UserModelInterface
 	{
 		$userId = $this->getId($user);
 
-		if (!is_numeric($userId)) {
+		if (!\is_numeric($userId)) {
 			return false;
 		}
 
 		$roleId = model(RoleModel::class)->getId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -251,13 +260,13 @@ class UserModel extends BaseModel implements UserModelInterface
 	{
 		$userId = $this->getId($user);
 
-		if (!is_numeric($userId)) {
+		if (!\is_numeric($userId)) {
 			return false;
 		}
 
 		$roleId = model(RoleModel::class)->getId($role);
 
-		if (!is_numeric($roleId)) {
+		if (!\is_numeric($roleId)) {
 			return false;
 		}
 
@@ -277,7 +286,7 @@ class UserModel extends BaseModel implements UserModelInterface
 	{
 		$userId = $this->getId($user);
 
-		if (!is_numeric($userId)) {
+		if (!\is_numeric($userId)) {
 			return false;
 		}
 
@@ -301,7 +310,7 @@ class UserModel extends BaseModel implements UserModelInterface
 	{
 		$userId = $this->getId($user);
 
-		if (!is_numeric($userId)) {
+		if (!\is_numeric($userId)) {
 			return [];
 		}
 
@@ -317,10 +326,10 @@ class UserModel extends BaseModel implements UserModelInterface
 	/**
 	 * Checks whether a specific permission has a specific permission.
 	 *
-	 * @param int|string $user         User ID or username
-	 * @param int|string $permission   Permission ID or name
-	 * @param null|bool  $direct       True: direct user permissions only
-	 *                                 False: both user and role permissions
+	 * @param int|string $user       User ID or username
+	 * @param int|string $permission Permission ID or name
+	 * @param null|bool  $direct     True: direct user permissions only
+	 *                               False: both user and role permissions
 	 *
 	 * @return bool True if the user has the permission, false otherwise
 	 */
@@ -328,13 +337,13 @@ class UserModel extends BaseModel implements UserModelInterface
 	{
 		$userId = $this->getId($user);
 
-		if (!is_numeric($userId)) {
+		if (!\is_numeric($userId)) {
 			return false;
 		}
 
 		$permissionId = model(PermissionModel::class)->getId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -359,13 +368,13 @@ class UserModel extends BaseModel implements UserModelInterface
 	{
 		$userId = $this->getId($user);
 
-		if (!is_numeric($userId)) {
+		if (!\is_numeric($userId)) {
 			return false;
 		}
 
 		$permissionId = model(PermissionModel::class)->getId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -386,13 +395,13 @@ class UserModel extends BaseModel implements UserModelInterface
 	{
 		$userId = $this->getId($user);
 
-		if (!is_numeric($userId)) {
+		if (!\is_numeric($userId)) {
 			return false;
 		}
 
 		$permissionId = model(PermissionModel::class)->getId($permission);
 
-		if (!is_numeric($permissionId)) {
+		if (!\is_numeric($permissionId)) {
 			return false;
 		}
 
@@ -412,7 +421,7 @@ class UserModel extends BaseModel implements UserModelInterface
 	{
 		$userId = $this->getId($user);
 
-		if (!is_numeric($userId)) {
+		if (!\is_numeric($userId)) {
 			return false;
 		}
 
@@ -428,9 +437,9 @@ class UserModel extends BaseModel implements UserModelInterface
 	 *
 	 * @param string      $email     Email address
 	 * @param bool        $success   Was the login successful?
-	 * @param int|null    $userId    User ID
-	 * @param string|null $ipAddress IP address
-	 * @param string|null $userAgent User agent
+	 * @param null|int    $userId    User ID
+	 * @param null|string $ipAddress IP address
+	 * @param null|string $userAgent User agent
 	 */
 	public function logLoginAttempt(
 		string $email,
@@ -443,11 +452,11 @@ class UserModel extends BaseModel implements UserModelInterface
 			'type'        => 'login',
 			'email'       => $email,
 			'user_id'     => $userID,
-			'ipv4'        => filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? $ipAddress : null,
-			'ipv6'        => filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ? $ipAddress : null,
+			'ipv4'        => \filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? $ipAddress : null,
+			'ipv6'        => \filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ? $ipAddress : null,
 			'user_agent'  => $userAgent,
-			'success'     => (int)$success,
-			'captured_at' => gmdate('Y-m-d H:i:s')
+			'success'     => (int) $success,
+			'captured_at' => \gmdate('Y-m-d H:i:s'),
 		];
 
 		model(AttemptModel::class)->insert(new Attempt($data));
@@ -459,9 +468,9 @@ class UserModel extends BaseModel implements UserModelInterface
 	 * Logs a password reset attempt for posterity sake.
 	 *
 	 * @param string      $email     Email address
-	 * @param string|null $token     Password reset token
-	 * @param string|null $ipAddress IP address
-	 * @param string|null $userAgent User agent
+	 * @param null|string $token     Password reset token
+	 * @param null|string $ipAddress IP address
+	 * @param null|string $userAgent User agent
 	 */
 	public function logResetAttempt(
 		string $email,
@@ -472,11 +481,11 @@ class UserModel extends BaseModel implements UserModelInterface
 		$data = [
 			'type'        => 'reset',
 			'email'       => $email,
-			'ipv4'        => filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? $ipAddress : null,
-			'ipv6'        => filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ? $ipAddress : null,
+			'ipv4'        => \filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? $ipAddress : null,
+			'ipv6'        => \filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ? $ipAddress : null,
 			'user_agent'  => $userAgent,
 			'token'       => $token,
-			'captured_at' => gmdate('Y-m-d H:i:s')
+			'captured_at' => \gmdate('Y-m-d H:i:s'),
 		];
 
 		model(AttemptModel::class)->insert(new Attempt($data));
@@ -487,9 +496,9 @@ class UserModel extends BaseModel implements UserModelInterface
 	/**
 	 * Logs an activation attempt for posterity sake.
 	 *
-	 * @param string|null $token     Password reset token
-	 * @param string|null $ipAddress IP address
-	 * @param string|null $userAgent User agent
+	 * @param null|string $token     Password reset token
+	 * @param null|string $ipAddress IP address
+	 * @param null|string $userAgent User agent
 	 */
 	public function logActivationAttempt(
 		string $token = null,
@@ -498,11 +507,11 @@ class UserModel extends BaseModel implements UserModelInterface
 	): void {
 		$data = [
 			'type'        => 'activation',
-			'ipv4'        => filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? $ipAddress : null,
-			'ipv6'        => filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ? $ipAddress : null,
+			'ipv4'        => \filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? $ipAddress : null,
+			'ipv6'        => \filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ? $ipAddress : null,
 			'user_agent'  => $userAgent,
 			'token'       => $token,
-			'captured_at' => gmdate('Y-m-d H:i:s')
+			'captured_at' => \gmdate('Y-m-d H:i:s'),
 		];
 
 		model(AttemptModel::class)->insert(new Attempt($data));
@@ -553,7 +562,7 @@ class UserModel extends BaseModel implements UserModelInterface
 	 */
 	protected function assignDefaultRole($data)
 	{
-		if (is_numeric($this->assignRole)) {
+		if (\is_numeric($this->assignRole)) {
 			model(UserRoleModel::class)->connect($data['id'], $this->assignRole);
 		}
 

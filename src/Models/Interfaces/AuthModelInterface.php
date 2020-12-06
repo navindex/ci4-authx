@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Models;
+namespace Navindex\Auth\Models\Interfaces;
 
 interface AuthModelInterface
 {
@@ -9,7 +9,7 @@ interface AuthModelInterface
 	 * it will first check for errors there, otherwise will try to
 	 * grab the last error from the Database connection.
 	 *
-	 * @param boolean $forceDB Always grab the db error, not validation
+	 * @param bool $forceDB Always grab the db error, not validation
 	 *
 	 * @return null|array Array of errors or null
 	 */
@@ -47,6 +47,7 @@ interface AuthModelInterface
 	public function getId($record): ?int;
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Retrieves the record name.
 	 *

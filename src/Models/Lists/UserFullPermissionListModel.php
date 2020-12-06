@@ -27,7 +27,7 @@ class UserFullPermissionListModel extends ListModel
 
 		$permissions = [];
 		foreach ($result as $record) {
-			$permissions[$record['permission_id']] = strtolower($record['name']);
+			$permissions[$record['permission_id']] = \strtolower($record['name']);
 		}
 
 		return $permissions;

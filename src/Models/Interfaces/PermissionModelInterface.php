@@ -1,8 +1,8 @@
 <?php
 
-namespace Navindex\Auth\Models;
+namespace Navindex\Auth\Models\Interfaces;
 
-use Navindex\Auth\Models\AuthModelInterface;
+use Navindex\Auth\Models\Interfaces\AuthModelInterface;
 
 interface PermissionModelInterface extends AuthModelInterface
 {
@@ -63,8 +63,8 @@ interface PermissionModelInterface extends AuthModelInterface
 	/**
 	 * Adds a permission to a user.
 	 *
-	 * @param int|string $permission   Permission ID or name
-	 * @param int        $userId User ID
+	 * @param int|string $permission Permission ID or name
+	 * @param int        $userId     User ID
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */
@@ -75,8 +75,8 @@ interface PermissionModelInterface extends AuthModelInterface
 	/**
 	 * Removes a user permission.
 	 *
-	 * @param int|string $permission   Permission ID or name
-	 * @param int        $userId User ID
+	 * @param int|string $permission Permission ID or name
+	 * @param int        $userId     User ID
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */
@@ -123,8 +123,8 @@ interface PermissionModelInterface extends AuthModelInterface
 	/**
 	 * Adds a permission to a role.
 	 *
-	 * @param int|string $permission   Permission ID or name
-	 * @param int        $roleId Role ID
+	 * @param int|string $permission Permission ID or name
+	 * @param int        $roleId     Role ID
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */
@@ -135,8 +135,8 @@ interface PermissionModelInterface extends AuthModelInterface
 	/**
 	 * Removes a role permission.
 	 *
-	 * @param int|string $permission   Permission ID or name
-	 * @param int        $roleId Role ID
+	 * @param int|string $permission Permission ID or name
+	 * @param int        $roleId     Role ID
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */
