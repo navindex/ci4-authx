@@ -257,7 +257,7 @@ class AuthMigration extends Migration
 					'unsigned'   => true,
 					'null'       => false,
 					'comment'    => 'User status',
-				], 'status_msg' => [
+				], 'status_reason' => [
 					'type'       => 'varchar',
 					'constraint' => 255,
 					'null'       => true,
