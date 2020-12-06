@@ -3,10 +3,10 @@
 namespace Navindex\Auth\Entities;
 
 use Navindex\Auth\Entities\BaseEntity;
+use Navindex\Auth\Entities\UserInterface;
 use Navindex\Auth\Models\Lists\UserFullPermissionListModel;
 use Navindex\Auth\Models\Lists\UserRoleListModel;
 use Navindex\Auth\Models\Types\UserStatusModel;
-use Navindex\Auth\Entities\UserInterface;
 
 class User extends BaseEntity implements UserInterface
 {
@@ -20,19 +20,19 @@ class User extends BaseEntity implements UserInterface
 	 * when they are accessed.
 	 */
 	protected $casts = [
-		'id'               => 'integer',
-		'username'         => 'string',
-		'email'            => 'string',
-		'password_hash'    => 'string',
-		'reset_hash'       => '?string',
-		'reset_at'         => '?datetime',
-		'reset_expires'    => '?datetime',
-		'activate_hash'    => '?string',
-		'force_pass_reset' => '?boolean',
-		'status_id'        => 'integer',
-		'status_reason'    => '?string',
-		'deleted'          => 'boolean',
-		'creator_id'       => 'integer',
+		'id'                 => 'integer',
+		'username'           => 'string',
+		'email'              => 'string',
+		'password_hash'      => 'string',
+		'reset_hash'         => '?string',
+		'reset_requested_at' => '?datetime',
+		'reset_expires_at'   => '?datetime',
+		'activate_hash'      => '?string',
+		'force_pass_reset'   => '?boolean',
+		'status_id'          => 'integer',
+		'status_reason'      => '?string',
+		'deleted'            => 'boolean',
+		'creator_id'         => 'integer',
 	];
 
 	/**
@@ -67,7 +67,7 @@ class User extends BaseEntity implements UserInterface
 
 	/**
 	 * User status list.
-	 * id => name
+	 * id => name.
 	 *
 	 * @var array
 	 */
@@ -111,13 +111,13 @@ class User extends BaseEntity implements UserInterface
 		$config = config('Auth');
 
 		if (
-			(defined('PASSWORD_ARGON2I') && PASSWORD_ARGON2I == $config->hashAlgorithm) ||
-			(defined('PASSWORD_ARGON2ID') && PASSWORD_ARGON2ID == $config->hashAlgorithm)
+			(\defined('PASSWORD_ARGON2I') && PASSWORD_ARGON2I == $config->hashAlgorithm) ||
+			(\defined('PASSWORD_ARGON2ID') && PASSWORD_ARGON2ID == $config->hashAlgorithm)
 		) {
 			$hashOptions = [
 				'memory_cost' => $config->hashMemoryCost,
 				'time_cost'   => $config->hashTimeCost,
-				'threads'     => $config->hashThreads
+				'threads'     => $config->hashThreads,
 			];
 		} else {
 			$hashOptions = [
@@ -125,8 +125,8 @@ class User extends BaseEntity implements UserInterface
 			];
 		}
 
-		$this->attributes['password_hash'] = password_hash(
-			base64_encode(hash('sha384', $password, true)),
+		$this->attributes['password_hash'] = \password_hash(
+			\base64_encode(\hash('sha384', $password, true)),
 			$config->hashAlgorithm,
 			$hashOptions
 		);
@@ -189,8 +189,8 @@ class User extends BaseEntity implements UserInterface
 	 */
 	public function generateResetHash(): self
 	{
-		$this->attributes['reset_hash'] = bin2hex(random_bytes(16));
-		$this->attributes['reset_expires'] = date('Y-m-d H:i:s', time() + config('Auth')->resetTime);
+		$this->attributes['reset_hash'] = \bin2hex(\random_bytes(16));
+		$this->attributes['reset_expires'] = \date('Y-m-d H:i:s', \time() + config('Auth')->resetTime);
 
 		return $this;
 	}
@@ -207,7 +207,7 @@ class User extends BaseEntity implements UserInterface
 	public function generateActivateHash(): self
 	{
 		$this->setStatus('registered');
-		$this->attributes['activate_hash'] = bin2hex(random_bytes(16));
+		$this->attributes['activate_hash'] = \bin2hex(\random_bytes(16));
 		$this->attributes['status_reason'] = null;
 
 		return $this;
@@ -254,7 +254,7 @@ class User extends BaseEntity implements UserInterface
 	 */
 	public function isActive(): bool
 	{
-		return !in_array($this->getStatus(), ['registered', 'inactive']);
+		return !\in_array($this->getStatus(), ['registered', 'inactive']);
 	}
 
 	//--------------------------------------------------------------------
@@ -301,7 +301,7 @@ class User extends BaseEntity implements UserInterface
 	 */
 	public function isBanned(): bool
 	{
-		return in_array($this->getStatus(), ['banned', 'permabanned']);
+		return \in_array($this->getStatus(), ['banned', 'permabanned']);
 	}
 
 	//--------------------------------------------------------------------
@@ -328,7 +328,7 @@ class User extends BaseEntity implements UserInterface
 	 */
 	public function can(string $permission): bool
 	{
-		return in_array(strtolower($permission), $this->getPermissions());
+		return \in_array(\strtolower($permission), $this->getPermissions());
 	}
 
 	//--------------------------------------------------------------------
@@ -354,7 +354,7 @@ class User extends BaseEntity implements UserInterface
 
 			$this->permissions = [];
 			foreach ($list as $permission) {
-				$this->permissions[$permission->id] = strtolower($permission->name);
+				$this->permissions[$permission->id] = \strtolower($permission->name);
 			}
 		}
 
@@ -384,7 +384,7 @@ class User extends BaseEntity implements UserInterface
 
 			$this->roles = [];
 			foreach ($list as $role) {
-				$this->roles[$role->id] = strtolower($role->name);
+				$this->roles[$role->id] = \strtolower($role->name);
 			}
 		}
 
@@ -400,11 +400,11 @@ class User extends BaseEntity implements UserInterface
 	 */
 	public function setStatus(string $status): void
 	{
-		if (is_null($status)) {
+		if (\is_null($status)) {
 			$this->attributes['status_id'] = null;
 		} else {
 			$list = $this->getStatusList();
-			$this->attributes['status_id'] = array_search(strtolower($status), $list) ?? null;
+			$this->attributes['status_id'] = \array_search(\strtolower($status), $list) ?? null;
 		}
 	}
 
@@ -469,7 +469,7 @@ class User extends BaseEntity implements UserInterface
 
 			$this->status = [];
 			foreach ($list as $status) {
-				$this->status[$status->id] = strtolower($status->name);
+				$this->status[$status->id] = \strtolower($status->name);
 			}
 		}
 

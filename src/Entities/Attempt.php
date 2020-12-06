@@ -8,26 +8,6 @@ use Navindex\Auth\Models\Types\AttemptTypeModel;
 class Attempt extends BaseEntity
 {
 	/**
-	 * Holds the current values of all class vars.
-	 *
-	 * @var array
-	 */
-	protected $attributes = [
-		'id'          => null,
-		'type_id'     => null,
-		'captured_at' => null,
-		'success'     => null,
-		'ipv4'        => null,
-		'ipv6'        => null,
-		'user_agent'  => null,
-		'email'       => null,
-		'user_id'     => null,
-		'token'       => null,
-		'deleted'     => null,
-		'creator_id'  => null,
-	];
-
-	/**
 	 * Define properties that are automatically converted to Time instances.
 	 */
 	protected $dates = ['captured_at'];
@@ -69,7 +49,7 @@ class Attempt extends BaseEntity
 
 	/**
 	 * The list of available attempt types.
-	 * id => name
+	 * id => name.
 	 *
 	 * @var array
 	 */
@@ -84,7 +64,7 @@ class Attempt extends BaseEntity
 	 */
 	public function setIpv4(string $ipv4 = null): void
 	{
-		$this->attributes['ipv4'] = ip2long($ipv4);
+		$this->attributes['ipv4'] = \ip2long($ipv4);
 	}
 
 	//--------------------------------------------------------------------
@@ -96,7 +76,7 @@ class Attempt extends BaseEntity
 	 */
 	public function getIpv4(): string
 	{
-		return long2ip($this->attributes['ipv4']);
+		return \long2ip($this->attributes['ipv4']);
 	}
 
 	//--------------------------------------------------------------------
@@ -110,7 +90,7 @@ class Attempt extends BaseEntity
 	{
 		$this->attributes['ipv6'] = empty($ipv6)
 			? null
-			: inet_pton($ipv6) ?? null;
+			: \inet_pton($ipv6) ?? null;
 	}
 
 	//--------------------------------------------------------------------
@@ -122,7 +102,7 @@ class Attempt extends BaseEntity
 	 */
 	public function getIpv6(): string
 	{
-		return inet_ntop($this->attributes['ipv6']);
+		return \inet_ntop($this->attributes['ipv6']);
 	}
 
 	//--------------------------------------------------------------------
@@ -134,11 +114,11 @@ class Attempt extends BaseEntity
 	 */
 	public function setType(string $type): void
 	{
-		if (is_null($type)) {
+		if (\is_null($type)) {
 			$this->attributes['type_id'] = null;
 		} else {
 			$list = $this->getAttemptTypes();
-			$this->attributes['type_id'] = array_search(strtolower($type), $list) ?? null;
+			$this->attributes['type_id'] = \array_search(\strtolower($type), $list) ?? null;
 		}
 	}
 
@@ -147,7 +127,7 @@ class Attempt extends BaseEntity
 	/**
 	 * Converts the attempt type ID to name.
 	 *
-	 * @return string|null Attempt type name
+	 * @return null|string Attempt type name
 	 */
 	public function getType(): ?string
 	{
@@ -156,13 +136,14 @@ class Attempt extends BaseEntity
 		}
 
 		$list = $this->getAttemptTypes();
+
 		return $list[$this->attributes['type_id']] ?? null;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns all available attempt types, formatted for simple checking:
+	 * Returns all available attempt types, formatted for simple checking:.
 	 *
 	 * [
 	 *    id => name,
@@ -176,7 +157,7 @@ class Attempt extends BaseEntity
 		if (empty($this->attemptTypes)) {
 			$list = model(AttemptTypeModel::class)->findAll();
 			foreach ($list as $attempt) {
-				$this->attemptTypes[$attempt->id] = strtolower($attempt->name);
+				$this->attemptTypes[$attempt->id] = \strtolower($attempt->name);
 			}
 		}
 
