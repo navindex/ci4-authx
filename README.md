@@ -319,3 +319,9 @@ This library is intentionally slim. You will likely want to use your own databas
 
 You can create your own migration to add these fields (see: [an example migration](bin/20190603101528_alter_table_users.php).
 If you used `auth:publish` you can also add these fields to your `UserModel`'s `$allowedFields` property.
+
+## 12. Credits
+
+Thanks to Lonnie Ezell and all the other developers who are tirelessly working on  [Myth:Auth](https://github.com/lonnieezell/myth-auth).
+
+Thanks to [EllisLab](https://ellislab.com) for originally creating CodeIgniter and the [British Columbia Institute of Technology](https://bcit.ca/) for continuing the project. Thanks to all the developers and contibutors working on [CodeIgniter 4](https://github.com/bcit-ci/CodeIgniter4).
