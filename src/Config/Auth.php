@@ -108,6 +108,17 @@ class Auth extends BaseConfig
 	public $defaultRole;
 
 	//--------------------------------------------------------------------
+	// Database
+	//--------------------------------------------------------------------
+
+	/**
+	 * Database table prefix.
+	 *
+	 * @var string
+	 */
+	public $tablePrefix;
+
+	//--------------------------------------------------------------------
 	// Views
 	//--------------------------------------------------------------------
 
@@ -154,7 +165,7 @@ class Auth extends BaseConfig
 	 */
 	public $validFields = [
 		'email',
-		'username'
+		'username',
 	];
 
 	//--------------------------------------------------------------------
@@ -460,7 +471,7 @@ class Auth extends BaseConfig
 				'token'      => UserToken::class,
 				'role'       => Type::class,
 				'permission' => Type::class,
-			]
+			],
 		],
 	];
 

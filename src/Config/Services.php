@@ -4,10 +4,10 @@ namespace Navindex\Auth\Config;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Config\Services as CoreServices;
-use Navindex\Auth\Config\Auth;
 use Navindex\Auth\Authentication\Activators\Activator;
-use Navindex\Auth\Authentication\Validators\Validator;
 use Navindex\Auth\Authentication\Resetters\Resetter;
+use Navindex\Auth\Authentication\Validators\Validator;
+use Navindex\Auth\Config\Auth;
 use Navindex\Auth\Models\Types\PermissionModel;
 use Navindex\Auth\Models\Types\RoleModel;
 use Navindex\Auth\Models\UserModel;
@@ -44,6 +44,7 @@ class Services extends CoreServices
 		$config = config(Auth::class);
 
 		$libClass = $config->activeAuthenticators[$lib];
+
 		return new $libClass($config);
 	}
 
