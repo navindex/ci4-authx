@@ -38,7 +38,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Navindex\\Auth\\": "src"
+			"Navindex\\AuthX\\": "src"
 		}
 	},
 	"autoload-dev": {
