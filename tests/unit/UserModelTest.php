@@ -1,8 +1,8 @@
 <?php
 
 use ModuleTests\Support\AuthTestCase;
-use Navindex\Auth\Authorization\GroupModel;
-use Navindex\Auth\Models\UserModel;
+use Navindex\AuthX\Authorization\GroupModel;
+use Navindex\AuthX\Models\UserModel;
 
 /**
  * @internal
@@ -48,7 +48,7 @@ class UserModelTest extends AuthTestCase
 			'password_hash' => 'cornedbeef',
 		];
 
-		$config = new \Navindex\Auth\Config\Auth();
+		$config = new \Navindex\AuthX\Config\Auth();
 		$config->defaultGroup = 'unknown';
 		\CodeIgniter\Config\Config::injectMock('Auth', $config);
 

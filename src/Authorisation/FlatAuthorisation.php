@@ -1,34 +1,34 @@
 <?php
 
-namespace Navindex\Auth\Authorisation;
+namespace Navindex\AuthX\Authorisation;
 
 use CodeIgniter\Events\Events;
-use Navindex\Auth\Authorisation\AuthorisationInterface;
-use Navindex\Auth\Authorisation\BaseAuthorisation;
-use Navindex\Auth\Models\Interfaces\PermissionModelInterface;
-use Navindex\Auth\Models\Interfaces\RoleModelInterface;
-use Navindex\Auth\Models\Interfaces\UserModelInterface;
+use Navindex\AuthX\Authorisation\AuthorisationInterface;
+use Navindex\AuthX\Authorisation\BaseAuthorisation;
+use Navindex\AuthX\Models\Interfaces\PermissionModelInterface;
+use Navindex\AuthX\Models\Interfaces\RoleModelInterface;
+use Navindex\AuthX\Models\Interfaces\UserModelInterface;
 
 class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterface
 {
 	/**
 	 * Role model.
 	 *
-	 * @var \Navindex\Auth\Models\RoleModelInterface
+	 * @var \Navindex\AuthX\Models\RoleModelInterface
 	 */
 	protected $roleModel;
 
 	/**
 	 * Permission model.
 	 *
-	 * @var \Navindex\Auth\Models\PermissionModelInterface
+	 * @var \Navindex\AuthX\Models\PermissionModelInterface
 	 */
 	protected $permissionModel;
 
 	/**
 	 * User model.
 	 *
-	 * @var \Navindex\Auth\Models\UserModelInterface
+	 * @var \Navindex\AuthX\Models\UserModelInterface
 	 */
 	protected $userModel;
 
@@ -48,7 +48,7 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 *
 	 * @param $model
 	 *
-	 * @return \Navindex\Auth\Authorisation\BaseAuthorisation
+	 * @return \Navindex\AuthX\Authorisation\BaseAuthorisation
 	 */
 	public function setUserModel(UserModelInterface $model): self
 	{
@@ -186,7 +186,7 @@ class FlatAuthorisation extends BaseAuthorisation implements AuthorisationInterf
 	 * Removes a user's role.
 	 *
 	 * @param int|string $user User ID or name
-	 * @param int|string $role   Role ID or name
+	 * @param int|string $role Role ID or name
 	 *
 	 * @return bool True is the user has the permission, false otherwise
 	 */

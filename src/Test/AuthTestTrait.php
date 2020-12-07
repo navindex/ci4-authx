@@ -1,12 +1,12 @@
 <?php
 
-namespace Navindex\Auth\Test;
+namespace Navindex\AuthX\Test;
 
 use CodeIgniter\Test\Fabricator;
 use Config\Services;
-use Navindex\Auth\Entities\User;
-use Navindex\Auth\Models\UserModel;
-use Navindex\Auth\Test\Fakers\UserFaker;
+use Navindex\AuthX\Entities\User;
+use Navindex\AuthX\Models\UserModel;
+use Navindex\AuthX\Test\Fakers\UserFaker;
 
 /**
  * Trait AuthTestTrait.

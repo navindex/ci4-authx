@@ -1,8 +1,8 @@
 <?php
 
 use ModuleTests\Support\AuthTestCase;
-use Navindex\Auth\Authorization\PermissionModel;
-use Navindex\Auth\Entities\User;
+use Navindex\AuthX\Authorization\PermissionModel;
+use Navindex\AuthX\Entities\User;
 
 /**
  * @internal
@@ -22,7 +22,7 @@ class UserEntityTest extends AuthTestCase
 		parent::setUp();
 
 		// Don't worry about default groups for this...
-		$config = new \Navindex\Auth\Config\Auth();
+		$config = new \Navindex\AuthX\Config\Auth();
 		$config->defaultGroup = 'Administrators';
 		\CodeIgniter\Config\Config::injectMock('Auth', $config);
 	}

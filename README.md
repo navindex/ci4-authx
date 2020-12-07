@@ -1,4 +1,4 @@
-# Navindex:Auth
+# Navindex:AuthX
 
 ***
 
@@ -24,31 +24,30 @@ This is meant to be a one-stop shop for 99% of your web-based authentication nee
 
 ## 3. Installation
 
-Installation is best done via Composer. Assuming Composer is installed globally, you may use
-the following command:
+Installation is best done via Composer. Assuming Composer is installed globally, you may use the following command:
 
 ```bash
     > composer require navindex/auth
 ```
 
-This will add the latest stable release of **Navindex:Auth** as a module to your project. Note that you may need to adjust your project's [minimum stability](http://webtips.krajee.com/setting-composer-minimum-stability-application/) in order to use **Navindex:Auth** while it is in beta.
+This will add the latest stable release of **Navindex:AuthX** as a module to your project. Note that you may need to adjust your project's [minimum stability](http://webtips.krajee.com/setting-composer-minimum-stability-application/) in order to use **Navindex:AuthX** while it is in beta.
 
 ### 3.1. Manual Installation
 
-Should you choose not to use Composer to install, you can clone or download this repo and then enable it by editing **app/Config/Autoload.php** and adding the **Navindex:Auth** namespace to the **$psr4** array. For example, if you copied it into **app/ThirdParty**:
+Should you choose not to use Composer to install, you can clone or download this repo and then enable it by editing **app/Config/Autoload.php** and adding the **Navindex:AuthX** namespace to the **$psr4** array. For example, if you copied it into **app/ThirdParty**:
 
 ```php
     $psr4 = [
-        'Config'        => APPPATH . 'Config',
-        APP_NAMESPACE   => APPPATH,
-        'App'           => APPPATH,
-        'Navindex\Auth' => APPPATH .'ThirdParty/auth/src',
+        'Config'         => APPPATH . 'Config',
+        APP_NAMESPACE    => APPPATH,
+        'App'            => APPPATH,
+        'Navindex\AuthX' => APPPATH .'ThirdParty/XAuth/src',
     ];
 ```
 
 ## 4. Configuration
 
-Once installed you need to configure the framework to use the **Navindex:Auth** library. In your application, perform the following setup:
+Once installed you need to configure the framework to use the **Navindex:AuthX** library. In your application, perform the following setup:
 
 1. Edit **app/Config/Email.php** and verify that a **fromName** and **fromEmail** are set as that is used when sending emails for password reset, etc.
 
@@ -60,7 +59,7 @@ Once installed you need to configure the framework to use the **Navindex:Auth** 
         \CodeIgniter\Validation\FormatRules::class,
         \CodeIgniter\Validation\FileRules::class,
         \CodeIgniter\Validation\CreditCardRules::class,
-        \Navindex\Auth\Validation\Rules::class,
+        \Navindex\AuthX\Validation\Rules::class,
     ];
 ```
 
@@ -72,7 +71,7 @@ Once installed you need to configure the framework to use the **Navindex:Auth** 
 
 ## 5. Overview
 
-When first installed, **Navindex:Auth** is setup to provide all of the basic authentication services for you, including new user registration, login/logout, and forgotten password flows.
+When first installed, **Navindex:AuthX** is setup to provide all of the basic authentication services for you, including new user registration, login/logout, and forgotten password flows.
 
 "Remember Me" functionality is turned off by default though it can be turned on by setting the `$allowRemembering` variable to be `true` in **Config/Auth.php**.
 
@@ -88,12 +87,12 @@ You can easily override the views used by editing **Config/Auth.php**, and chang
 
 ```php
     public $views = [
-        'login'         => 'Navindex\Auth\Views\login',
-        'register'      => 'Navindex\Auth\Views\register',
-        'forgot'        => 'Navindex\Auth\Views\forgot',
-        'reset'         => 'Navindex\Auth\Views\reset',
-        'emailActivate' => 'Navindex\Auth\Views\emails\activate',
-        'emailForgot'   => 'Navindex\Auth\Views\emails\forgot',
+        'login'         => 'Navindex\AuthX\Views\login',
+        'register'      => 'Navindex\AuthX\Views\register',
+        'forgot'        => 'Navindex\AuthX\Views\forgot',
+        'reset'         => 'Navindex\AuthX\Views\reset',
+        'emailActivate' => 'Navindex\AuthX\Views\emails\activate',
+        'emailForgot'   => 'Navindex\AuthX\Views\emails\forgot',
     ];
 ```
 
@@ -105,7 +104,7 @@ The following Services are provided by the package:
 
 ### 6.1. Authentication
 
-Provides access to any of the authentication packages that **Navindex:Auth** knows about. By default it will return the "Local Authentication" library, which is the basic password-based system.
+Provides access to any of the authentication packages that **Navindex:AuthX** knows about. By default it will return the "Local Authentication" library, which is the basic password-based system.
 
 ```php
     $authenticate = service('authentication');
@@ -119,7 +118,7 @@ You can specify the library to use as the first argument:
 
 ### 6.2. Authorisation
 
-Provides access to any of the authorization libraries that **Navindex:Auth** knows about. By default it will return the "Flat" authorization library, which is a Flat RBAC (role-based access control) as defined by NIST. It provides user-specific permissions as well as role based permissions.
+Provides access to any of the authorization libraries that **Navindex:AuthX** knows about. By default it will return the "Flat" authorization library, which is a Flat RBAC (role-based access control) as defined by NIST. It provides user-specific permissions as well as role based permissions.
 
 ```php
     $authorise = service('authorization');
@@ -142,7 +141,7 @@ Most of the time you should not need to access this library directly, though, as
         \CodeIgniter\Validation\FormatRules::class,
         \CodeIgniter\Validation\FileRules::class,
         \CodeIgniter\Validation\CreditCardRules::class,
-        \Navindex\Auth\Validation\Rules::class,
+        \Navindex\AuthX\Validation\Rules::class,
     ];
 ```
 
@@ -157,7 +156,7 @@ Now you can use `strong_password` in any set of rules for validation:
 
 ## 7. Helper Functions
 
-**Navindex:Auth** comes with its own [Helper](https://codeigniter4.github.io/CodeIgniter4/general/helpers.html) that includes the following helper functions to ease access to basic features. Be sure to load the helper before using these functions: `helper('auth');`
+**Navindex:AuthX** comes with its own [Helper](https://codeigniter4.github.io/CodeIgniter4/general/helpers.html) that includes the following helper functions to ease access to basic features. Be sure to load the helper before using these functions: `helper('auth');`
 
 **Hint**: Add `'auth'` to any controller's `$helper` property to have it loaded automatically, or the same in **app/Controllers/BaseController.php** to have it globally available. the auth filters all pre-load the helper so it is available on any filtered routes.
 
@@ -195,7 +194,7 @@ Now you can use `strong_password` in any set of rules for validation:
 
 ### 8.1. User
 
-**Navindex:Auth** uses [CodeIgniter Entities](https://codeigniter4.github.io/CodeIgniter4/models/entities.html) for it's User object. This class provides automatic password hashing as well as utility methods for banning/un-banning, password reset hash generation, and more.
+**Navindex:AuthX** uses [CodeIgniter Entities](https://codeigniter4.github.io/CodeIgniter4/models/entities.html) for it's User object. This class provides automatic password hashing as well as utility methods for banning/un-banning, password reset hash generation, and more.
 Your application can use a different class, however, the **Entities/UserInterface.php** interface must be implemented. You also need to change *all* class references in **Config/Auth.php**. For example:
 
 ```php
@@ -229,14 +228,14 @@ User registration already handles this for you, and looks to the Auth config fil
 
 ## 9. Toolbar
 
-**Navindex:Auth** includes a toolbar collector to make it easy for developers to work with and troubleshoot the authentication process. To enable the collector, edit **app/Config/Toolbar.php** and add it to the list of active collectors:
+**Navindex:AuthX** includes a toolbar collector to make it easy for developers to work with and troubleshoot the authentication process. To enable the collector, edit **app/Config/Toolbar.php** and add it to the list of active collectors:
 
 ```php
     public $collectors = [
         \CodeIgniter\Debug\Toolbar\Collectors\Timers::class,
         \CodeIgniter\Debug\Toolbar\Collectors\Database::class,
         ...
-        \Navindex\Auth\Collectors\Auth::class,
+        \Navindex\AuthX\Collectors\Auth::class,
     ];
 ```
 
@@ -247,9 +246,9 @@ If you specify each of your routes within the **app/Config/Routes.php** file, yo
 First, edit **app/Config/Filters.php** and add the following entries to the `aliases` property:
 
 ```php
-    'login'      => \Navindex\Auth\Filters\LoginFilter::class,
-    'role'       => \Navindex\Auth\Filters\RoleFilter::class,
-    'permission' => \Navindex\Auth\Filters\PermissionFilter::class,
+    'login'      => \Navindex\AuthX\Filters\LoginFilter::class,
+    'role'       => \Navindex\AuthX\Filters\RoleFilter::class,
+    'permission' => \Navindex\AuthX\Filters\PermissionFilter::class,
 ```
 
 ### 10.1. Global restrictions

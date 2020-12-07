@@ -3,7 +3,7 @@
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Validation;
 use Config\Services;
-use Navindex\Auth\Authentication\Passwords\ValidationRules;
+use Navindex\AuthX\Authentication\Passwords\ValidationRules;
 
 /**
  * @internal

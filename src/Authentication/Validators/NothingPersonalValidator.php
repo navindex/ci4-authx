@@ -1,10 +1,10 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Validators;
+namespace Navindex\AuthX\Authentication\Validators;
 
-use Navindex\Auth\Authentication\Validators\BaseValidator;
-use Navindex\Auth\Authentication\Validators\ValidatorInterface;
-use Navindex\Auth\Entities\UserInterface;
+use Navindex\AuthX\Authentication\Validators\BaseValidator;
+use Navindex\AuthX\Authentication\Validators\ValidatorInterface;
+use Navindex\AuthX\Entities\UserInterface;
 
 /**
  * Class NothingPersonalValidator.
@@ -41,13 +41,13 @@ class NothingPersonalValidator extends BaseValidator implements ValidatorInterfa
 	 * isNotPersonal().
 	 *
 	 * Looks for personal information in a password. The personal info used
-	 * comes from Navindex\Auth\Entities\User properties username and email.
+	 * comes from Navindex\AuthX\Entities\User properties username and email.
 	 *
 	 * It is possible to include other fields as information sources.
 	 * For instance, a project might require adding `firstname` and `lastname` properties
 	 * to an extended version of the User class.
 	 * The new fields can be included in personal information testing in by setting
-	 * the `$personalFields` property in Navindex\Auth\Config\Auth, e.g.
+	 * the `$personalFields` property in Navindex\AuthX\Config\Auth, e.g.
 	 *
 	 *      public $personalFields = ['firstname', 'lastname'];
 	 *
@@ -143,7 +143,7 @@ class NothingPersonalValidator extends BaseValidator implements ValidatorInterfa
 
 	/**
 	 * notSimilar() uses $password and $userName to calculate a similarity value.
-	 * Similarity values equal to, or greater than Navindex\Auth\Config::maxSimilarity
+	 * Similarity values equal to, or greater than Navindex\AuthX\Config::maxSimilarity
 	 * are rejected for being too much alike and false is returned.
 	 * Otherwise, true is returned,.
 	 *

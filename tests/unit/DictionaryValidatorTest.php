@@ -1,7 +1,7 @@
 <?php
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Navindex\Auth\Authentication\Passwords\DictionaryValidator;
+use Navindex\AuthX\Authentication\Passwords\DictionaryValidator;
 
 /**
  * @internal
@@ -18,7 +18,7 @@ class DictionaryValidatorTest extends CIUnitTestCase
 	{
 		parent::setUp();
 
-		$config = new \Navindex\Auth\Config\Auth();
+		$config = new \Navindex\AuthX\Config\Auth();
 
 		$this->validator = new DictionaryValidator();
 		$this->validator->setConfig($config);

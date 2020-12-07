@@ -2,11 +2,11 @@
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Mockery as m;
-use Navindex\Auth\Authentication\LocalAuthenticator;
-use Navindex\Auth\Config\Auth;
-use Navindex\Auth\Config\Services;
-use Navindex\Auth\Entities\User;
-use Navindex\Auth\Models\UserModel;
+use Navindex\AuthX\Authentication\LocalAuthenticator;
+use Navindex\AuthX\Config\Auth;
+use Navindex\AuthX\Config\Services;
+use Navindex\AuthX\Entities\User;
+use Navindex\AuthX\Models\UserModel;
 
 /**
  * @internal
@@ -34,7 +34,7 @@ class LocalAuthenticateAttemptTest extends CIUnitTestCase
 		parent::setUp();
 
 		$this->userModel = m::mock(UserModel::class);
-		$this->auth = m::mock('Navindex\Auth\Authentication\LocalAuthenticator[recordLoginAttempt,login,rememberUser,validate]', [new Auth()]);
+		$this->auth = m::mock('Navindex\AuthX\Authentication\LocalAuthenticator[recordLoginAttempt,login,rememberUser,validate]', [new Auth()]);
 		$this->auth->setUserModel($this->userModel);
 
 		$this->request = m::mock('CodeIgniter\HTTP\IncomingRequest');

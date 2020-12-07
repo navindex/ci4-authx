@@ -1,9 +1,9 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Validators;
+namespace Navindex\AuthX\Authentication\Validators;
 
-use Navindex\Auth\Authentication\Validators\BaseValidator;
-use Navindex\Auth\Authentication\Validators\ValidatorInterface;
+use Navindex\AuthX\Authentication\Validators\BaseValidator;
+use Navindex\AuthX\Authentication\Validators\ValidatorInterface;
 
 /**
  * Class DictionaryValidator.

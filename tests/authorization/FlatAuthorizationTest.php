@@ -1,10 +1,10 @@
 <?php
 
 use ModuleTests\Support\AuthTestCase;
-use Navindex\Auth\Authorization\FlatAuthorization;
-use Navindex\Auth\Authorization\GroupModel;
-use Navindex\Auth\Authorization\PermissionModel;
-use Navindex\Auth\Models\UserModel;
+use Navindex\AuthX\Authorization\FlatAuthorization;
+use Navindex\AuthX\Authorization\GroupModel;
+use Navindex\AuthX\Authorization\PermissionModel;
+use Navindex\AuthX\Models\UserModel;
 
 /**
  * @internal

@@ -2,10 +2,10 @@
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Mockery as m;
-use Navindex\Auth\Authentication\LocalAuthenticator;
-use Navindex\Auth\Config\Services;
-use Navindex\Auth\Models\LoginModel;
-use Navindex\Auth\Models\UserModel;
+use Navindex\AuthX\Authentication\LocalAuthenticator;
+use Navindex\AuthX\Config\Services;
+use Navindex\AuthX\Models\LoginModel;
+use Navindex\AuthX\Models\UserModel;
 
 /**
  * @internal
@@ -57,7 +57,7 @@ class LocalAuthenticateValidateTest extends CIUnitTestCase
 
 	public function testThrowsWithTooManyCredentials()
 	{
-		$this->expectException('\Navindex\Auth\Exceptions\AuthException');
+		$this->expectException('\Navindex\AuthX\Exceptions\AuthException');
 		$this->expectExceptionMessage('You may only validate against 1 credential other than a password.');
 
 		$this->auth->validate([
@@ -69,7 +69,7 @@ class LocalAuthenticateValidateTest extends CIUnitTestCase
 
 	public function testThrowsWithInvalidFields()
 	{
-		$this->expectException('\Navindex\Auth\Exceptions\AuthException');
+		$this->expectException('\Navindex\AuthX\Exceptions\AuthException');
 		$this->expectExceptionMessage('The "foo" field cannot be used to validate credentials.');
 
 		$this->auth->validate([
@@ -94,7 +94,7 @@ class LocalAuthenticateValidateTest extends CIUnitTestCase
 
 	public function testFailsPasswordValidation()
 	{
-		$user = new \Navindex\Auth\Entities\User(['password_hash' => \password_hash('nope!', PASSWORD_DEFAULT)]);
+		$user = new \Navindex\AuthX\Entities\User(['password_hash' => \password_hash('nope!', PASSWORD_DEFAULT)]);
 
 		$this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
 		$this->userModel->shouldReceive('first')->once()->andReturn($user);
@@ -110,7 +110,7 @@ class LocalAuthenticateValidateTest extends CIUnitTestCase
 
 	public function testValidateSuccess()
 	{
-		$user = new \Navindex\Auth\Entities\User(['password' => 'secret']);
+		$user = new \Navindex\AuthX\Entities\User(['password' => 'secret']);
 
 		$this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
 		$this->userModel->shouldReceive('first')->once()->andReturn($user);
@@ -125,7 +125,7 @@ class LocalAuthenticateValidateTest extends CIUnitTestCase
 
 	public function testValidateSuccessReturnsUser()
 	{
-		$user = new \Navindex\Auth\Entities\User(['password' => 'secret']);
+		$user = new \Navindex\AuthX\Entities\User(['password' => 'secret']);
 
 		$this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
 		$this->userModel->shouldReceive('first')->once()->andReturn($user);
@@ -135,12 +135,12 @@ class LocalAuthenticateValidateTest extends CIUnitTestCase
 			'email'    => 'joe@example.com',
 		], true);
 
-		$this->assertTrue($result instanceof \Navindex\Auth\Entities\User);
+		$this->assertTrue($result instanceof \Navindex\AuthX\Entities\User);
 	}
 
 	public function testValidateSuccessReHashPassword()
 	{
-		$user = new \Navindex\Auth\Entities\User(['password' => 'secret']);
+		$user = new \Navindex\AuthX\Entities\User(['password' => 'secret']);
 
 		$this->userModel->shouldReceive('where')->once()->with(\Mockery::subset(['email' => 'joe@example.com']))->andReturn($this->userModel);
 		$this->userModel->shouldReceive('first')->once()->andReturn($user);
@@ -150,6 +150,6 @@ class LocalAuthenticateValidateTest extends CIUnitTestCase
 			'email'    => 'joe@example.com',
 		], true);
 
-		$this->assertTrue($result instanceof \Navindex\Auth\Entities\User);
+		$this->assertTrue($result instanceof \Navindex\AuthX\Entities\User);
 	}
 }

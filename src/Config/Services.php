@@ -1,16 +1,16 @@
 <?php
 
-namespace Navindex\Auth\Config;
+namespace Navindex\AuthX\Config;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Config\Services as CoreServices;
-use Navindex\Auth\Authentication\Activators\Activator;
-use Navindex\Auth\Authentication\Resetters\Resetter;
-use Navindex\Auth\Authentication\Validators\Validator;
-use Navindex\Auth\Config\Auth;
-use Navindex\Auth\Models\Types\PermissionModel;
-use Navindex\Auth\Models\Types\RoleModel;
-use Navindex\Auth\Models\UserModel;
+use Navindex\AuthX\Authentication\Activators\Activator;
+use Navindex\AuthX\Authentication\Resetters\Resetter;
+use Navindex\AuthX\Authentication\Validators\Validator;
+use Navindex\AuthX\Config\Auth;
+use Navindex\AuthX\Models\Types\PermissionModel;
+use Navindex\AuthX\Models\Types\RoleModel;
+use Navindex\AuthX\Models\UserModel;
 
 /**
  * Services Configuration file.
@@ -89,7 +89,7 @@ class Services extends CoreServices
 	 * @param null|\CodeIgniter\Config\BaseConfig $config    Configuration settings
 	 * @param null|bool                           $getShared Shall we use a shared instance?
 	 *
-	 * @return \Navindex\Auth\Authentication\Validators\PasswordValidator
+	 * @return \Navindex\AuthX\Authentication\Validators\PasswordValidator
 	 */
 	public static function passwords(BaseConfig $config = null, bool $getShared = true)
 	{
@@ -108,7 +108,7 @@ class Services extends CoreServices
 	 * @param null|\CodeIgniter\Config\BaseConfig $config    Configuration settings
 	 * @param null|bool                           $getShared Shall we use a shared instance?
 	 *
-	 * @return \Navindex\Auth\Authentication\Activators\UserActivator
+	 * @return \Navindex\AuthX\Authentication\Activators\UserActivator
 	 */
 	public static function activator(BaseConfig $config = null, bool $getShared = true)
 	{
@@ -127,7 +127,7 @@ class Services extends CoreServices
 	 * @param null|\CodeIgniter\Config\BaseConfig $config    Configuration settings
 	 * @param null|bool                           $getShared Shall we use a shared instance?
 	 *
-	 * @return \Navindex\Auth\Authentication\Resetters\UserResetter
+	 * @return \Navindex\AuthX\Authentication\Resetters\UserResetter
 	 */
 	public static function resetter(BaseConfig $config = null, bool $getShared = true)
 	{

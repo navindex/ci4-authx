@@ -1,15 +1,15 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Validators;
+namespace Navindex\AuthX\Authentication\Validators;
 
-use Navindex\Auth\Config\Auth;
+use Navindex\AuthX\Config\Auth;
 
 abstract class BaseValidator
 {
 	/**
 	 * Configuration settings.
 	 *
-	 * @var \Navindex\Auth\Config\Auth
+	 * @var \Navindex\AuthX\Config\Auth
 	 */
 	protected $config;
 
@@ -32,9 +32,9 @@ abstract class BaseValidator
 	/**
 	 * Allows for setting a config file on the Validator.
 	 *
-	 * @param \Navindex\Auth\Config\Auth $config Configuration settings
+	 * @param \Navindex\AuthX\Config\Auth $config Configuration settings
 	 *
-	 * @return \Navindex\Auth\Authentication\Validators\BaseValidator
+	 * @return \Navindex\AuthX\Authentication\Validators\BaseValidator
 	 */
 	public function setConfig(Auth $config): self
 	{

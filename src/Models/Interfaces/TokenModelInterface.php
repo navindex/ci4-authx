@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Models\Interfaces;
+namespace Navindex\AuthX\Models\Interfaces;
 
 interface TokenModelInterface
 {

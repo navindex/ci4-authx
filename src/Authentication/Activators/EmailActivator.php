@@ -1,10 +1,10 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Activators;
+namespace Navindex\AuthX\Authentication\Activators;
 
 use Config\Email;
-use Navindex\Auth\Authentication\Activators\ActivatorInterface;
-use Navindex\Auth\Entities\UserInterface;
+use Navindex\AuthX\Authentication\Activators\ActivatorInterface;
+use Navindex\AuthX\Entities\UserInterface;
 
 /**
  * Class EmailActivator.
@@ -16,7 +16,7 @@ class EmailActivator extends BaseActivator implements ActivatorInterface
 	/**
 	 * Sends an activation email.
 	 *
-	 * @param \Navindex\Auth\Entities\UserInterface $user User record
+	 * @param \Navindex\AuthX\Entities\UserInterface $user User record
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */

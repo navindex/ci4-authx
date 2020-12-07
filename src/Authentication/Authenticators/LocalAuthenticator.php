@@ -1,30 +1,30 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Authenticators;
+namespace Navindex\AuthX\Authentication\Authenticators;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use Config\App as AppConfig;
-use Navindex\Auth\Authentication\Authenticators\AuthenticatorInterface;
-use Navindex\Auth\Authentication\Authenticators\BaseAuthentication;
-use Navindex\Auth\Config\Auth;
-use Navindex\Auth\Entities\UserInterface;
-use Navindex\Auth\Exceptions\AuthException;
-use Navindex\Auth\Exceptions\UserNotFoundException;
+use Navindex\AuthX\Authentication\Authenticators\AuthenticatorInterface;
+use Navindex\AuthX\Authentication\Authenticators\BaseAuthentication;
+use Navindex\AuthX\Config\Auth;
+use Navindex\AuthX\Entities\UserInterface;
+use Navindex\AuthX\Exceptions\AuthException;
+use Navindex\AuthX\Exceptions\UserNotFoundException;
 
 class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInterface
 {
 	/**
 	 * User model.
 	 *
-	 * @var \Navindex\Auth\Models\UserModelInterface
+	 * @var \Navindex\AuthX\Models\UserModelInterface
 	 */
 	protected $userModel;
 
 	/**
 	 * Token model.
 	 *
-	 * @var \Navindex\Auth\Models\TokenModelInterface
+	 * @var \Navindex\AuthX\Models\TokenModelInterface
 	 */
 	protected $tokenModel;
 
@@ -40,7 +40,7 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 	/**
 	 * Constructor.
 	 *
-	 * @param \Navindex\Auth\Config\Auth $config Configuration settings
+	 * @param \Navindex\AuthX\Config\Auth $config Configuration settings
 	 */
 	public function __construct(Auth $config)
 	{
@@ -188,7 +188,7 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 	 * @param array $credentials User credentials
 	 * @param bool  $returnUser  Return the user record?
 	 *
-	 * @return bool|\Navindex\Auth\Entities\UserInterface Validation result or user entity
+	 * @return bool|\Navindex\AuthX\Entities\UserInterface Validation result or user entity
 	 */
 	public function validate(array $credentials, bool $returnUser = false)
 	{
@@ -249,8 +249,8 @@ class LocalAuthenticator extends BaseAuthentication implements AuthenticatorInte
 	 * NOTE: does not perform validation. All validation should
 	 * be done prior to using the login method.
 	 *
-	 * @param \Navindex\Auth\Entities\UserInterface $user     User record
-	 * @param bool                                  $remember Should we remember the user (if enabled)
+	 * @param \Navindex\AuthX\Entities\UserInterface $user     User record
+	 * @param bool                                   $remember Should we remember the user (if enabled)
 	 *
 	 * @throws \Exception
 	 *

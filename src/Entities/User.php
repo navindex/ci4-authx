@@ -1,12 +1,12 @@
 <?php
 
-namespace Navindex\Auth\Entities;
+namespace Navindex\AuthX\Entities;
 
-use Navindex\Auth\Entities\BaseEntity;
-use Navindex\Auth\Entities\UserInterface;
-use Navindex\Auth\Models\Lists\UserFullPermissionListModel;
-use Navindex\Auth\Models\Lists\UserRoleListModel;
-use Navindex\Auth\Models\Types\UserStatusModel;
+use Navindex\AuthX\Entities\BaseEntity;
+use Navindex\AuthX\Entities\UserInterface;
+use Navindex\AuthX\Models\Lists\UserFullPermissionListModel;
+use Navindex\AuthX\Models\Lists\UserRoleListModel;
+use Navindex\AuthX\Models\Types\UserStatusModel;
 
 class User extends BaseEntity implements UserInterface
 {

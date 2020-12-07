@@ -1,8 +1,8 @@
 <?php
 
-namespace Navindex\Auth\Models\Base;
+namespace Navindex\AuthX\Models\Base;
 
-use Navindex\Auth\Models\Base\BaseModel;
+use Navindex\AuthX\Models\Base\BaseModel;
 
 abstract class ListModel extends BaseModel
 {

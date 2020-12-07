@@ -2,8 +2,8 @@
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Mockery as m;
-use Navindex\Auth\Authentication\AuthenticationBase;
-use Navindex\Auth\Models\LoginModel;
+use Navindex\AuthX\Authentication\AuthenticationBase;
+use Navindex\AuthX\Models\LoginModel;
 
 /**
  * @internal
@@ -27,7 +27,7 @@ class AuthenticationBaseLoginTest extends CIUnitTestCase
 
 		$this->loginModel = m::mock(LoginModel::class);
 
-		$this->auth = new AuthenticationBase(new \Navindex\Auth\Config\Auth());
+		$this->auth = new AuthenticationBase(new \Navindex\AuthX\Config\Auth());
 		$this->auth->setLoginModel($this->loginModel);
 	}
 

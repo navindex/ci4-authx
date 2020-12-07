@@ -1,7 +1,7 @@
 <?php
 
 use ModuleTests\Support\AuthTestCase;
-use Navindex\Auth\Authorization\GroupModel;
+use Navindex\AuthX\Authorization\GroupModel;
 
 /**
  * @internal

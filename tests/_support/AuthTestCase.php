@@ -4,10 +4,10 @@ namespace ModuleTests\Support;
 
 use CodeIgniter\Session\Handlers\ArrayHandler;
 use CodeIgniter\Test\Mock\MockSession;
-use Navindex\Auth\Authorization\GroupModel;
-use Navindex\Auth\Authorization\PermissionModel;
-use Navindex\Auth\Entities\User;
-use Navindex\Auth\Models\UserModel;
+use Navindex\AuthX\Authorization\GroupModel;
+use Navindex\AuthX\Authorization\PermissionModel;
+use Navindex\AuthX\Entities\User;
+use Navindex\AuthX\Models\UserModel;
 
 /**
  * @internal
@@ -44,7 +44,7 @@ class AuthTestCase extends \CodeIgniter\Test\CIDatabaseTestCase
 	protected $namespace = 'Myth\Auth';
 
 	/**
-	 * @var \Navindex\Auth\Models\UserModel
+	 * @var \Navindex\AuthX\Models\UserModel
 	 */
 	protected $users;
 

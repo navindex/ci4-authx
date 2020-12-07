@@ -1,13 +1,13 @@
 <?php
 
-namespace Navindex\Auth\Controllers;
+namespace Navindex\AuthX\Controllers;
 
 use CodeIgniter\Controller;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Paths;
-use Navindex\Auth\Config\Auth as AuthConfig;
+use Navindex\AuthX\Config\Auth as AuthConfig;
 use Psr\Log\LoggerInterface;
 
 class Auth extends Controller
@@ -23,14 +23,14 @@ class Auth extends Controller
 	/**
 	 * Authenticator library.
 	 *
-	 * @var \Navindex\Auth\Authentication\Authenticators\AuthenticatorInterface
+	 * @var \Navindex\AuthX\Authentication\Authenticators\AuthenticatorInterface
 	 */
 	protected $auth;
 
 	/**
 	 * Configuration settings.
 	 *
-	 * @var \Navindex\Auth\Config\Auth
+	 * @var \Navindex\AuthX\Config\Auth
 	 */
 	protected $config;
 

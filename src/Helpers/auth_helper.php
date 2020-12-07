@@ -16,7 +16,7 @@ if (!\function_exists('user')) {
 	/**
 	 * Returns the User instance for the current logged in user.
 	 *
-	 * @return null|\Navindex\Auth\Entities\UserInterface User entity
+	 * @return null|\Navindex\AuthX\Entities\UserInterface User entity
 	 */
 	function user()
 	{

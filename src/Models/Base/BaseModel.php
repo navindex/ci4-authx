@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Models\Base;
+namespace Navindex\AuthX\Models\Base;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ConnectionInterface;
@@ -8,7 +8,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Model;
 use CodeIgniter\Validation\ValidationInterface;
-use Navindex\Auth\Exceptions\ModelException;
+use Navindex\AuthX\Exceptions\ModelException;
 
 abstract class BaseModel extends Model
 {

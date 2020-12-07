@@ -1,338 +1,317 @@
 <?php
 
-namespace Navindex\Auth\Commands;
+namespace Navindex\AuthX\Commands;
 
-use Config\Autoload;
-use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
+use Config\Autoload;
 
 class Publish extends BaseCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group = 'Auth';
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
+	protected $group = 'Auth';
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'auth:publish';
+	/**
+	 * The Command's name.
+	 *
+	 * @var string
+	 */
+	protected $name = 'auth:publish';
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Publish selected Auth functionality into the current application.';
+	/**
+	 * the Command's short description.
+	 *
+	 * @var string
+	 */
+	protected $description = 'Publish selected Auth functionality into the current application.';
 
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'auth:publish';
+	/**
+	 * the Command's usage.
+	 *
+	 * @var string
+	 */
+	protected $usage = 'auth:publish';
 
-    /**
-     * the Command's Arguments
-     *
-     * @var array
-     */
-    protected $arguments = [];
+	/**
+	 * the Command's Arguments.
+	 *
+	 * @var array
+	 */
+	protected $arguments = [];
 
-    /**
-     * the Command's Options
-     *
-     * @var array
-     */
-    protected $options = [
-        '-f'    => 'Force overwrite ALL existing files in destination',
-    ];
+	/**
+	 * the Command's Options.
+	 *
+	 * @var array
+	 */
+	protected $options = [
+		'-f'    => 'Force overwrite ALL existing files in destination',
+	];
 
-    /**
-     * The path to Navindex\Auth\src directory.
-     *
-     * @var string
-     */
-    protected $sourcePath;
+	/**
+	 * The path to Navindex\AuthX\src directory.
+	 *
+	 * @var string
+	 */
+	protected $sourcePath;
 
-    /**
-     * Whether the Views were published for local use.
-     *
-     * @var bool
-     */
-    protected $viewsPublished = false;
+	/**
+	 * Whether the Views were published for local use.
+	 *
+	 * @var bool
+	 */
+	protected $viewsPublished = false;
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Displays the help for the spark cli script itself.
-     *
-     * @param array $params
-     */
-    public function run(array $params)
-    {
-        $this->determineSourcePath();
+	/**
+	 * Displays the help for the spark cli script itself.
+	 *
+	 * @param array $params
+	 */
+	public function run(array $params)
+	{
+		$this->determineSourcePath();
 
-        // Migration
-        if (CLI::prompt('Publish Migration?', ['y', 'n']) == 'y')
-        {
-            $this->publishMigration();
-        }
+		// Migration
+		if ('y' == CLI::prompt('Publish Migration?', ['y', 'n'])) {
+			$this->publishMigration();
+		}
 
-        // Models
-        if (CLI::prompt('Publish Models?', ['y', 'n']) == 'y')
-        {
-            $this->publishModels();
-        }
+		// Models
+		if ('y' == CLI::prompt('Publish Models?', ['y', 'n'])) {
+			$this->publishModels();
+		}
 
-        // Entities
-        if (CLI::prompt('Publish Entities?', ['y', 'n']) == 'y')
-        {
-            $this->publishEntities();
-        }
+		// Entities
+		if ('y' == CLI::prompt('Publish Entities?', ['y', 'n'])) {
+			$this->publishEntities();
+		}
 
-        // Controller
-        if (CLI::prompt('Publish Controller?', ['y', 'n']) == 'y')
-        {
-            $this->publishController();
-        }
+		// Controller
+		if ('y' == CLI::prompt('Publish Controller?', ['y', 'n'])) {
+			$this->publishController();
+		}
 
-        // Views
-        if (CLI::prompt('Publish Views?', ['y', 'n']) == 'y')
-        {
-            $this->publishViews();
-            $this->viewsPublished = true;
-        }
+		// Views
+		if ('y' == CLI::prompt('Publish Views?', ['y', 'n'])) {
+			$this->publishViews();
+			$this->viewsPublished = true;
+		}
 
-        // Filters
-        if (CLI::prompt('Publish Filters?', ['y', 'n']) == 'y')
-        {
-            $this->publishFilters();
-        }
+		// Filters
+		if ('y' == CLI::prompt('Publish Filters?', ['y', 'n'])) {
+			$this->publishFilters();
+		}
 
-        // Config
-        if (CLI::prompt('Publish Config file?', ['y', 'n']) == 'y')
-        {
-            $this->publishConfig();
-        }
+		// Config
+		if ('y' == CLI::prompt('Publish Config file?', ['y', 'n'])) {
+			$this->publishConfig();
+		}
 
-        // Language
-        if (CLI::prompt('Publish Language file?', ['y', 'n']) == 'y')
-        {
-            $this->publishLanguage();
-        }
-    }
+		// Language
+		if ('y' == CLI::prompt('Publish Language file?', ['y', 'n'])) {
+			$this->publishLanguage();
+		}
+	}
 
-    protected function publishModels()
-    {
-        $models = ['LoginModel', 'UserModel'];
+	protected function publishModels()
+	{
+		$models = ['LoginModel', 'UserModel'];
 
-        foreach ($models as $model)
-        {
-            $path = "{$this->sourcePath}/Models/{$model}.php";
+		foreach ($models as $model) {
+			$path = "{$this->sourcePath}/Models/{$model}.php";
 
-            $content = file_get_contents($path);
-            $content = $this->replaceNamespace($content, 'Navindex\Auth\Models', 'Models');
+			$content = \file_get_contents($path);
+			$content = $this->replaceNamespace($content, 'Navindex\AuthX\Models', 'Models');
 
-            $this->writeFile("Models/{$model}.php", $content);
-        }
-    }
+			$this->writeFile("Models/{$model}.php", $content);
+		}
+	}
 
-    protected function publishEntities()
-    {
-        $path = "{$this->sourcePath}/Entities/User.php";
+	protected function publishEntities()
+	{
+		$path = "{$this->sourcePath}/Entities/User.php";
 
-        $content = file_get_contents($path);
-        $content = $this->replaceNamespace($content, 'Navindex\Auth\Entities', 'Entities');
+		$content = \file_get_contents($path);
+		$content = $this->replaceNamespace($content, 'Navindex\AuthX\Entities', 'Entities');
 
-        $this->writeFile("Entities/User.php", $content);
-    }
+		$this->writeFile('Entities/User.php', $content);
+	}
 
-    protected function publishController()
-    {
-        $path = "{$this->sourcePath}/Controllers/AuthController.php";
+	protected function publishController()
+	{
+		$path = "{$this->sourcePath}/Controllers/AuthController.php";
 
-        $content = file_get_contents($path);
-        $content = $this->replaceNamespace($content, 'Navindex\Auth\Controllers', 'Controllers');
+		$content = \file_get_contents($path);
+		$content = $this->replaceNamespace($content, 'Navindex\AuthX\Controllers', 'Controllers');
 
-        $this->writeFile("Controllers/AuthController.php", $content);
-    }
+		$this->writeFile('Controllers/AuthController.php', $content);
+	}
 
-    protected function publishViews()
-    {
-        $map = directory_map($this->sourcePath . '/Views');
-        $prefix = '';
+	protected function publishViews()
+	{
+		$map = directory_map($this->sourcePath . '/Views');
+		$prefix = '';
 
-        foreach ($map as $key => $view)
-        {
-            if (is_array($view))
-            {
-                $oldPrefix = $prefix;
-                $prefix .= $key;
+		foreach ($map as $key => $view) {
+			if (\is_array($view)) {
+				$oldPrefix = $prefix;
+				$prefix .= $key;
 
-                foreach ($view as $file)
-                {
-                    $this->publishView($file, $prefix);
-                }
+				foreach ($view as $file) {
+					$this->publishView($file, $prefix);
+				}
 
-                $prefix = $oldPrefix;
+				$prefix = $oldPrefix;
 
-                continue;
-            }
+				continue;
+			}
 
-            $this->publishView($view, $prefix);
-        }
-    }
+			$this->publishView($view, $prefix);
+		}
+	}
 
-    protected function publishView($view, string $prefix = '')
-    {
-        $path = "{$this->sourcePath}/Views/{$prefix}{$view}";
-		$namespace = defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
+	protected function publishView($view, string $prefix = '')
+	{
+		$path = "{$this->sourcePath}/Views/{$prefix}{$view}";
+		$namespace = \defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
 
-        $content = file_get_contents($path);
-        $content = str_replace('Navindex\Auth\Views', $namespace . '\Auth', $content);
+		$content = \file_get_contents($path);
+		$content = \str_replace('Navindex\AuthX\Views', $namespace . '\Auth', $content);
 
-        $this->writeFile("Views/Auth/{$prefix}{$view}", $content);
-    }
+		$this->writeFile("Views/Auth/{$prefix}{$view}", $content);
+	}
 
-    protected function publishFilters()
-    {
-        $filters = ['LoginFilter', 'PermissionFilter', 'RoleFilter'];
+	protected function publishFilters()
+	{
+		$filters = ['LoginFilter', 'PermissionFilter', 'RoleFilter'];
 
-        foreach ($filters as $filter)
-        {
-            $path = "{$this->sourcePath}/Filters/{$filter}.php";
+		foreach ($filters as $filter) {
+			$path = "{$this->sourcePath}/Filters/{$filter}.php";
 
-            $content = file_get_contents($path);
-            $content = $this->replaceNamespace($content, 'Navindex\Auth\Filters', 'Filters');
+			$content = \file_get_contents($path);
+			$content = $this->replaceNamespace($content, 'Navindex\AuthX\Filters', 'Filters');
 
-            $this->writeFile("Filters/{$filter}.php", $content);
-        }
-    }
+			$this->writeFile("Filters/{$filter}.php", $content);
+		}
+	}
 
-    protected function publishMigration()
-    {
-        $map = directory_map($this->sourcePath . '/Database/Migrations');
+	protected function publishMigration()
+	{
+		$map = directory_map($this->sourcePath . '/Database/Migrations');
 
-        foreach ($map as $file)
-        {
-            $content = file_get_contents("{$this->sourcePath}/Database/Migrations/{$file}");
-            $content = $this->replaceNamespace($content, 'Navindex\Auth\Database\Migrations', 'Database\Migrations');
+		foreach ($map as $file) {
+			$content = \file_get_contents("{$this->sourcePath}/Database/Migrations/{$file}");
+			$content = $this->replaceNamespace($content, 'Navindex\AuthX\Database\Migrations', 'Database\Migrations');
 
-            $this->writeFile("Database/Migrations/{$file}", $content);
-        }
+			$this->writeFile("Database/Migrations/{$file}", $content);
+		}
 
-        CLI::write('  Remember to run `spark migrate -all` to migrate the database.', 'blue');
-    }
+		CLI::write('  Remember to run `spark migrate -all` to migrate the database.', 'blue');
+	}
 
-    protected function publishConfig()
-    {
-        $path = "{$this->sourcePath}/Config/Auth.php";
+	protected function publishConfig()
+	{
+		$path = "{$this->sourcePath}/Config/Auth.php";
 
-        $content = file_get_contents($path);
-        $content = str_replace('namespace Navindex\Auth\Config', "namespace Config", $content);
-        $content = str_replace("use CodeIgniter\Config\BaseConfig;\n", '', $content);
-        $content = str_replace('extends BaseConfig', "extends \Navindex\Auth\Config\Auth", $content);
+		$content = \file_get_contents($path);
+		$content = \str_replace('namespace Navindex\AuthX\Config', 'namespace Config', $content);
+		$content = \str_replace("use CodeIgniter\\Config\\BaseConfig;\n", '', $content);
+		$content = \str_replace('extends BaseConfig', 'extends \\Navindex\\AuthX\\Config\\Auth', $content);
 
-        // are we also changing the views?
-        if ($this->viewsPublished)
-        {
-            $namespace = defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
-            $content = str_replace('Navindex\Auth\Views', $namespace . '\Views', $content);
-        }
+		// are we also changing the views?
+		if ($this->viewsPublished) {
+			$namespace = \defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
+			$content = \str_replace('Navindex\AuthX\Views', $namespace . '\Views', $content);
+		}
 
-        $this->writeFile("Config/Auth.php", $content);
-    }
+		$this->writeFile('Config/Auth.php', $content);
+	}
 
-    protected function publishLanguage()
-    {
-        $path = "{$this->sourcePath}/Language/en/Auth.php";
+	protected function publishLanguage()
+	{
+		$path = "{$this->sourcePath}/Language/en/Auth.php";
 
-        $content = file_get_contents($path);
+		$content = \file_get_contents($path);
 
-        $this->writeFile("Language/en/Auth.php", $content);
-    }
+		$this->writeFile('Language/en/Auth.php', $content);
+	}
 
-    //--------------------------------------------------------------------
-    // Utilities
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+	// Utilities
+	//--------------------------------------------------------------------
 
-    /**
-     * Replaces the Myth\Auth namespace in the published
-     * file with the applications current namespace.
-     *
-     * @param string $contents
-     * @param string $originalNamespace
-     * @param string $newNamespace
-     *
-     * @return string
-     */
-    protected function replaceNamespace(string $contents, string $originalNamespace, string $newNamespace): string
-    {
-        $appNamespace = APP_NAMESPACE;
-        $originalNamespace = "namespace {$originalNamespace}";
-        $newNamespace = "namespace {$appNamespace}\\{$newNamespace}";
+	/**
+	 * Replaces the Myth\Auth namespace in the published
+	 * file with the applications current namespace.
+	 *
+	 * @param string $contents
+	 * @param string $originalNamespace
+	 * @param string $newNamespace
+	 *
+	 * @return string
+	 */
+	protected function replaceNamespace(string $contents, string $originalNamespace, string $newNamespace): string
+	{
+		$appNamespace = APP_NAMESPACE;
+		$originalNamespace = "namespace {$originalNamespace}";
+		$newNamespace = "namespace {$appNamespace}\\{$newNamespace}";
 
-        return str_replace($originalNamespace, $newNamespace, $contents);
-    }
+		return \str_replace($originalNamespace, $newNamespace, $contents);
+	}
 
-    /**
-     * Determines the current source path from which all other files are located.
-     */
-    protected function determineSourcePath()
-    {
-        $this->sourcePath = realpath(__DIR__ . '/../');
+	/**
+	 * Determines the current source path from which all other files are located.
+	 */
+	protected function determineSourcePath()
+	{
+		$this->sourcePath = \realpath(__DIR__ . '/../');
 
-        if ($this->sourcePath == '/' || empty($this->sourcePath))
-        {
-            CLI::error('Unable to determine the correct source directory. Bailing.');
-            exit();
-        }
-    }
+		if ('/' == $this->sourcePath || empty($this->sourcePath)) {
+			CLI::error('Unable to determine the correct source directory. Bailing.');
+			exit();
+		}
+	}
 
-    /**
-     * Write a file, catching any exceptions and showing a
-     * nicely formatted error.
-     *
-     * @param string $path
-     * @param string $content
-     */
-    protected function writeFile(string $path, string $content)
-    {
-        $config = new Autoload();
-        $appPath = $config->psr4[APP_NAMESPACE];
+	/**
+	 * Write a file, catching any exceptions and showing a
+	 * nicely formatted error.
+	 *
+	 * @param string $path
+	 * @param string $content
+	 */
+	protected function writeFile(string $path, string $content)
+	{
+		$config = new Autoload();
+		$appPath = $config->psr4[APP_NAMESPACE];
 
-        $filename = $appPath . $path;
-        $directory = dirname($filename);
+		$filename = $appPath . $path;
+		$directory = \dirname($filename);
 
-        if (! is_dir($directory))
-        {
-            mkdir($directory, 0777, true);
-        }
+		if (!\is_dir($directory)) {
+			\mkdir($directory, 0777, true);
+		}
 
-        if (file_exists($filename))
-        {
-            $overwrite = (bool) CLI::getOption('f');
+		if (\file_exists($filename)) {
+			$overwrite = (bool) CLI::getOption('f');
 
-            if (! $overwrite && CLI::prompt("  File '{$path}' already exists in destination. Overwrite?", ['n', 'y']) === 'n')
-            {
-                CLI::error("  Skipped {$path}. If you wish to overwrite, please use the '-f' option or reply 'y' to the prompt.");
-                return;
-            }
-        }
+			if (!$overwrite && 'n' === CLI::prompt("  File '{$path}' already exists in destination. Overwrite?", ['n', 'y'])) {
+				CLI::error("  Skipped {$path}. If you wish to overwrite, please use the '-f' option or reply 'y' to the prompt.");
 
-        if (write_file($filename, $content))
-        {
-            CLI::write(CLI::color('  Created: ', 'green') . $path);
-        }
-        else
-        {
-            CLI::error("  Error creating {$path}.");
-        }
-    }
+				return;
+			}
+		}
+
+		if (write_file($filename, $content)) {
+			CLI::write(CLI::color('  Created: ', 'green') . $path);
+		} else {
+			CLI::error("  Error creating {$path}.");
+		}
+	}
 }

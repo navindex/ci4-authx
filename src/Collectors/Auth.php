@@ -1,9 +1,9 @@
 <?php
 
-namespace Navindex\Auth\Collectors;
+namespace Navindex\AuthX\Collectors;
 
 use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
-use Navindex\Auth\Authorization\GroupModel;
+use Navindex\AuthX\Authorization\GroupModel;
 
 /**
  * Debug Toolbar Collector for Auth.

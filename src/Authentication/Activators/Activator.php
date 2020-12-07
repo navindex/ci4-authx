@@ -1,15 +1,15 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Activators;
+namespace Navindex\AuthX\Authentication\Activators;
 
-use Navindex\Auth\Config\Auth;
+use Navindex\AuthX\Config\Auth;
 
 class Activator
 {
 	/**
 	 * Configuration settings.
 	 *
-	 * @var \Navindex\Auth\Config\Auth
+	 * @var \Navindex\AuthX\Config\Auth
 	 */
 	protected $config;
 
@@ -25,7 +25,7 @@ class Activator
 	/**
 	 * Constructor.
 	 *
-	 * @param \Navindex\Auth\Config\Auth $config Configuration settings
+	 * @param \Navindex\AuthX\Config\Auth $config Configuration settings
 	 */
 	public function __construct(Auth $config)
 	{
@@ -36,7 +36,7 @@ class Activator
 
 	/**
 	 * Sends activation message to the user via specified class
-	 * in `$requireActivation` setting in Navindex\Auth\Config\Auth.php.
+	 * in `$requireActivation` setting in Navindex\AuthX\Config\Auth.php.
 	 *
 	 * @param object $user User entity
 	 *

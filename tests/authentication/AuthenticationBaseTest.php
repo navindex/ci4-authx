@@ -1,7 +1,7 @@
 <?php
 
 use ModuleTests\Support\AuthTestCase;
-use Navindex\Auth\Authentication\LocalAuthenticator;
+use Navindex\AuthX\Authentication\LocalAuthenticator;
 
 /**
  * @internal
@@ -20,7 +20,7 @@ class AuthenticationBaseTest extends AuthTestCase
 	{
 		parent::setUp();
 
-		$this->auth = \Navindex\Auth\Config\Services::authentication('local', false);
+		$this->auth = \Navindex\AuthX\Config\Services::authentication('local', false);
 		$this->setPrivateProperty($this->auth, 'user', null);
 
 		$db = db_connect();

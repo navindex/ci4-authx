@@ -1,14 +1,14 @@
 <?php
 
-namespace Navindex\Auth\Models\Types;
+namespace Navindex\AuthX\Models\Types;
 
-use Navindex\Auth\Entities\Type;
-use Navindex\Auth\Models\Base\TypeModel;
-use Navindex\Auth\Models\Interfaces\RoleModelInterface;
-use Navindex\Auth\Models\Junctions\RolePermissionModel;
-use Navindex\Auth\Models\Junctions\UserRoleModel;
-use Navindex\Auth\Models\Lists\RolePermissionListModel;
-use Navindex\Auth\Models\Lists\UserRoleListModel;
+use Navindex\AuthX\Entities\Type;
+use Navindex\AuthX\Models\Base\TypeModel;
+use Navindex\AuthX\Models\Interfaces\RoleModelInterface;
+use Navindex\AuthX\Models\Junctions\RolePermissionModel;
+use Navindex\AuthX\Models\Junctions\UserRoleModel;
+use Navindex\AuthX\Models\Lists\RolePermissionListModel;
+use Navindex\AuthX\Models\Lists\UserRoleListModel;
 
 class RoleModel extends TypeModel implements RoleModelInterface
 {

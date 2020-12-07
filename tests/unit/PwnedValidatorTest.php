@@ -4,9 +4,9 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
-use Navindex\Auth\Authentication\Passwords\PwnedValidator;
-use Navindex\Auth\Config\Services;
-use Navindex\Auth\Exceptions\AuthException;
+use Navindex\AuthX\Authentication\Passwords\PwnedValidator;
+use Navindex\AuthX\Config\Services;
+use Navindex\AuthX\Exceptions\AuthException;
 
 /**
  * @internal

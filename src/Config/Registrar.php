@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Config;
+namespace Navindex\AuthX\Config;
 
 /**
  * Helper class that will register our bulk plugins

@@ -14,7 +14,7 @@ NOTE: it assumes a standard CodeIgniter 4 application structure, so will need to
 
 ## 1. LocalAuthenticator Class
 
-The included class, `Navindex\Auth\Authenticators\LocalAuthenticator`, together with the models and entities is the power behind the features listed below. If you want to create your own, create a new class that implements the `Navindex\Auth\Authenticators\AuthenticateInterface`. Then modify `app/Config/App.php` to use the new class. This will be automatically loaded up and readied for any class that uses the [Auth Trait](auth_trait.md).
+The included class, `Navindex\AuthX\Authenticators\LocalAuthenticator`, together with the models and entities is the power behind the features listed below. If you want to create your own, create a new class that implements the `Navindex\AuthX\Authenticators\AuthenticateInterface`. Then modify `app/Config/App.php` to use the new class. This will be automatically loaded up and readied for any class that uses the [Auth Trait](auth_trait.md).
 
 ## 2. Logging Users In
 
@@ -138,7 +138,7 @@ To allow a user to remove all login attempts associated with their email address
 Before the system can work, you must tell it which model to use when working with Users.
 
 ```php
-    $auth->useModel( new \Navindex\Auth\Models\UserModel() );
+    $auth->useModel( new \Navindex\AuthX\Models\UserModel() );
 ```
 
 ## 9. Removing All Login Attempts for A User
@@ -205,7 +205,7 @@ This can be either false or string with a namespaced class name. Using a class n
 class to send an activation message.
 
 ```php
-    public $requireActivation = 'Navindex\Auth\Authentication\Activators\EmailActivator';
+    public $requireActivation = 'Navindex\AuthX\Authentication\Activators\EmailActivator';
 
 ### auth.userActivators
 This is a list of available activators, along with their optional configuration variables. Class names listed here can be used
@@ -213,7 +213,7 @@ by `requireActivation` config variable.
 
 ```php
     public $userActivators = [
-        'Navindex\Auth\Authentication\Activators\EmailActivator' => [
+        'Navindex\AuthX\Authentication\Activators\EmailActivator' => [
             'fromEmail' => null,
             'fromName' => null,
         ],
@@ -224,7 +224,7 @@ This can be either false or string with a namespaced class name. Using a class n
  class to send a reset message.
 
 ```php
-    public $activeResetter = 'Navindex\Auth\Authentication\Resetters\EmailResetter';
+    public $activeResetter = 'Navindex\AuthX\Authentication\Resetters\EmailResetter';
 
 ### auth.userResetters
 This is a list of available resetters, along with their optional configuration variables. Class names listed here can be used
@@ -232,7 +232,7 @@ by `activeResetter` config variable.
 
 ```php
     public $userResetters = [
-        'Navindex\Auth\Authentication\Resetters\EmailResetter' => [
+        'Navindex\AuthX\Authentication\Resetters\EmailResetter' => [
             'fromEmail' => null,
             'fromName' => null,
         ],
@@ -272,9 +272,9 @@ You can easily add your own should you need to customize the validation rules.
 
 ```php
     public $passwordValidators = [
-        'Navindex\Auth\Authentication\Passwords\CompositionValidator',
-        'Navindex\Auth\Authentication\Passwords\DictionaryValidator',
-        //'Navindex\Auth\Authentication\Passwords\PwnedValidator',
+        'Navindex\AuthX\Authentication\Passwords\CompositionValidator',
+        'Navindex\AuthX\Authentication\Passwords\DictionaryValidator',
+        //'Navindex\AuthX\Authentication\Passwords\PwnedValidator',
     ];
 
 The default validators that come with Myth:Auth are:

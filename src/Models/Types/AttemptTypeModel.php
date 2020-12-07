@@ -1,8 +1,8 @@
 <?php
 
-namespace Navindex\Auth\Models\Types;
+namespace Navindex\AuthX\Models\Types;
 
-use Navindex\Auth\Models\Base\TypeModel;
+use Navindex\AuthX\Models\Base\TypeModel;
 
 class AttemptTypeModel extends TypeModel
 {

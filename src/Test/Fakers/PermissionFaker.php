@@ -1,9 +1,9 @@
 <?php
 
-namespace Navindex\Auth\Test\Fakers;
+namespace Navindex\AuthX\Test\Fakers;
 
 use Faker\Generator;
-use Navindex\Auth\Authorization\PermissionModel;
+use Navindex\AuthX\Authorization\PermissionModel;
 
 class PermissionFaker extends PermissionModel
 {

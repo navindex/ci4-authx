@@ -1,20 +1,20 @@
 <?php
 
-namespace Navindex\Auth\Models;
+namespace Navindex\AuthX\Models;
 
 use CodeIgniter\Database\BaseBuilder;
-use Navindex\Auth\Entities\Attempt;
-use Navindex\Auth\Entities\User;
-use Navindex\Auth\Models\AttemptModel;
-use Navindex\Auth\Models\Base\BaseModel;
-use Navindex\Auth\Models\Interfaces\UserModelInterface;
-use Navindex\Auth\Models\Junctions\UserPermissionModel;
-use Navindex\Auth\Models\Junctions\UserRoleModel;
-use Navindex\Auth\Models\Lists\UserFullPermissionListModel;
-use Navindex\Auth\Models\Lists\UserPermissionListModel;
-use Navindex\Auth\Models\Lists\UserRoleListModel;
-use Navindex\Auth\Models\Types\PermissionModel;
-use Navindex\Auth\Models\Types\RoleModel;
+use Navindex\AuthX\Entities\Attempt;
+use Navindex\AuthX\Entities\User;
+use Navindex\AuthX\Models\AttemptModel;
+use Navindex\AuthX\Models\Base\BaseModel;
+use Navindex\AuthX\Models\Interfaces\UserModelInterface;
+use Navindex\AuthX\Models\Junctions\UserPermissionModel;
+use Navindex\AuthX\Models\Junctions\UserRoleModel;
+use Navindex\AuthX\Models\Lists\UserFullPermissionListModel;
+use Navindex\AuthX\Models\Lists\UserPermissionListModel;
+use Navindex\AuthX\Models\Lists\UserRoleListModel;
+use Navindex\AuthX\Models\Types\PermissionModel;
+use Navindex\AuthX\Models\Types\RoleModel;
 
 class UserModel extends BaseModel implements UserModelInterface
 {

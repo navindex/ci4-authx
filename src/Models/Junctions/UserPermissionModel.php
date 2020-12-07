@@ -1,9 +1,9 @@
 <?php
 
-namespace Navindex\Auth\Models\Junctions;
+namespace Navindex\AuthX\Models\Junctions;
 
-use Navindex\Auth\Entities\UserPermission;
-use Navindex\Auth\Models\Base\JunctionModel;
+use Navindex\AuthX\Entities\UserPermission;
+use Navindex\AuthX\Models\Base\JunctionModel;
 
 class UserPermissionModel extends JunctionModel
 {

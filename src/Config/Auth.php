@@ -1,25 +1,25 @@
 <?php
 
-namespace Navindex\Auth\Config;
+namespace Navindex\AuthX\Config;
 
 use CodeIgniter\Config\BaseConfig;
-use Navindex\Auth\Authentication\Activators\EmailActivator;
-use Navindex\Auth\Authentication\Authenticators\LocalAuthenticator;
-use Navindex\Auth\Authentication\Resetters\EmailResetter;
-use Navindex\Auth\Authentication\Validators\CompositionValidator;
-use Navindex\Auth\Authentication\Validators\DictionaryValidator;
-use Navindex\Auth\Authentication\Validators\NothingPersonalValidator;
-use Navindex\Auth\Authentication\Validators\PwnedValidator;
-use Navindex\Auth\Authorisation\FlatAuthorisation;
-use Navindex\Auth\Controllers\Auth as AuthController;
-use Navindex\Auth\Entities\Type;
-use Navindex\Auth\Entities\User;
-use Navindex\Auth\Entities\PersistenceToken;
-use Navindex\Auth\Models\Types\PermissionModel;
-use Navindex\Auth\Models\Types\RoleModel;
-use Navindex\Auth\Models\UserModel;
-use Navindex\Auth\Models\PersistenceTokenModel;
-use Navindex\Auth\Validation\Rules as AuthRules;
+use Navindex\AuthX\Authentication\Activators\EmailActivator;
+use Navindex\AuthX\Authentication\Authenticators\LocalAuthenticator;
+use Navindex\AuthX\Authentication\Resetters\EmailResetter;
+use Navindex\AuthX\Authentication\Validators\CompositionValidator;
+use Navindex\AuthX\Authentication\Validators\DictionaryValidator;
+use Navindex\AuthX\Authentication\Validators\NothingPersonalValidator;
+use Navindex\AuthX\Authentication\Validators\PwnedValidator;
+use Navindex\AuthX\Authorisation\FlatAuthorisation;
+use Navindex\AuthX\Controllers\Auth as AuthController;
+use Navindex\AuthX\Entities\PersistenceToken;
+use Navindex\AuthX\Entities\Type;
+use Navindex\AuthX\Entities\User;
+use Navindex\AuthX\Models\PersistenceTokenModel;
+use Navindex\AuthX\Models\Types\PermissionModel;
+use Navindex\AuthX\Models\Types\RoleModel;
+use Navindex\AuthX\Models\UserModel;
+use Navindex\AuthX\Validation\Rules as AuthRules;
 
 class Auth extends BaseConfig
 {
@@ -128,12 +128,12 @@ class Auth extends BaseConfig
 	 * @var array
 	 */
 	public $views = [
-		'login'         => 'Navindex\Auth\Views\forms\login',
-		'register'      => 'Navindex\Auth\Views\forms\register',
-		'forgot'        => 'Navindex\Auth\Views\forms\forgot',
-		'reset'         => 'Navindex\Auth\Views\forms\reset',
-		'emailForgot'   => 'Navindex\Auth\Views\emails\forgot',
-		'emailActivate' => 'Navindex\Auth\Views\emails\activate',
+		'login'         => 'Navindex\AuthX\Views\forms\login',
+		'register'      => 'Navindex\AuthX\Views\forms\register',
+		'forgot'        => 'Navindex\AuthX\Views\forms\forgot',
+		'reset'         => 'Navindex\AuthX\Views\forms\reset',
+		'emailForgot'   => 'Navindex\AuthX\Views\emails\forgot',
+		'emailActivate' => 'Navindex\AuthX\Views\emails\activate',
 	];
 
 	//--------------------------------------------------------------------
@@ -143,7 +143,7 @@ class Auth extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $viewLayout = 'Navindex\Auth\Views\layouts\auth';
+	public $viewLayout = 'Navindex\AuthX\Views\layouts\auth';
 
 	//--------------------------------------------------------------------
 
@@ -152,7 +152,7 @@ class Auth extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $emailLayout = 'Navindex\Auth\Views\layouts\email';
+	public $emailLayout = 'Navindex\AuthX\Views\layouts\email';
 
 	//--------------------------------------------------------------------
 	// Fields

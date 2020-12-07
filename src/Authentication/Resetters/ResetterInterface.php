@@ -1,8 +1,8 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Resetters;
+namespace Navindex\AuthX\Authentication\Resetters;
 
-use Navindex\Auth\Entities\UserInterface;
+use Navindex\AuthX\Entities\UserInterface;
 
 /**
  * Interface ResetterInterface.
@@ -12,7 +12,7 @@ interface ResetterInterface
 	/**
 	 * Send reset message to user.
 	 *
-	 * @param \Navindex\Auth\Entities\UserInterface $user User record
+	 * @param \Navindex\AuthX\Entities\UserInterface $user User record
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */

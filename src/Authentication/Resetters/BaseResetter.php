@@ -1,15 +1,15 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Resetters;
+namespace Navindex\AuthX\Authentication\Resetters;
 
-use Navindex\Auth\Config\Auth;
+use Navindex\AuthX\Config\Auth;
 
 abstract class BaseResetter
 {
 	/**
 	 * Configuration settings.
 	 *
-	 * @var \Navindex\Auth\Config\Auth
+	 * @var \Navindex\AuthX\Config\Auth
 	 */
 	protected $config;
 
@@ -25,7 +25,7 @@ abstract class BaseResetter
 	/**
 	 * Constructor.
 	 *
-	 * @param \Navindex\Auth\Config\Auth $config Configuration settings
+	 * @param \Navindex\AuthX\Config\Auth $config Configuration settings
 	 */
 	public function __construct(Auth $config)
 	{

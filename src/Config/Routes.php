@@ -1,7 +1,7 @@
 <?php
 
-use Navindex\Auth\Config\Auth as AuthConfig;
-use Navindex\Auth\Controllers\Auth as AuthController;
+use Navindex\AuthX\Config\Auth as AuthConfig;
+use Navindex\AuthX\Controllers\Auth as AuthController;
 
 /**
  * Auth routes file.

@@ -1,15 +1,15 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Activators;
+namespace Navindex\AuthX\Authentication\Activators;
 
-use Navindex\Auth\Entities\UserInterface;
+use Navindex\AuthX\Entities\UserInterface;
 
 interface ActivatorInterface
 {
 	/**
 	 * Send activation message to user.
 	 *
-	 * @param \Navindex\Auth\Entities\UserInterface $user User record
+	 * @param \Navindex\AuthX\Entities\UserInterface $user User record
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */

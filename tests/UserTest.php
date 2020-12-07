@@ -1,7 +1,7 @@
 <?php
 
 use ModuleTests\Support\AuthTestCase;
-use Navindex\Auth\Entities\User;
+use Navindex\AuthX\Entities\User;
 
 /**
  * @internal

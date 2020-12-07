@@ -1,15 +1,15 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Resetters;
+namespace Navindex\AuthX\Authentication\Resetters;
 
-use Navindex\Auth\Config\Auth;
+use Navindex\AuthX\Config\Auth;
 
 class Resetter
 {
 	/**
 	 * Configuration settings.
 	 *
-	 * @var \Navindex\Auth\Config\Auth
+	 * @var \Navindex\AuthX\Config\Auth
 	 */
 	protected $config;
 
@@ -25,7 +25,7 @@ class Resetter
 	/**
 	 * Constructor.
 	 *
-	 * @param \Navindex\Auth\Config\Auth $config Configuration settings
+	 * @param \Navindex\AuthX\Config\Auth $config Configuration settings
 	 */
 	public function __construct(Auth $config)
 	{
@@ -36,7 +36,7 @@ class Resetter
 
 	/**
 	 * Sends reset message to the user via specified class
-	 * in `$activeResetter` setting in Navindex\Auth\Config\Auth.php.
+	 * in `$activeResetter` setting in Navindex\AuthX\Config\Auth.php.
 	 *
 	 * @param object $user User record
 	 *

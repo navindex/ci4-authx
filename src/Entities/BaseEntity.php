@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Entities;
+namespace Navindex\AuthX\Entities;
 
 use CodeIgniter\Entity;
 

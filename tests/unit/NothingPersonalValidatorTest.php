@@ -1,7 +1,7 @@
 <?php
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Navindex\Auth\Authentication\Passwords\NothingPersonalValidator;
+use Navindex\AuthX\Authentication\Passwords\NothingPersonalValidator;
 
 /**
  * @internal
@@ -18,7 +18,7 @@ class NothingPersonalValidatorTest extends CIUnitTestCase
 	{
 		parent::setUp();
 
-		$config = new \Navindex\Auth\Config\Auth();
+		$config = new \Navindex\AuthX\Config\Auth();
 		//
 		//        $config->personalFields = [];//['firstname', 'lastname'];
 
@@ -28,7 +28,7 @@ class NothingPersonalValidatorTest extends CIUnitTestCase
 
 	public function testFalseOnPasswordIsEmail()
 	{
-		$user = new \Navindex\Auth\Entities\User(
+		$user = new \Navindex\AuthX\Entities\User(
 			[
 				'email'    => 'JoeSmith@example.com',
 				'username' => 'Joe Smith',
@@ -42,7 +42,7 @@ class NothingPersonalValidatorTest extends CIUnitTestCase
 
 	public function testFalseOnPasswordIsUsernameBackwards()
 	{
-		$user = new \Navindex\Auth\Entities\User(
+		$user = new \Navindex\AuthX\Entities\User(
 			[
 				'email'    => 'JoeSmith@example.com',
 				'username' => 'Joe Smith',
@@ -56,7 +56,7 @@ class NothingPersonalValidatorTest extends CIUnitTestCase
 
 	public function testFalseOnPasswordAndUsernameTheSame()
 	{
-		$user = new \Navindex\Auth\Entities\User(
+		$user = new \Navindex\AuthX\Entities\User(
 			[
 				'email'    => 'vampire@example.com',
 				'username' => 'Vlad the Impaler',
@@ -70,12 +70,12 @@ class NothingPersonalValidatorTest extends CIUnitTestCase
 
 	public function testTrueWhenPasswordHasNothingPersonal()
 	{
-		$config = new \Navindex\Auth\Config\Auth();
+		$config = new \Navindex\AuthX\Config\Auth();
 		$config->maxSimilarity = 50;
 		$config->personalFields = ['firstname', 'lastname'];
 		$this->validator->setConfig($config);
 
-		$user = new \Navindex\Auth\Entities\User(
+		$user = new \Navindex\AuthX\Entities\User(
 			[
 				'email'     => 'jsmith@example.com',
 				'username'  => 'JoeS',
@@ -106,14 +106,14 @@ class NothingPersonalValidatorTest extends CIUnitTestCase
 	 */
 	public function testIsNotPersonalFalsePositivesCaughtByIsNotSimilar($password)
 	{
-		$user = new \Navindex\Auth\Entities\User(
+		$user = new \Navindex\AuthX\Entities\User(
 			[
 				'username' => 'CaptainJoe',
 				'email'    => 'JosephSmith@example.com',
 			]
 		);
 
-		$config = new \Navindex\Auth\Config\Auth();
+		$config = new \Navindex\AuthX\Config\Auth();
 		$config->maxSimilarity = 50;
 		$this->validator->setConfig($config);
 
@@ -155,12 +155,12 @@ class NothingPersonalValidatorTest extends CIUnitTestCase
 	 */
 	public function testConfigPersonalFieldsValues($firstName, $lastName, $expected)
 	{
-		$config = new \Navindex\Auth\Config\Auth();
+		$config = new \Navindex\AuthX\Config\Auth();
 		$config->maxSimilarity = 66;
 		$config->personalFields = ['firstname', 'lastname'];
 		$this->validator->setConfig($config);
 
-		$user = new \Navindex\Auth\Entities\User(
+		$user = new \Navindex\AuthX\Entities\User(
 			[
 				'username'  => 'Vlad the Impaler',
 				'email'     => 'vampire@example.com',
@@ -198,11 +198,11 @@ class NothingPersonalValidatorTest extends CIUnitTestCase
 		$maxSimilarity,
 		$expected
 	) {
-		$config = new \Navindex\Auth\Config\Auth();
+		$config = new \Navindex\AuthX\Config\Auth();
 		$config->maxSimilarity = $maxSimilarity;
 		$this->validator->setConfig($config);
 
-		$user = new \Navindex\Auth\Entities\User(
+		$user = new \Navindex\AuthX\Entities\User(
 			[
 				'username' => 'CaptainJoe',
 				'email'    => 'joseph@example.com',

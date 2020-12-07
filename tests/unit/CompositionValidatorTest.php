@@ -1,7 +1,7 @@
 <?php
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Navindex\Auth\Authentication\Passwords\CompositionValidator;
+use Navindex\AuthX\Authentication\Passwords\CompositionValidator;
 
 /**
  * @internal
@@ -18,7 +18,7 @@ class CompositionValidatorTest extends CIUnitTestCase
 	{
 		parent::setUp();
 
-		$config = new \Navindex\Auth\Config\Auth();
+		$config = new \Navindex\AuthX\Config\Auth();
 		$config->minimumPasswordLength = 8;
 
 		$this->validator = new CompositionValidator();

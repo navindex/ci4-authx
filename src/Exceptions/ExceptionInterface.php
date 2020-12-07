@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Exceptions;
+namespace Navindex\AuthX\Exceptions;
 
 /**
  * Provides a domain-level interface for broad capture

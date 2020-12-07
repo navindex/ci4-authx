@@ -1,15 +1,15 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Authenticators;
+namespace Navindex\AuthX\Authentication\Authenticators;
 
-use Navindex\Auth\Config\Auth;
+use Navindex\AuthX\Config\Auth;
 
 class BaseAuthentication
 {
 	/**
 	 * Configuration settings.
 	 *
-	 * @var \Navindex\Auth\Config\Auth
+	 * @var \Navindex\AuthX\Config\Auth
 	 */
 	protected $config;
 
@@ -32,7 +32,7 @@ class BaseAuthentication
 	/**
 	 * Constructor.
 	 *
-	 * @param \Navindex\Auth\Config\Auth $config Configuration settings
+	 * @param \Navindex\AuthX\Config\Auth $config Configuration settings
 	 */
 	public function __construct(Auth $config)
 	{

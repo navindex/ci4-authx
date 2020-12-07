@@ -2,7 +2,7 @@
 
 use CodeIgniter\Test\ControllerTester;
 use ModuleTests\Support\AuthTestCase;
-use Navindex\Auth\Controllers\AuthController;
+use Navindex\AuthX\Controllers\AuthController;
 
 /**
  * @internal
@@ -22,7 +22,7 @@ class LoginTest extends AuthTestCase
 
 		// Make sure our valiation rules include strong_password
 		$vConfig = new \Config\Validation();
-		$vConfig->ruleSets[] = \Navindex\Auth\Authentication\Passwords\ValidationRules::class;
+		$vConfig->ruleSets[] = \Navindex\AuthX\Authentication\Passwords\ValidationRules::class;
 		$vConfig->ruleSets = \array_reverse($vConfig->ruleSets);
 		\CodeIgniter\Config\Config::injectMock('Validation', $vConfig);
 

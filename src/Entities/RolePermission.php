@@ -1,8 +1,8 @@
 <?php
 
-namespace Navindex\Auth\Entities;
+namespace Navindex\AuthX\Entities;
 
-use Navindex\Auth\Entities\BaseEntity;
+use Navindex\AuthX\Entities\BaseEntity;
 
 class RolePermission extends BaseEntity
 {

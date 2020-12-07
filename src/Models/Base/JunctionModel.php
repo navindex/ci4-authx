@@ -1,10 +1,10 @@
 <?php
 
-namespace Navindex\Auth\Models\Base;
+namespace Navindex\AuthX\Models\Base;
 
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
-use Navindex\Auth\Models\Base\BaseModel;
+use Navindex\AuthX\Models\Base\BaseModel;
 
 /**
  * Model representing a mny-to-many connector table.
@@ -12,6 +12,7 @@ use Navindex\Auth\Models\Base\BaseModel;
 abstract class JunctionModel extends BaseModel
 {
 	const LEFT = 0;
+
 	const RIGHT = 1;
 
 	/**

@@ -1,9 +1,9 @@
 <?php
 
-namespace Navindex\Auth\Test\Fakers;
+namespace Navindex\AuthX\Test\Fakers;
 
 use Faker\Generator;
-use Navindex\Auth\Authorization\GroupModel;
+use Navindex\AuthX\Authorization\GroupModel;
 
 class GroupFaker extends GroupModel
 {

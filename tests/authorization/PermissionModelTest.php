@@ -1,7 +1,7 @@
 <?php
 
 use ModuleTests\Support\AuthTestCase;
-use Navindex\Auth\Authorization\PermissionModel;
+use Navindex\AuthX\Authorization\PermissionModel;
 
 /**
  * @internal

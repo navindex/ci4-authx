@@ -4,7 +4,7 @@
 
 ## Publish
 
-	php spark auth:publish
+    php spark auth:publish
 
 The `publish` command integrates module components into an existing CodeIgniter 4 project.
 When run, you will be prompted about each component (e.g. Migrations, Views, Models, etc.)
@@ -20,13 +20,13 @@ place and updating namespaces accordingly.
 
 ## Create User
 
-	php spark auth:create_user [username] [email]
+    php spark auth:create_user [username] [email]
 
 The `create_user` command will add a new user record to the database. This command creates
 the new user with only the `username` and `email` fields propagated, so the user will be
 forced to create a password at first login attempt. `create_user` will prompt for missing
 fields but can also accept them directly making it easy to batch load users from a file,
-script, or data stream. Users are added through `Navindex\Auth\Models\UserModel` and thus are
+script, or data stream. Users are added through `Navindex\AuthX\Models\UserModel` and thus are
 subject to validation rules and casts.
 
 ### Arguments
@@ -36,7 +36,7 @@ subject to validation rules and casts.
 
 ## Create Group
 
-	php spark auth:create_group [name] [description]
+    php spark auth:create_group [name] [description]
 
 The `create_group` command will add a new group record to the database. The `name` and
 `description` parameters will both be prompted for if missing. If the new group is successfully
@@ -49,7 +49,7 @@ created this command will list all the groups from the database by calling `list
 
 ## List Groups
 
-	php spark auth:list_groups
+    php spark auth:list_groups
 
 The `list_groups` command displays all the groups in the database in a neatly ordered table.
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Exceptions;
+namespace Navindex\AuthX\Exceptions;
 
 class PermissionException extends \RuntimeException implements ExceptionInterface
 {

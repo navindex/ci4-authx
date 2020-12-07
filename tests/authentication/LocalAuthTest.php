@@ -1,9 +1,9 @@
 <?php
 
 use ModuleTests\Support\AuthTestCase;
-use Navindex\Auth\Authentication\LocalAuthenticator;
-use Navindex\Auth\Entities\User;
-use Navindex\Auth\Models\UserModel;
+use Navindex\AuthX\Authentication\LocalAuthenticator;
+use Navindex\AuthX\Entities\User;
+use Navindex\AuthX\Models\UserModel;
 
 /**
  * @internal
@@ -27,7 +27,7 @@ class LocalAuthTest extends AuthTestCase
 	{
 		parent::setUp();
 
-		$this->auth = \Navindex\Auth\Config\Services::authentication('local');
+		$this->auth = \Navindex\AuthX\Config\Services::authentication('local');
 	}
 
 	public function tearDown(): void
@@ -59,7 +59,7 @@ class LocalAuthTest extends AuthTestCase
 
 	public function testValidateInvalidCredential()
 	{
-		$this->expectException(\Navindex\Auth\Exceptions\AuthException::class);
+		$this->expectException(\Navindex\AuthX\Exceptions\AuthException::class);
 
 		$this->hasInDatabase('users', [
 			'email'         => 'fred@example.com',

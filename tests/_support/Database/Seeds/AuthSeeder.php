@@ -2,7 +2,7 @@
 
 namespace ModuleTests\Support\Database\Seeds;
 
-use Navindex\Auth\Entities\User;
+use Navindex\AuthX\Entities\User;
 
 class AuthSeeder extends \CodeIgniter\Database\Seeder
 {

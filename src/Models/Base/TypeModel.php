@@ -1,11 +1,11 @@
 <?php
 
-namespace Navindex\Auth\Models\Base;
+namespace Navindex\AuthX\Models\Base;
 
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
-use Navindex\Auth\Entities\Type;
-use Navindex\Auth\Models\Base\BaseModel;
+use Navindex\AuthX\Entities\Type;
+use Navindex\AuthX\Models\Base\BaseModel;
 
 abstract class TypeModel extends BaseModel
 {

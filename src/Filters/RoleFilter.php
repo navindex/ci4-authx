@@ -1,12 +1,12 @@
 <?php
 
-namespace Navindex\Auth\Filters;
+namespace Navindex\AuthX\Filters;
 
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
-use Navindex\Auth\Exceptions\PermissionException;
+use Navindex\AuthX\Exceptions\PermissionException;
 
 class RoleFilter implements FilterInterface
 {

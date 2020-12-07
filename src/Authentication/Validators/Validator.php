@@ -1,16 +1,16 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Validators;
+namespace Navindex\AuthX\Authentication\Validators;
 
-use Navindex\Auth\Config\Auth;
-use Navindex\Auth\Exceptions\AuthException;
+use Navindex\AuthX\Config\Auth;
+use Navindex\AuthX\Exceptions\AuthException;
 
 class Validator
 {
 	/**
 	 * Configuration settings.
 	 *
-	 * @var \Navindex\Auth\Config\Auth
+	 * @var \Navindex\AuthX\Config\Auth
 	 */
 	protected $config;
 
@@ -26,7 +26,7 @@ class Validator
 	/**
 	 * Constructor.
 	 *
-	 * @param \Navindex\Auth\Config\Auth $config Configuration settings
+	 * @param \Navindex\AuthX\Config\Auth $config Configuration settings
 	 */
 	public function __construct(Auth $config)
 	{
@@ -37,7 +37,7 @@ class Validator
 
 	/**
 	 * Checks a password against all of the Validators specified
-	 * in `$passwordValidators` setting in Navindex\Auth\Config\Auth.php.
+	 * in `$passwordValidators` setting in Navindex\AuthX\Config\Auth.php.
 	 *
 	 * @param string $password Password
 	 * @param object $user     User object

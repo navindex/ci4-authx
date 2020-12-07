@@ -1,8 +1,8 @@
 <?php
 
-namespace Navindex\Auth\Validation;
+namespace Navindex\AuthX\Validation;
 
-use Navindex\Auth\Config\Auth;
+use Navindex\AuthX\Config\Auth;
 
 /**
  * Validation rules.

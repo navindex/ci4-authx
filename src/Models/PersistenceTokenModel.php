@@ -1,10 +1,10 @@
 <?php
 
-namespace Navindex\Auth\Models;
+namespace Navindex\AuthX\Models;
 
-use Navindex\Auth\Entities\PersistenceToken;
-use Navindex\Auth\Models\Base\BaseModel;
-use Navindex\Auth\Models\Interfaces\TokenModelInterface;
+use Navindex\AuthX\Entities\PersistenceToken;
+use Navindex\AuthX\Models\Base\BaseModel;
+use Navindex\AuthX\Models\Interfaces\TokenModelInterface;
 
 class PersistenceTokenModel extends BaseModel implements TokenModelInterface
 {

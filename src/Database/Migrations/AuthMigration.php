@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Database\Migrations;
+namespace Navindex\AuthX\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
@@ -11,9 +11,7 @@ class AuthMigration extends Migration
 	 */
 	public function up()
 	{
-		/**
-		 * Attempt type table.
-		 */
+		// Attempt type table.
 		$this->addMetaFields();
 		$this->forge
 			->addField([
@@ -40,11 +38,10 @@ class AuthMigration extends Migration
 			->addUniqueKey('label')
 			->createTable('attempt_type', true, [
 				'comment' => 'Attempt types',
-			]);
+			])
+		;
 
-		/**
-		 * Permission table.
-		 */
+		// Permission table.
 		$this->addMetaFields();
 		$this->forge
 			->addField([
@@ -71,11 +68,10 @@ class AuthMigration extends Migration
 			->addUniqueKey('label')
 			->createTable('permission', true, [
 				'comment' => 'Permissions',
-			]);
+			])
+		;
 
-		/**
-		 * Role table.
-		 */
+		// Role table.
 		$this->addMetaFields();
 		$this->forge
 			->addField([
@@ -102,11 +98,10 @@ class AuthMigration extends Migration
 			->addUniqueKey('label')
 			->createTable('role', true, [
 				'comment' => 'Roles',
-			]);
+			])
+		;
 
-		/**
-		 * User status table.
-		 */
+		// User status table.
 		$this->addMetaFields();
 		$this->forge
 			->addField([
@@ -133,9 +128,10 @@ class AuthMigration extends Migration
 			->addUniqueKey('label')
 			->createTable('status', true, [
 				'comment' => 'User statuses',
-			]);
+			])
+		;
 
-		/**
+		/*
 		 * Attempt table.
 		 *
 		 * @todo Check if 'success' can be NULL or not.
@@ -204,11 +200,10 @@ class AuthMigration extends Migration
 			->addKey('email')
 			->createTable('attempt', true, [
 				'comment' => 'Attempts',
-			]);
+			])
+		;
 
-		/*
-         * User table.
-         */
+		// User table.
 		$this->addMetaFields();
 		$this->forge
 			->addField([
@@ -276,13 +271,14 @@ class AuthMigration extends Migration
 			->addKey('status_id')
 			->createTable('user', true, [
 				'comment' => 'Users',
-			]);
+			])
+		;
 
 		/*
-         * Persistence token table.
-         *
-         * @see https://paragonie.com/blog/2015/04/secure-authentication-php-with-long-term-persistence
-         */
+		 * Persistence token table.
+		 *
+		 * @see https://paragonie.com/blog/2015/04/secure-authentication-php-with-long-term-persistence
+		 */
 		$this->addMetaFields();
 		$this->forge
 			->addField([
@@ -320,11 +316,10 @@ class AuthMigration extends Migration
 			->addForeignKey('user_id', 'user', 'id', false, 'CASCADE')
 			->createTable('persistence', true, [
 				'comment' => 'Persistence tokens',
-			]);
+			])
+		;
 
-		/*
-         * Role permission junction table.
-         */
+		// Role permission junction table.
 		$this->addMetaFields();
 		$this->forge
 			->addField([
@@ -346,11 +341,10 @@ class AuthMigration extends Migration
 			->addForeignKey('permission_id', 'permission', 'id', false, 'CASCADE')
 			->createTable('role_permission', true, [
 				'comment' => 'Role permissions',
-			]);
+			])
+		;
 
-		/*
-         * User permission junction table.
-         */
+		// User permission junction table.
 		$this->addMetaFields();
 		$this->forge
 			->addField([
@@ -372,11 +366,10 @@ class AuthMigration extends Migration
 			->addForeignKey('permission_id', 'permission', 'id', false, 'CASCADE')
 			->createTable('user_permission', true, [
 				'comment' => 'User permissions',
-			]);
+			])
+		;
 
-		/*
-         * User role junction table.
-         */
+		// User role junction table.
 		$this->addMetaFields();
 		$this->forge
 			->addField([
@@ -398,7 +391,8 @@ class AuthMigration extends Migration
 			->addForeignKey('role_id', 'role', 'id', false, 'CASCADE')
 			->createTable('user_role', true, [
 				'comment' => 'User roles',
-			]);
+			])
+		;
 	}
 
 	//--------------------------------------------------------------------
@@ -422,8 +416,6 @@ class AuthMigration extends Migration
 
 	/**
 	 * Adds the metadat columns.
-	 *
-	 * @return void
 	 */
 	private function addMetaFields()
 	{

@@ -1,10 +1,10 @@
 <?php
 
-namespace Navindex\Auth\Test\Fakers;
+namespace Navindex\AuthX\Test\Fakers;
 
 use Faker\Generator;
-use Navindex\Auth\Entities\User;
-use Navindex\Auth\Models\UserModel;
+use Navindex\AuthX\Entities\User;
+use Navindex\AuthX\Models\UserModel;
 
 class UserFaker extends UserModel
 {

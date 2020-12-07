@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Authorisation;
+namespace Navindex\AuthX\Authorisation;
 
 interface AuthorisationInterface
 {

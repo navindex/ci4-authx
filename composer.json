@@ -1,12 +1,12 @@
 {
-	"name": "navindex/auth",
-	"description": "Flexible authentication/authorization system for CodeIgniter 4.",
+	"name": "navindex/authx",
+	"description": "Flexible authentication/authorisation system for CodeIgniter 4.",
 	"keywords": [
 		"codeigniter",
 		"authentication",
-		"authorization"
+		"authorisation"
 	],
-	"homepage": "https://github.com/navindex/auth",
+	"homepage": "https://github.com/navindex/ci4-authx",
 	"license": "MIT",
 	"authors": [
 		{
@@ -23,7 +23,7 @@
 		}
 	],
 	"require": {
-		"php" : ">=7.2"
+		"php": ">=7.2"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
@@ -38,7 +38,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Myth\\Auth\\": "src"
+			"Navindex\\Auth\\": "src"
 		}
 	},
 	"autoload-dev": {

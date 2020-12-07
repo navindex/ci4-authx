@@ -2,7 +2,7 @@
 
 use CodeIgniter\Test\ControllerTester;
 use ModuleTests\Support\AuthTestCase;
-use Navindex\Auth\Controllers\AuthController;
+use Navindex\AuthX\Controllers\AuthController;
 
 /**
  * @internal
@@ -22,7 +22,7 @@ class RegisterTest extends AuthTestCase
 
 		// Make sure our valiation rules include strong_password
 		$vConfig = new \Config\Validation();
-		$vConfig->ruleSets[] = \Navindex\Auth\Authentication\Passwords\ValidationRules::class;
+		$vConfig->ruleSets[] = \Navindex\AuthX\Authentication\Passwords\ValidationRules::class;
 		$vConfig->ruleSets = \array_reverse($vConfig->ruleSets);
 		\CodeIgniter\Config\Config::injectMock('Validation', $vConfig);
 
@@ -53,7 +53,7 @@ class RegisterTest extends AuthTestCase
 
 	public function testAttemptRegisterDisabled()
 	{
-		$config = new \Navindex\Auth\Config\Auth();
+		$config = new \Navindex\AuthX\Config\Auth();
 		$config->allowRegistration = false;
 		\CodeIgniter\Config\Config::injectMock('Auth', $config);
 
@@ -68,7 +68,7 @@ class RegisterTest extends AuthTestCase
 
 	public function testAttemptRegisterValidationErrors()
 	{
-		$config = new \Navindex\Auth\Config\Auth();
+		$config = new \Navindex\AuthX\Config\Auth();
 		$config->allowRegistration = true;
 		\CodeIgniter\Config\Config::injectMock('Auth', $config);
 
@@ -157,7 +157,7 @@ class RegisterTest extends AuthTestCase
 			'email'    => $data['email'],
 		]);
 
-		$users = new \Navindex\Auth\Models\UserModel();
+		$users = new \Navindex\AuthX\Models\UserModel();
 		$user = $users->where('username', $data['username'])->first();
 		$this->seeInDatabase('auth_groups_users', [
 			'user_id'  => $user->id,

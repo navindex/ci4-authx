@@ -10,14 +10,14 @@ trait AuthTrait
 	/**
 	 * Instance of Authentication Class.
 	 *
-	 * @var \Navindex\Auth\Authentication\Authenticators\AuthenticatorInterface
+	 * @var \Navindex\AuthX\Authentication\Authenticators\AuthenticatorInterface
 	 */
 	public $authenticate;
 
 	/**
 	 * Instance of Authorization class.
 	 *
-	 * @var \Navindex\Auth\Authorisation\AuthorisationInterface
+	 * @var \Navindex\AuthX\Authorisation\AuthorisationInterface
 	 */
 	public $authorize;
 

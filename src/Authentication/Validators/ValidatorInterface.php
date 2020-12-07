@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Validators;
+namespace Navindex\AuthX\Authentication\Validators;
 
 /**
  * Interface ValidatorInterface.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Filters;
+namespace Navindex\AuthX\Filters;
 
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;

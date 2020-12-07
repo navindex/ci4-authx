@@ -1,6 +1,6 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Authenticators;
+namespace Navindex\AuthX\Authentication\Authenticators;
 
 interface AuthenticatorInterface
 {

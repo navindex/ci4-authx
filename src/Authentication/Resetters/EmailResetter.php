@@ -1,10 +1,10 @@
 <?php
 
-namespace Navindex\Auth\Authentication\Resetters;
+namespace Navindex\AuthX\Authentication\Resetters;
 
 use Config\Email;
-use Navindex\Auth\Authentication\Resetters\ResetterInterface;
-use Navindex\Auth\Entities\UserInterface;
+use Navindex\AuthX\Authentication\Resetters\ResetterInterface;
+use Navindex\AuthX\Entities\UserInterface;
 
 /**
  * Class EmailResetter.
@@ -16,7 +16,7 @@ class EmailResetter extends BaseResetter implements ResetterInterface
 	/**
 	 * Sends a reset email.
 	 *
-	 * @param \Navindex\Auth\Entities\UserInterface $user User record
+	 * @param \Navindex\AuthX\Entities\UserInterface $user User record
 	 *
 	 * @return bool True if the operation was successful, false otherwise
 	 */

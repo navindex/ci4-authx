@@ -1,8 +1,8 @@
 <?php
 
-namespace Navindex\Auth\Models\Lists;
+namespace Navindex\AuthX\Models\Lists;
 
-use Navindex\Auth\Models\Base\ListModel;
+use Navindex\AuthX\Models\Base\ListModel;
 
 class UserPermissionListModel extends ListModel
 {

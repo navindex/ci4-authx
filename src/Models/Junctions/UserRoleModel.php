@@ -1,9 +1,9 @@
 <?php
 
-namespace Navindex\Auth\Models\Junctions;
+namespace Navindex\AuthX\Models\Junctions;
 
-use Navindex\Auth\Entities\UserRole;
-use Navindex\Auth\Models\Base\JunctionModel;
+use Navindex\AuthX\Entities\UserRole;
+use Navindex\AuthX\Models\Base\JunctionModel;
 
 class UserRoleModel extends JunctionModel
 {
